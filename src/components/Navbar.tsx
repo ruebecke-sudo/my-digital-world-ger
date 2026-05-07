@@ -1,11 +1,21 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'wouter'
-import { Menu, X, Zap } from 'lucide-react'
+import { Menu, X, ChevronDown, Zap } from 'lucide-react'
+
+const leistungenLinks = [
+  { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
+  { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
+  { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
+  { href: '/ki-agenten', label: 'KI Agenten' },
+  { href: '/digitale-transformation', label: 'Digitale Transformation' },
+]
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [leistungenOpen, setLeistungenOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [location] = useLocation()
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -13,11 +23,17 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { href: '/', label: 'Start' },
-    { href: '/leistungen', label: 'Leistungen' },
-    { href: '/programme', label: 'Programme' },
-  ]
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setLeistungenOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const isLeistungActive = leistungenLinks.some(l => l.href === location)
 
   return (
     <nav
@@ -35,47 +51,71 @@ export function Navbar() {
               <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center group-hover:bg-cyan-500/30 transition-all">
                 <Zap className="w-4 h-4 text-cyan-400" />
               </div>
-              <div>
-                <span className="font-display font-bold text-white text-sm">My Digital</span>
-                <span className="font-display font-bold text-cyan-400 text-sm"> World</span>
+              <div className="leading-tight">
+                <span className="font-display font-bold text-white text-sm">My digital</span>
+                <span className="font-display font-bold text-cyan-400 text-sm"> world</span>
               </div>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} data-testid={`link-nav-${link.label.toLowerCase()}`}>
-                <span
-                  className={`text-sm font-medium transition-colors cursor-pointer ${
-                    location === link.href
-                      ? 'text-cyan-400'
-                      : 'text-white/70 hover:text-white'
-                  }`}
-                >
-                  {link.label}
-                </span>
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center gap-6">
+            <Link href="/" data-testid="link-nav-start">
+              <span className={`text-sm font-medium transition-colors cursor-pointer ${location === '/' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+                Start
+              </span>
+            </Link>
+
+            {/* Leistungen Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setLeistungenOpen(!leistungenOpen)}
+                data-testid="button-nav-leistungen"
+                className={`flex items-center gap-1 text-sm font-medium transition-colors ${isLeistungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
+              >
+                Leistungen
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${leistungenOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {leistungenOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 glass rounded-xl border border-cyan-500/10 shadow-xl shadow-black/30 py-2">
+                  {leistungenLinks.map(link => (
+                    <Link key={link.href} href={link.href} data-testid={`link-dropdown-${link.label.toLowerCase().replace(/\s/g,'-')}`}>
+                      <span
+                        onClick={() => setLeistungenOpen(false)}
+                        className={`block px-4 py-2 text-sm cursor-pointer transition-colors ${location === link.href ? 'text-cyan-400 bg-cyan-500/5' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
+                      >
+                        {link.label}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link href="/programme" data-testid="link-nav-programme">
+              <span className={`text-sm font-medium transition-colors cursor-pointer ${location === '/programme' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+                Zu den Programmen
+              </span>
+            </Link>
+
+            <Link href="/kontakt" data-testid="link-nav-kontakt">
+              <span className={`text-sm font-medium transition-colors cursor-pointer ${location === '/kontakt' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+                Kontakt
+              </span>
+            </Link>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center gap-4">
-            <a
-              href="mailto:info@my-digital-world.de"
-              data-testid="button-contact-nav"
-              className="btn-primary text-sm"
-            >
-              Kontakt aufnehmen
-            </a>
+          {/* CTA */}
+          <div className="hidden md:flex">
+            <Link href="/kontakt">
+              <button className="btn-primary text-sm" data-testid="button-contact-nav">
+                Jetzt anfragen
+              </button>
+            </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            data-testid="button-mobile-menu"
-            className="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all"
-          >
+          {/* Mobile menu */}
+          <button onClick={() => setIsOpen(!isOpen)} data-testid="button-mobile-menu" className="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all">
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -84,26 +124,23 @@ export function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-[#060b18]/98 backdrop-blur-xl border-b border-cyan-500/10">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} data-testid={`link-mobile-nav-${link.label.toLowerCase()}`}>
-                <span
-                  onClick={() => setIsOpen(false)}
-                  className={`block text-sm font-medium py-2 transition-colors cursor-pointer ${
-                    location === link.href ? 'text-cyan-400' : 'text-white/70 hover:text-white'
-                  }`}
-                >
-                  {link.label}
-                </span>
-              </Link>
-            ))}
-            <a
-              href="mailto:info@my-digital-world.de"
-              data-testid="button-contact-mobile"
-              className="btn-primary text-sm text-center mt-2"
-            >
-              Kontakt aufnehmen
-            </a>
+          <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+            <Link href="/"><span onClick={() => setIsOpen(false)} className="block py-2 text-sm font-medium text-white/70 hover:text-white cursor-pointer">Start</span></Link>
+            <div className="py-1">
+              <p className="text-xs text-white/30 uppercase tracking-wider mb-1">Leistungen</p>
+              {leistungenLinks.map(link => (
+                <Link key={link.href} href={link.href}>
+                  <span onClick={() => setIsOpen(false)} className={`block py-2 pl-3 text-sm cursor-pointer ${location === link.href ? 'text-cyan-400' : 'text-white/60 hover:text-white'}`}>
+                    {link.label}
+                  </span>
+                </Link>
+              ))}
+            </div>
+            <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-sm font-medium text-white/70 hover:text-white cursor-pointer">Zu den Programmen</span></Link>
+            <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-sm font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
+            <Link href="/kontakt">
+              <button className="btn-primary text-sm text-center mt-3 w-full" onClick={() => setIsOpen(false)}>Jetzt anfragen</button>
+            </Link>
           </div>
         </div>
       )}
