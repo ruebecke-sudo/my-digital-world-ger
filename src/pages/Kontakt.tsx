@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import { MessageCircle, Mail, Globe } from 'lucide-react'
+import emailjs from '@emailjs/browser'
+import { MessageCircle, Mail, Globe, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 const interessen = [
   'Dig. Akademie',
@@ -12,12 +17,57 @@ const interessen = [
   'Sonstiges',
 ]
 
+type Status = 'idle' | 'sending' | 'success' | 'error'
+
 export default function Kontakt() {
   const [selected, setSelected] = useState<string[]>([])
-  const [form, setForm] = useState({ vorname: '', nachname: '', email: '', tel: '', domain: '', nachricht: '', einwilligung: false })
+  const [form, setForm] = useState({
+    vorname: '',
+    nachname: '',
+    email: '',
+    tel: '',
+    domain: '',
+    nachricht: '',
+    einwilligung: false,
+  })
+  const [status, setStatus] = useState<Status>('idle')
 
   const toggle = (item: string) => {
-    setSelected(prev => prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item])
+    setSelected(prev =>
+      prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+    )
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!form.einwilligung) return
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setStatus('error')
+      return
+    }
+
+    setStatus('sending')
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: `${form.vorname} ${form.nachname}`.trim(),
+          from_email: form.email,
+          phone: form.tel || '–',
+          domain: form.domain || '–',
+          message: form.nachricht || '–',
+          interests: selected.length > 0 ? selected.join(', ') : '–',
+          to_email: 'info@my-digital-world.de',
+        },
+        PUBLIC_KEY
+      )
+      setStatus('success')
+      setForm({ vorname: '', nachname: '', email: '', tel: '', domain: '', nachricht: '', einwilligung: false })
+      setSelected([])
+    } catch {
+      setStatus('error')
+    }
   }
 
   return (
@@ -96,7 +146,32 @@ export default function Kontakt() {
                 Deine Nachricht an <span className="text-cyan-400">My digital world</span>
               </h2>
 
-              <form className="space-y-5" onSubmit={e => e.preventDefault()}>
+              {/* Success state */}
+              {status === 'success' && (
+                <div className="flex items-start gap-3 bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-green-400 font-medium text-sm">Nachricht gesendet!</p>
+                    <p className="text-white/50 text-xs mt-1">Vielen Dank – wir melden uns so bald wie möglich bei Ihnen.</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error state */}
+              {status === 'error' && (
+                <div className="flex items-start gap-3 bg-red-500/10 border border-red-500/20 rounded-xl p-4 mb-6">
+                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-red-400 font-medium text-sm">Fehler beim Senden</p>
+                    <p className="text-white/50 text-xs mt-1">
+                      Bitte versuchen Sie es erneut oder schreiben Sie direkt an{' '}
+                      <a href="mailto:info@my-digital-world.de" className="text-cyan-400">info@my-digital-world.de</a>
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <form className="space-y-5" onSubmit={handleSubmit}>
                 {/* Interessen */}
                 <div>
                   <label className="block text-white/60 text-sm mb-3">Ich interessiere mich für:</label>
@@ -222,10 +297,17 @@ export default function Kontakt() {
 
                 <button
                   type="submit"
-                  className="btn-primary w-full"
+                  disabled={!form.einwilligung || status === 'sending'}
                   data-testid="button-kontakt-submit"
+                  className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Nachricht senden
+                  {status === 'sending' ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" /> Wird gesendet…
+                    </>
+                  ) : (
+                    'Nachricht senden'
+                  )}
                 </button>
               </form>
             </div>
