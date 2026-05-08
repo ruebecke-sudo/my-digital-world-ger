@@ -132,7 +132,7 @@ export default function Kontakt() {
               <h2 className="font-display font-bold text-white text-lg mb-2">
                 Deine Nachricht an <span className="text-cyan-400">My digital world</span>
               </h2>
-              <p className="text-white/60 text-sm mb-6">
+              <p className="text-cyan-400 text-sm mb-6">
                 Das Formular öffnet Ihr E-Mail-Programm mit allen Angaben vorausgefüllt – Sie müssen nur noch auf Senden klicken.
               </p>
 
