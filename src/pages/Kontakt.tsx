@@ -1,10 +1,5 @@
 import { useState } from 'react'
-import emailjs from '@emailjs/browser'
-import { MessageCircle, Mail, Globe, CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
-
-const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
-const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+import { MessageCircle, Mail, Globe, CheckCircle } from 'lucide-react'
 
 const interessen = [
   'Dig. Akademie',
@@ -17,8 +12,6 @@ const interessen = [
   'Sonstiges',
 ]
 
-type Status = 'idle' | 'sending' | 'success' | 'error'
-
 export default function Kontakt() {
   const [selected, setSelected] = useState<string[]>([])
   const [form, setForm] = useState({
@@ -30,8 +23,7 @@ export default function Kontakt() {
     nachricht: '',
     einwilligung: false,
   })
-  const [status, setStatus] = useState<Status>('idle')
-  const [errorDetail, setErrorDetail] = useState<string>('')
+  const [sent, setSent] = useState(false)
 
   const toggle = (item: string) => {
     setSelected(prev =>
@@ -39,40 +31,33 @@ export default function Kontakt() {
     )
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.einwilligung) return
-    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-      setErrorDetail('Konfigurationsfehler: EmailJS-Zugangsdaten fehlen.')
-      setStatus('error')
-      return
-    }
 
-    setStatus('sending')
-    setErrorDetail('')
-    try {
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          from_name: `${form.vorname} ${form.nachname}`.trim(),
-          from_email: form.email,
-          phone: form.tel || '–',
-          domain: form.domain || '–',
-          message: form.nachricht || '–',
-          interests: selected.length > 0 ? selected.join(', ') : '–',
-        },
-        { publicKey: PUBLIC_KEY }
-      )
-      setStatus('success')
-      setForm({ vorname: '', nachname: '', email: '', tel: '', domain: '', nachricht: '', einwilligung: false })
-      setSelected([])
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : JSON.stringify(err)
-      console.error('EmailJS error:', err)
-      setErrorDetail(msg)
-      setStatus('error')
-    }
+    const subject = encodeURIComponent(
+      `Kontaktanfrage von ${form.vorname} ${form.nachname}`.trim()
+    )
+
+    const body = encodeURIComponent(
+      [
+        `Name: ${`${form.vorname} ${form.nachname}`.trim() || '–'}`,
+        `E-Mail: ${form.email || '–'}`,
+        `Telefon: ${form.tel || '–'}`,
+        `Domain: ${form.domain || '–'}`,
+        '',
+        `Interesse: ${selected.length > 0 ? selected.join(', ') : '–'}`,
+        '',
+        `Nachricht:`,
+        form.nachricht || '–',
+      ].join('\n')
+    )
+
+    window.location.href = `mailto:info@my-digital-world.de?subject=${subject}&body=${body}`
+
+    setSent(true)
+    setForm({ vorname: '', nachname: '', email: '', tel: '', domain: '', nachricht: '', einwilligung: false })
+    setSelected([])
   }
 
   return (
@@ -101,28 +86,26 @@ export default function Kontakt() {
               href="https://wa.me/4915906146147"
               target="_blank"
               rel="noopener noreferrer"
-              data-testid="link-kontakt-whatsapp"
               className="flex items-center gap-4 glass rounded-xl border border-white/5 hover:border-cyan-500/20 p-4 transition-all group"
             >
               <div className="w-10 h-10 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center flex-shrink-0">
                 <MessageCircle className="w-5 h-5 text-green-400" />
               </div>
               <div>
-                <p className="text-white/75 text-xs">WhatsApp</p>
+                <p className="text-white/60 text-xs">WhatsApp</p>
                 <p className="text-white text-sm font-medium group-hover:text-cyan-400 transition-colors">+49 15906146147</p>
               </div>
             </a>
 
             <a
               href="mailto:info@my-digital-world.de"
-              data-testid="link-kontakt-email"
               className="flex items-center gap-4 glass rounded-xl border border-white/5 hover:border-cyan-500/20 p-4 transition-all group"
             >
               <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0">
                 <Mail className="w-5 h-5 text-cyan-400" />
               </div>
               <div>
-                <p className="text-white/75 text-xs">E-Mail</p>
+                <p className="text-white/60 text-xs">E-Mail</p>
                 <p className="text-white text-sm font-medium group-hover:text-cyan-400 transition-colors">info@my-digital-world.de</p>
               </div>
             </a>
@@ -131,14 +114,13 @@ export default function Kontakt() {
               href="https://www.my-digital-world.de"
               target="_blank"
               rel="noopener noreferrer"
-              data-testid="link-kontakt-website"
               className="flex items-center gap-4 glass rounded-xl border border-white/5 hover:border-cyan-500/20 p-4 transition-all group"
             >
               <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center flex-shrink-0">
                 <Globe className="w-5 h-5 text-cyan-400" />
               </div>
               <div>
-                <p className="text-white/75 text-xs">Website</p>
+                <p className="text-white/60 text-xs">Website</p>
                 <p className="text-white text-sm font-medium group-hover:text-cyan-400 transition-colors">www.my-digital-world.de</p>
               </div>
             </a>
@@ -147,33 +129,21 @@ export default function Kontakt() {
           {/* Form */}
           <div className="lg:col-span-2">
             <div className="glass rounded-2xl border border-white/5 p-8">
-              <h2 className="font-display font-bold text-white text-lg mb-6">
+              <h2 className="font-display font-bold text-white text-lg mb-2">
                 Deine Nachricht an <span className="text-cyan-400">My digital world</span>
               </h2>
+              <p className="text-white/60 text-xs mb-6">
+                Das Formular öffnet Ihr E-Mail-Programm mit allen Angaben vorausgefüllt – Sie müssen nur noch auf Senden klicken.
+              </p>
 
               {/* Success state */}
-              {status === 'success' && (
+              {sent && (
                 <div className="flex items-start gap-3 bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6">
                   <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-green-400 font-medium text-sm">Nachricht gesendet!</p>
-                    <p className="text-white/70 text-xs mt-1">Vielen Dank – wir melden uns so bald wie möglich bei Ihnen.</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Error state */}
-              {status === 'error' && (
-                <div className="flex items-start gap-3 bg-red-500/10 border border-red-500/20 rounded-xl p-4 mb-6">
-                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-red-400 font-medium text-sm">Fehler beim Senden</p>
-                    {errorDetail && (
-                      <p className="text-red-300/70 text-xs mt-1 font-mono break-all">{errorDetail}</p>
-                    )}
-                    <p className="text-white/70 text-xs mt-1">
-                      Bitte versuchen Sie es erneut oder schreiben Sie direkt an{' '}
-                      <a href="mailto:info@my-digital-world.de" className="text-cyan-400">info@my-digital-world.de</a>
+                    <p className="text-green-400 font-medium text-sm">E-Mail-Programm wurde geöffnet</p>
+                    <p className="text-white/60 text-xs mt-1">
+                      Bitte senden Sie die vorausgefüllte E-Mail ab. Wir melden uns so bald wie möglich bei Ihnen.
                     </p>
                   </div>
                 </div>
@@ -202,7 +172,7 @@ export default function Kontakt() {
                         </div>
                         <span
                           onClick={() => toggle(item)}
-                          className={`text-xs transition-colors ${selected.includes(item) ? 'text-white' : 'text-white/70 group-hover:text-white/70'}`}
+                          className={`text-xs transition-colors ${selected.includes(item) ? 'text-white' : 'text-white/70 group-hover:text-white/90'}`}
                         >
                           {item}
                         </span>
@@ -220,7 +190,7 @@ export default function Kontakt() {
                     value={form.domain}
                     onChange={e => setForm({ ...form, domain: e.target.value })}
                     placeholder="www.meine-webseite.de"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
                   />
                 </div>
 
@@ -233,7 +203,7 @@ export default function Kontakt() {
                       value={form.vorname}
                       onChange={e => setForm({ ...form, vorname: e.target.value })}
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
                     />
                   </div>
                   <div>
@@ -242,7 +212,7 @@ export default function Kontakt() {
                       type="text"
                       value={form.nachname}
                       onChange={e => setForm({ ...form, nachname: e.target.value })}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
                     />
                   </div>
                 </div>
@@ -255,7 +225,7 @@ export default function Kontakt() {
                     value={form.email}
                     onChange={e => setForm({ ...form, email: e.target.value })}
                     required
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
                   />
                 </div>
 
@@ -267,7 +237,7 @@ export default function Kontakt() {
                     type="tel"
                     value={form.tel}
                     onChange={e => setForm({ ...form, tel: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors"
                   />
                 </div>
 
@@ -278,7 +248,7 @@ export default function Kontakt() {
                     rows={4}
                     value={form.nachricht}
                     onChange={e => setForm({ ...form, nachricht: e.target.value })}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/20 focus:outline-none focus:border-cyan-500/50 transition-colors resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:border-cyan-500/50 transition-colors resize-none"
                   />
                 </div>
 
@@ -297,7 +267,7 @@ export default function Kontakt() {
                         </svg>
                       )}
                     </div>
-                    <span className="text-white/75 text-xs leading-relaxed">
+                    <span className="text-white/60 text-xs leading-relaxed">
                       Ich stimme der Verarbeitung meiner Daten zur Kontaktaufnahme zu. Die Daten werden nicht an Dritte weitergegeben.
                     </span>
                   </label>
@@ -305,17 +275,11 @@ export default function Kontakt() {
 
                 <button
                   type="submit"
-                  disabled={!form.einwilligung || status === 'sending'}
-                  data-testid="button-kontakt-submit"
-                  className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!form.einwilligung}
+                  className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  {status === 'sending' ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" /> Wird gesendet…
-                    </>
-                  ) : (
-                    'Nachricht senden'
-                  )}
+                  <Mail className="w-4 h-4" />
+                  Nachricht senden
                 </button>
               </form>
             </div>
