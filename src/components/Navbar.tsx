@@ -52,8 +52,8 @@ export function Navbar() {
                 <Zap className="w-4 h-4 text-cyan-400" />
               </div>
               <div className="leading-tight">
-                <span className="font-display font-bold text-white text-sm">My digital</span>
-                <span className="font-display font-bold text-cyan-400 text-sm"> world</span>
+                <span className="font-display font-bold text-white text-base">My digital</span>
+                <span className="font-display font-bold text-cyan-400 text-base"> world</span>
               </div>
             </div>
           </Link>
@@ -61,7 +61,7 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             <Link href="/" data-testid="link-nav-start">
-              <span className={`text-sm font-medium transition-colors cursor-pointer ${location === '/' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
                 Start
               </span>
             </Link>
@@ -71,7 +71,7 @@ export function Navbar() {
               <button
                 onClick={() => setLeistungenOpen(!leistungenOpen)}
                 data-testid="button-nav-leistungen"
-                className={`flex items-center gap-1 text-sm font-medium transition-colors ${isLeistungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
+                className={`flex items-center gap-1 text-base font-medium transition-colors ${isLeistungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
               >
                 Leistungen
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${leistungenOpen ? 'rotate-180' : ''}`} />
@@ -82,7 +82,7 @@ export function Navbar() {
                     <Link key={link.href} href={link.href} data-testid={`link-dropdown-${link.label.toLowerCase().replace(/\s/g,'-')}`}>
                       <span
                         onClick={() => setLeistungenOpen(false)}
-                        className={`block px-4 py-2 text-sm cursor-pointer transition-colors ${location === link.href ? 'text-cyan-400 bg-cyan-500/5' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
+                        className={`block px-4 py-2 text-base cursor-pointer transition-colors ${location === link.href ? 'text-cyan-400 bg-cyan-500/5' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
                       >
                         {link.label}
                       </span>
@@ -93,13 +93,13 @@ export function Navbar() {
             </div>
 
             <Link href="/programme" data-testid="link-nav-programme">
-              <span className={`text-sm font-medium transition-colors cursor-pointer ${location === '/programme' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/programme' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
                 Zu den Programmen
               </span>
             </Link>
 
             <Link href="/kontakt" data-testid="link-nav-kontakt">
-              <span className={`text-sm font-medium transition-colors cursor-pointer ${location === '/kontakt' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/kontakt' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
                 Kontakt
               </span>
             </Link>
@@ -108,7 +108,7 @@ export function Navbar() {
           {/* CTA */}
           <div className="hidden md:flex">
             <Link href="/kontakt">
-              <button className="btn-primary text-sm" data-testid="button-contact-nav">
+              <button className="btn-primary text-base" data-testid="button-contact-nav">
                 Jetzt anfragen
               </button>
             </Link>
@@ -125,21 +125,21 @@ export function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-[#060b18]/98 backdrop-blur-xl border-b border-cyan-500/10">
           <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
-            <Link href="/"><span onClick={() => setIsOpen(false)} className="block py-2 text-sm font-medium text-white/70 hover:text-white cursor-pointer">Start</span></Link>
+            <Link href="/"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Start</span></Link>
             <div className="py-1">
-              <p className="text-xs text-white/55 uppercase tracking-wider mb-1">Leistungen</p>
+              <p className="text-sm text-white/55 uppercase tracking-wider mb-1">Leistungen</p>
               {leistungenLinks.map(link => (
                 <Link key={link.href} href={link.href}>
-                  <span onClick={() => setIsOpen(false)} className={`block py-2 pl-3 text-sm cursor-pointer ${location === link.href ? 'text-cyan-400' : 'text-white/75 hover:text-white'}`}>
+                  <span onClick={() => setIsOpen(false)} className={`block py-2 pl-3 text-base cursor-pointer ${location === link.href ? 'text-cyan-400' : 'text-white/75 hover:text-white'}`}>
                     {link.label}
                   </span>
                 </Link>
               ))}
             </div>
-            <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-sm font-medium text-white/70 hover:text-white cursor-pointer">Zu den Programmen</span></Link>
-            <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-sm font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
+            <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Zu den Programmen</span></Link>
+            <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
             <Link href="/kontakt">
-              <button className="btn-primary text-sm text-center mt-3 w-full" onClick={() => setIsOpen(false)}>Jetzt anfragen</button>
+              <button className="btn-primary text-base text-center mt-3 w-full" onClick={() => setIsOpen(false)}>Jetzt anfragen</button>
             </Link>
           </div>
         </div>

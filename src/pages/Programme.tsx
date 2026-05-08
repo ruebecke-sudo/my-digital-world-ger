@@ -136,7 +136,7 @@ export default function Programme() {
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
             Zu den Programmen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight" data-testid="text-programme-headline">
@@ -173,7 +173,7 @@ export default function Programme() {
                 </div>
                 <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-cyan-400 transition-colors flex-shrink-0 mt-1" />
               </div>
-              <p className="text-white/70 text-sm leading-relaxed flex-1">{prog.beschreibung}</p>
+              <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
             </a>
           ))}
         </div>

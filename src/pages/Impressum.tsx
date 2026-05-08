@@ -3,14 +3,14 @@ export default function Impressum() {
     <div className="pt-24 pb-32">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
             Rechtliches
           </div>
           <h1 className="font-display font-bold text-5xl text-white mb-4" data-testid="text-impressum-headline">Impressum</h1>
           <div className="h-px bg-gradient-to-r from-cyan-500/50 to-transparent" />
         </div>
 
-        <div className="glass rounded-2xl border border-white/5 p-8 md:p-10 space-y-8 text-white/70 text-sm leading-relaxed" data-testid="content-impressum">
+        <div className="glass rounded-2xl border border-white/5 p-8 md:p-10 space-y-8 text-white/70 text-base leading-relaxed" data-testid="content-impressum">
 
           <section>
             <h2 className="font-display font-semibold text-white text-lg mb-4">Verantwortlich für diese Webseite:</h2>

@@ -7,7 +7,7 @@ export default function SocMediaMarketing() {
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
             Leistungen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight">
@@ -24,7 +24,7 @@ export default function SocMediaMarketing() {
         {/* Metricool Feature */}
         <div className="glass rounded-2xl border border-cyan-500/15 p-8">
           <div className="mb-4">
-            <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-4">
+            <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-4">
               My digital world Empfehlung
             </span>
             <h2 className="font-display font-bold text-white text-2xl md:text-3xl mb-2">
@@ -36,7 +36,7 @@ export default function SocMediaMarketing() {
             <p className="text-white/70 text-base italic leading-relaxed">
               Metricool: Das digitale Schweizer Taschenmesser für Social-Media-Marketer
             </p>
-            <p className="text-white/70 text-sm mt-2">
+            <p className="text-white/70 text-base mt-2">
               Mehr als 2 Millionen Fachleute, Agenturen und Marken nutzen <strong className="text-white">Metricool</strong> als One-Stop-Shop für Social Media und Online-Anzeigenmanagement.
             </p>
           </blockquote>
@@ -44,13 +44,13 @@ export default function SocMediaMarketing() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             {['Vereinfache Deine Aufgaben', 'Automatisiere Deine Prozesse', 'Vereinheitliche Deine Tools'].map((item) => (
               <div key={item} className="glass rounded-xl border border-cyan-500/10 p-4 text-center">
-                <p className="text-white font-semibold text-sm">{item}</p>
+                <p className="text-white font-semibold text-base">{item}</p>
               </div>
             ))}
           </div>
 
           <p className="text-white font-semibold mb-4">Ein einziges Tool für alle Social-Media-Aufgaben:</p>
-          <p className="text-white/70 text-sm mb-6">
+          <p className="text-white/70 text-base mb-6">
             Für alle, unabhängig von Ihren Fähigkeiten, Kenntnissen und Ressourcen. Denn wir glauben, dass alle Menschen, Unternehmen und Organisationen, unabhängig von ihrer Größe oder ihrem Budget, einen prominenten Platz in der digitalen Welt verdienen.
           </p>
 
@@ -68,7 +68,7 @@ export default function SocMediaMarketing() {
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
                 <CheckCircle className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm">{item}</span>
+                <span className="text-white/70 text-base">{item}</span>
               </div>
             ))}
           </div>
@@ -100,7 +100,7 @@ export default function SocMediaMarketing() {
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
                 <CheckCircle className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm">{item}</span>
+                <span className="text-white/70 text-base">{item}</span>
               </div>
             ))}
           </div>

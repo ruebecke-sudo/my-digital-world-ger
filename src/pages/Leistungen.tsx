@@ -130,7 +130,7 @@ export default function Leistungen() {
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
             Kreative digitale Leistungen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight" data-testid="text-leistungen-headline">
@@ -162,11 +162,11 @@ export default function Leistungen() {
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${leistung.farbe} border ${leistung.grenze} flex items-center justify-center mb-5`}>
                     <Icon className={`w-7 h-7 ${leistung.iconFarbe}`} />
                   </div>
-                  <p className={`text-xs font-medium mb-2 ${leistung.iconFarbe}`}>{leistung.untertitel}</p>
+                  <p className={`text-sm font-medium mb-2 ${leistung.iconFarbe}`}>{leistung.untertitel}</p>
                   <h2 className="font-display font-bold text-white text-2xl md:text-3xl mb-4 leading-tight">{leistung.titel}</h2>
-                  <p className="text-white/75 text-sm leading-relaxed mb-6">{leistung.beschreibung}</p>
+                  <p className="text-white/75 text-base leading-relaxed mb-6">{leistung.beschreibung}</p>
                   <Link href="/programme">
-                    <button className="btn-outline flex items-center gap-2 text-sm" data-testid={`button-leistung-programme-${leistung.id}`}>
+                    <button className="btn-outline flex items-center gap-2 text-base" data-testid={`button-leistung-programme-${leistung.id}`}>
                       Passende Programme ansehen
                       <ArrowRight className="w-4 h-4" />
                     </button>
@@ -175,12 +175,12 @@ export default function Leistungen() {
 
                 {/* Advantages */}
                 <div className={`glass rounded-xl border ${leistung.grenze} p-6 ${!isEven ? 'lg:order-1' : ''}`}>
-                  <h3 className="font-display font-semibold text-white text-sm mb-4">Was Sie erhalten</h3>
+                  <h3 className="font-display font-semibold text-white text-base mb-4">Was Sie erhalten</h3>
                   <ul className="space-y-3">
                     {leistung.vorteile.map((vorteil) => (
                       <li key={vorteil} className="flex items-start gap-3" data-testid={`item-vorteil-${leistung.id}`}>
                         <CheckCircle className={`w-4 h-4 ${leistung.iconFarbe} flex-shrink-0 mt-0.5`} />
-                        <span className="text-white/70 text-sm">{vorteil}</span>
+                        <span className="text-white/70 text-base">{vorteil}</span>
                       </li>
                     ))}
                   </ul>

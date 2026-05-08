@@ -7,7 +7,7 @@ export default function Webseiten() {
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
             Leistungen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight">
@@ -31,8 +31,8 @@ export default function Webseiten() {
           </p>
           <div className="inline-block">
             <div className="text-6xl font-display font-black text-cyan-400 mb-1">350,- €</div>
-            <div className="text-white/70 text-sm">Für eine komplette, moderne, funktionelle Webseite</div>
-            <div className="text-white/55 text-xs mt-1">Alle Preise sind netto, zzgl. MwSt.</div>
+            <div className="text-white/70 text-base">Für eine komplette, moderne, funktionelle Webseite</div>
+            <div className="text-white/55 text-sm mt-1">Alle Preise sind netto, zzgl. MwSt.</div>
           </div>
         </div>
 
@@ -41,7 +41,7 @@ export default function Webseiten() {
           <h2 className="font-display font-bold text-white text-xl mb-4">
             Eine moderne, funktionelle Webseite
           </h2>
-          <p className="text-white/75 text-sm mb-4">
+          <p className="text-white/75 text-base mb-4">
             Verwende dein Logo, dein CI mit Fonts und Farben
           </p>
 
@@ -71,12 +71,12 @@ export default function Webseiten() {
               },
             ].map((step) => (
               <div key={step.nr} className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0 text-cyan-400 font-bold text-sm">
+                <div className="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center flex-shrink-0 text-cyan-400 font-bold text-base">
                   {step.nr}
                 </div>
                 <div>
-                  <h3 className="font-display font-semibold text-white text-sm mb-1">{step.titel}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">
+                  <h3 className="font-display font-semibold text-white text-base mb-1">{step.titel}</h3>
+                  <p className="text-white/70 text-base leading-relaxed">
                     {step.text}
                     {step.link && (
                       <> <a href={`mailto:${step.link}`} className="text-cyan-400 hover:text-cyan-300">{step.link}</a></>
@@ -104,7 +104,7 @@ export default function Webseiten() {
             ].map((item) => (
               <div key={item} className="flex items-center gap-3">
                 <CheckCircle className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm">{item}</span>
+                <span className="text-white/70 text-base">{item}</span>
               </div>
             ))}
           </div>

@@ -43,7 +43,7 @@ export default function KiAgenten() {
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
             Leistungen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight">
@@ -82,16 +82,16 @@ export default function KiAgenten() {
         {/* Anwendungsbereiche */}
         <div>
           <h2 className="font-display font-bold text-white text-xl mb-6">Anwendungsbereiche von KI-Agenten</h2>
-          <p className="text-white/70 text-sm mb-6">Die Einsatzmöglichkeiten von KI-Agenten sind nahezu grenzenlos. Hier einige konkrete Beispiele:</p>
+          <p className="text-white/70 text-base mb-6">Die Einsatzmöglichkeiten von KI-Agenten sind nahezu grenzenlos. Hier einige konkrete Beispiele:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {anwendungsbereiche.map((bereich) => (
               <div key={bereich.titel} className="glass rounded-xl border border-white/5 p-5">
-                <h3 className="font-display font-semibold text-white text-sm mb-2">{bereich.titel}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{bereich.text}</p>
+                <h3 className="font-display font-semibold text-white text-base mb-2">{bereich.titel}</h3>
+                <p className="text-white/70 text-base leading-relaxed">{bereich.text}</p>
               </div>
             ))}
           </div>
-          <p className="text-white/75 text-sm mt-4">
+          <p className="text-white/75 text-base mt-4">
             Gerade kleine und mittelständische Unternehmen profitieren stark vom Einsatz solcher Technologien, da sie mit relativ wenig Aufwand große Wirkung erzielen können.
           </p>
         </div>
@@ -104,8 +104,8 @@ export default function KiAgenten() {
               <div key={v.titel} className="flex gap-3">
                 <CheckCircle className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-display font-semibold text-white text-sm mb-1">{v.titel}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">{v.text}</p>
+                  <h3 className="font-display font-semibold text-white text-base mb-1">{v.titel}</h3>
+                  <p className="text-white/70 text-base leading-relaxed">{v.text}</p>
                 </div>
               </div>
             ))}
@@ -115,7 +115,7 @@ export default function KiAgenten() {
         {/* CTA */}
         <div className="glass rounded-2xl border border-cyan-500/15 p-8 text-center">
           <h2 className="font-display font-bold text-white text-xl mb-4">Jetzt beraten lassen</h2>
-          <p className="text-white/70 text-sm mb-6">
+          <p className="text-white/70 text-base mb-6">
             Diese Vorteile machen KI-Agenten zu einem echten Game-Changer – besonders in einem zunehmend digitalen Marktumfeld.
           </p>
           <Link href="/kontakt">

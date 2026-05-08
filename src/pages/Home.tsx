@@ -121,8 +121,8 @@ export default function Home() {
                 <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4 group-hover:bg-cyan-500/20 transition-all">
                   <s.icon className="w-5 h-5 text-cyan-400" />
                 </div>
-                <h3 className="font-display font-bold text-white text-sm mb-2 capitalize">{s.title}</h3>
-                <p className="text-white/70 text-xs leading-relaxed">{s.text}</p>
+                <h3 className="font-display font-bold text-white text-base mb-2 capitalize">{s.title}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{s.text}</p>
               </div>
             ))}
           </div>
@@ -135,7 +135,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
                 About us
               </div>
               <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-6 leading-tight" data-testid="text-about-headline">
@@ -158,15 +158,15 @@ export default function Home() {
               <div className="grid grid-cols-3 gap-4 text-center mb-6">
                 <div>
                   <div className="font-display text-3xl font-black text-cyan-400 mb-1">15+</div>
-                  <div className="text-white/75 text-xs">Jahre Expertise</div>
+                  <div className="text-white/75 text-sm">Jahre Expertise</div>
                 </div>
                 <div>
                   <div className="font-display text-3xl font-black text-cyan-400 mb-1">15+</div>
-                  <div className="text-white/75 text-xs">Jahre Weiterbildung</div>
+                  <div className="text-white/75 text-sm">Jahre Weiterbildung</div>
                 </div>
                 <div>
                   <div className="font-display text-3xl font-black text-cyan-400 mb-1">15+</div>
-                  <div className="text-white/75 text-xs">Über den Tellerrand</div>
+                  <div className="text-white/75 text-sm">Über den Tellerrand</div>
                 </div>
               </div>
               <div className="pt-4 border-t border-white/5">
@@ -174,7 +174,7 @@ export default function Home() {
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-cyan-400 text-cyan-400" />)}
                   </div>
-                  <span className="text-white/75 text-sm">Ausgebildeter Mediendesigner</span>
+                  <span className="text-white/75 text-base">Ausgebildeter Mediendesigner</span>
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@ export default function Home() {
       <section className="py-24 section-overlay">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-4">
               Kreative digitale Leistungen
             </div>
             <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4" data-testid="text-services-headline">
@@ -205,10 +205,10 @@ export default function Home() {
                 className="card-hover glass rounded-2xl p-6 border border-cyan-500/10 hover:border-cyan-500/30 transition-all group flex flex-col"
               >
                 <h3 className="font-display font-bold text-white mb-3 capitalize">{l.title}</h3>
-                <p className="text-white/70 text-sm leading-relaxed flex-1">{l.text}</p>
+                <p className="text-white/70 text-base leading-relaxed flex-1">{l.text}</p>
                 <div className="mt-5">
                   <Link href={l.href}>
-                    <button className="flex items-center gap-2 text-cyan-400 text-sm font-medium hover:text-cyan-300 transition-colors">
+                    <button className="flex items-center gap-2 text-cyan-400 text-base font-medium hover:text-cyan-300 transition-colors">
                       {l.cta} <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </Link>
@@ -223,7 +223,7 @@ export default function Home() {
       <section className="py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-4">
               Warum My digital world
             </div>
             <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-4" data-testid="text-warum-headline">
@@ -235,8 +235,8 @@ export default function Home() {
             {gruende.map((g) => (
               <div key={g.title} className="glass rounded-2xl p-6 border border-cyan-500/10">
                 <CheckCircle2 className="w-6 h-6 text-cyan-400 mb-4" />
-                <h3 className="font-display font-bold text-white mb-3 text-sm">{g.title}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{g.text}</p>
+                <h3 className="font-display font-bold text-white mb-3 text-base">{g.title}</h3>
+                <p className="text-white/70 text-base leading-relaxed">{g.text}</p>
               </div>
             ))}
           </div>
@@ -249,7 +249,7 @@ export default function Home() {
           <div className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 p-12 text-center">
             <div className="hero-orb w-64 h-64 bg-cyan-500/10 -top-32 left-1/2 -translate-x-1/2" />
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-medium mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
                 Zu den Programmen
               </div>
               <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4" data-testid="text-programmes-teaser-headline">
