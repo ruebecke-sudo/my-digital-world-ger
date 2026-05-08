@@ -31,6 +31,7 @@ export default function Kontakt() {
     einwilligung: false,
   })
   const [status, setStatus] = useState<Status>('idle')
+  const [errorDetail, setErrorDetail] = useState<string>('')
 
   const toggle = (item: string) => {
     setSelected(prev =>
@@ -42,11 +43,13 @@ export default function Kontakt() {
     e.preventDefault()
     if (!form.einwilligung) return
     if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setErrorDetail('Konfigurationsfehler: EmailJS-Zugangsdaten fehlen.')
       setStatus('error')
       return
     }
 
     setStatus('sending')
+    setErrorDetail('')
     try {
       await emailjs.send(
         SERVICE_ID,
@@ -58,14 +61,16 @@ export default function Kontakt() {
           domain: form.domain || '–',
           message: form.nachricht || '–',
           interests: selected.length > 0 ? selected.join(', ') : '–',
-          to_email: 'info@my-digital-world.de',
         },
-        PUBLIC_KEY
+        { publicKey: PUBLIC_KEY }
       )
       setStatus('success')
       setForm({ vorname: '', nachname: '', email: '', tel: '', domain: '', nachricht: '', einwilligung: false })
       setSelected([])
-    } catch {
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : JSON.stringify(err)
+      console.error('EmailJS error:', err)
+      setErrorDetail(msg)
       setStatus('error')
     }
   }
@@ -163,6 +168,9 @@ export default function Kontakt() {
                   <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-red-400 font-medium text-sm">Fehler beim Senden</p>
+                    {errorDetail && (
+                      <p className="text-red-300/70 text-xs mt-1 font-mono break-all">{errorDetail}</p>
+                    )}
                     <p className="text-white/50 text-xs mt-1">
                       Bitte versuchen Sie es erneut oder schreiben Sie direkt an{' '}
                       <a href="mailto:info@my-digital-world.de" className="text-cyan-400">info@my-digital-world.de</a>
