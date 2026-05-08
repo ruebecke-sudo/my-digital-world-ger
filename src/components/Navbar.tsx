@@ -127,10 +127,10 @@ export function Navbar() {
           <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
             <Link href="/"><span onClick={() => setIsOpen(false)} className="block py-2 text-sm font-medium text-white/70 hover:text-white cursor-pointer">Start</span></Link>
             <div className="py-1">
-              <p className="text-xs text-white/30 uppercase tracking-wider mb-1">Leistungen</p>
+              <p className="text-xs text-white/55 uppercase tracking-wider mb-1">Leistungen</p>
               {leistungenLinks.map(link => (
                 <Link key={link.href} href={link.href}>
-                  <span onClick={() => setIsOpen(false)} className={`block py-2 pl-3 text-sm cursor-pointer ${location === link.href ? 'text-cyan-400' : 'text-white/60 hover:text-white'}`}>
+                  <span onClick={() => setIsOpen(false)} className={`block py-2 pl-3 text-sm cursor-pointer ${location === link.href ? 'text-cyan-400' : 'text-white/75 hover:text-white'}`}>
                     {link.label}
                   </span>
                 </Link>

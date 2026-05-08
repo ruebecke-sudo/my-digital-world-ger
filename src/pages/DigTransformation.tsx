@@ -14,7 +14,7 @@ export default function DigTransformation() {
             Digitale<br />
             <span className="gradient-text">Transformation</span>
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="text-white/70 text-base leading-relaxed">
             Dein Foto als Kunstwerk: Vom Schnappschuss zum modernen Kunstobjekt
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function DigTransformation() {
           ].map((v) => (
             <div key={v.titel} className="glass rounded-2xl border border-cyan-500/10 p-6">
               <h3 className="font-display font-bold text-white mb-3">{v.titel}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{v.text}</p>
+              <p className="text-white/70 text-sm leading-relaxed">{v.text}</p>
             </div>
           ))}
         </div>
@@ -72,7 +72,7 @@ export default function DigTransformation() {
         {/* CTA */}
         <div className="glass rounded-2xl border border-cyan-500/15 p-8 text-center">
           <h2 className="font-display font-bold text-white text-xl mb-4">Jetzt Ihr Bild transformieren lassen</h2>
-          <p className="text-white/50 text-sm mb-6">
+          <p className="text-white/70 text-sm mb-6">
             Kontaktieren Sie uns und lassen Sie Ihr Lieblingsfotos zu einem einzigartigen Kunstwerk werden.
           </p>
           <Link href="/kontakt">

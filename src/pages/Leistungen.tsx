@@ -138,7 +138,7 @@ export default function Leistungen() {
             <br />
             <span className="gradient-text">digitalen Hand</span>
           </h1>
-          <p className="text-white/50 text-base leading-relaxed" data-testid="text-leistungen-subtitle">
+          <p className="text-white/70 text-base leading-relaxed" data-testid="text-leistungen-subtitle">
             Von der Website bis zum KI-Marketing – My Digital World bietet Ihnen alle digitalen Leistungen, die Ihr Unternehmen nach vorne bringen.
           </p>
         </div>
@@ -164,7 +164,7 @@ export default function Leistungen() {
                   </div>
                   <p className={`text-xs font-medium mb-2 ${leistung.iconFarbe}`}>{leistung.untertitel}</p>
                   <h2 className="font-display font-bold text-white text-2xl md:text-3xl mb-4 leading-tight">{leistung.titel}</h2>
-                  <p className="text-white/60 text-sm leading-relaxed mb-6">{leistung.beschreibung}</p>
+                  <p className="text-white/75 text-sm leading-relaxed mb-6">{leistung.beschreibung}</p>
                   <Link href="/programme">
                     <button className="btn-outline flex items-center gap-2 text-sm" data-testid={`button-leistung-programme-${leistung.id}`}>
                       Passende Programme ansehen
@@ -199,7 +199,7 @@ export default function Leistungen() {
             <br />
             <span className="gradient-text">zu Ihrem Unternehmen?</span>
           </h2>
-          <p className="text-white/50 text-base mb-8">
+          <p className="text-white/70 text-base mb-8">
             Lassen Sie uns in einem unverbindlichen Gespräch herausfinden, was My Digital World für Sie tun kann.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

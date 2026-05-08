@@ -82,16 +82,16 @@ export default function KiAgenten() {
         {/* Anwendungsbereiche */}
         <div>
           <h2 className="font-display font-bold text-white text-xl mb-6">Anwendungsbereiche von KI-Agenten</h2>
-          <p className="text-white/50 text-sm mb-6">Die Einsatzmöglichkeiten von KI-Agenten sind nahezu grenzenlos. Hier einige konkrete Beispiele:</p>
+          <p className="text-white/70 text-sm mb-6">Die Einsatzmöglichkeiten von KI-Agenten sind nahezu grenzenlos. Hier einige konkrete Beispiele:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {anwendungsbereiche.map((bereich) => (
               <div key={bereich.titel} className="glass rounded-xl border border-white/5 p-5">
                 <h3 className="font-display font-semibold text-white text-sm mb-2">{bereich.titel}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{bereich.text}</p>
+                <p className="text-white/70 text-sm leading-relaxed">{bereich.text}</p>
               </div>
             ))}
           </div>
-          <p className="text-white/40 text-sm mt-4">
+          <p className="text-white/75 text-sm mt-4">
             Gerade kleine und mittelständische Unternehmen profitieren stark vom Einsatz solcher Technologien, da sie mit relativ wenig Aufwand große Wirkung erzielen können.
           </p>
         </div>
@@ -105,7 +105,7 @@ export default function KiAgenten() {
                 <CheckCircle className="w-5 h-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-display font-semibold text-white text-sm mb-1">{v.titel}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">{v.text}</p>
+                  <p className="text-white/70 text-sm leading-relaxed">{v.text}</p>
                 </div>
               </div>
             ))}
@@ -115,7 +115,7 @@ export default function KiAgenten() {
         {/* CTA */}
         <div className="glass rounded-2xl border border-cyan-500/15 p-8 text-center">
           <h2 className="font-display font-bold text-white text-xl mb-4">Jetzt beraten lassen</h2>
-          <p className="text-white/50 text-sm mb-6">
+          <p className="text-white/70 text-sm mb-6">
             Diese Vorteile machen KI-Agenten zu einem echten Game-Changer – besonders in einem zunehmend digitalen Marktumfeld.
           </p>
           <Link href="/kontakt">

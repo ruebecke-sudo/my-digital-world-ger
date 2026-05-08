@@ -14,7 +14,7 @@ export default function SocMediaMarketing() {
             Soc. Media<br />
             <span className="gradient-text">Marketing</span>
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="text-white/70 text-base leading-relaxed">
             My digital world Empfehlung für Social Media Marketing
           </p>
         </div>
@@ -36,7 +36,7 @@ export default function SocMediaMarketing() {
             <p className="text-white/70 text-base italic leading-relaxed">
               Metricool: Das digitale Schweizer Taschenmesser für Social-Media-Marketer
             </p>
-            <p className="text-white/50 text-sm mt-2">
+            <p className="text-white/70 text-sm mt-2">
               Mehr als 2 Millionen Fachleute, Agenturen und Marken nutzen <strong className="text-white">Metricool</strong> als One-Stop-Shop für Social Media und Online-Anzeigenmanagement.
             </p>
           </blockquote>
@@ -50,7 +50,7 @@ export default function SocMediaMarketing() {
           </div>
 
           <p className="text-white font-semibold mb-4">Ein einziges Tool für alle Social-Media-Aufgaben:</p>
-          <p className="text-white/50 text-sm mb-6">
+          <p className="text-white/70 text-sm mb-6">
             Für alle, unabhängig von Ihren Fähigkeiten, Kenntnissen und Ressourcen. Denn wir glauben, dass alle Menschen, Unternehmen und Organisationen, unabhängig von ihrer Größe oder ihrem Budget, einen prominenten Platz in der digitalen Welt verdienen.
           </p>
 

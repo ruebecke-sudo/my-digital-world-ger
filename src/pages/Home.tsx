@@ -93,7 +93,7 @@ export default function Home() {
               <br />
               <span className="gradient-text glow-cyan-text">für dein Unternehmen</span>
             </h1>
-            <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-8">
+            <p className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto mb-8">
               Moderne Webseiten | digitale Transformation –<br />
               Wir bieten Ihnen Lösungen um sichtbarer zu werden
             </p>
@@ -122,7 +122,7 @@ export default function Home() {
                   <s.icon className="w-5 h-5 text-cyan-400" />
                 </div>
                 <h3 className="font-display font-bold text-white text-sm mb-2 capitalize">{s.title}</h3>
-                <p className="text-white/50 text-xs leading-relaxed">{s.text}</p>
+                <p className="text-white/70 text-xs leading-relaxed">{s.text}</p>
               </div>
             ))}
           </div>
@@ -142,7 +142,7 @@ export default function Home() {
                 Digitale Kompetenz<br />
                 <span className="gradient-text">mit Erfahrung</span>
               </h2>
-              <div className="space-y-4 text-white/60 leading-relaxed text-base">
+              <div className="space-y-4 text-white/75 leading-relaxed text-base">
                 <p>
                   Die digitale Welt ist rasant gewachsen – doch ich bin ihr einen Schritt voraus. Denn meine Reise begann lange vor dem digitalen Zeitalter, in der analogen Welt der klassischen Mediengestaltung.
                 </p>
@@ -158,15 +158,15 @@ export default function Home() {
               <div className="grid grid-cols-3 gap-4 text-center mb-6">
                 <div>
                   <div className="font-display text-3xl font-black text-cyan-400 mb-1">15+</div>
-                  <div className="text-white/40 text-xs">Jahre Expertise</div>
+                  <div className="text-white/75 text-xs">Jahre Expertise</div>
                 </div>
                 <div>
                   <div className="font-display text-3xl font-black text-cyan-400 mb-1">15+</div>
-                  <div className="text-white/40 text-xs">Jahre Weiterbildung</div>
+                  <div className="text-white/75 text-xs">Jahre Weiterbildung</div>
                 </div>
                 <div>
                   <div className="font-display text-3xl font-black text-cyan-400 mb-1">15+</div>
-                  <div className="text-white/40 text-xs">Über den Tellerrand</div>
+                  <div className="text-white/75 text-xs">Über den Tellerrand</div>
                 </div>
               </div>
               <div className="pt-4 border-t border-white/5">
@@ -174,7 +174,7 @@ export default function Home() {
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(i => <Star key={i} className="w-4 h-4 fill-cyan-400 text-cyan-400" />)}
                   </div>
-                  <span className="text-white/40 text-sm">Ausgebildeter Mediendesigner</span>
+                  <span className="text-white/75 text-sm">Ausgebildeter Mediendesigner</span>
                 </div>
               </div>
             </div>
@@ -193,7 +193,7 @@ export default function Home() {
               Kreative digitale Lösungen<br />
               <span className="gradient-text">für dein Unternehmen</span>
             </h2>
-            <p className="text-white/50 max-w-xl mx-auto text-base">
+            <p className="text-white/70 max-w-xl mx-auto text-base">
               My digital world bietet zielgerichtete Lösungen im digitalen Bereich an.<br />
               Profitiere von unserer Expertise.
             </p>
@@ -205,7 +205,7 @@ export default function Home() {
                 className="card-hover glass rounded-2xl p-6 border border-cyan-500/10 hover:border-cyan-500/30 transition-all group flex flex-col"
               >
                 <h3 className="font-display font-bold text-white mb-3 capitalize">{l.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed flex-1">{l.text}</p>
+                <p className="text-white/70 text-sm leading-relaxed flex-1">{l.text}</p>
                 <div className="mt-5">
                   <Link href={l.href}>
                     <button className="flex items-center gap-2 text-cyan-400 text-sm font-medium hover:text-cyan-300 transition-colors">
@@ -236,7 +236,7 @@ export default function Home() {
               <div key={g.title} className="glass rounded-2xl p-6 border border-cyan-500/10">
                 <CheckCircle2 className="w-6 h-6 text-cyan-400 mb-4" />
                 <h3 className="font-display font-bold text-white mb-3 text-sm">{g.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{g.text}</p>
+                <p className="text-white/70 text-sm leading-relaxed">{g.text}</p>
               </div>
             ))}
           </div>
@@ -256,7 +256,7 @@ export default function Home() {
                 Entdecken Sie alle<br />
                 <span className="gradient-text">digitalen Programme</span>
               </h2>
-              <p className="text-white/50 max-w-lg mx-auto text-base mb-8">
+              <p className="text-white/70 max-w-lg mx-auto text-base mb-8">
                 Eine vollständige Übersicht aller KI-Programme und digitalen Werkzeuge, die My Digital World für Sie bereitstellt.
               </p>
               <Link href="/programme">
@@ -276,7 +276,7 @@ export default function Home() {
             Bereit für die<br />
             <span className="gradient-text">digitale Zukunft?</span>
           </h2>
-          <p className="text-white/50 text-base mb-10">
+          <p className="text-white/70 text-base mb-10">
             Nehmen Sie jetzt Kontakt auf und lassen Sie uns gemeinsam Ihre digitale Strategie entwickeln.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

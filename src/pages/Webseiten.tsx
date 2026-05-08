@@ -14,7 +14,7 @@ export default function Webseiten() {
             Profitiere jetzt<br />
             <span className="gradient-text">mit unserer Aktion</span>
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="text-white/70 text-base leading-relaxed">
             Zur Zeit bieten wir moderne und funktionelle Webseiten.
           </p>
         </div>
@@ -26,13 +26,13 @@ export default function Webseiten() {
           <h2 className="font-display font-bold text-white text-2xl md:text-3xl mb-4">
             Bist du <span className="text-cyan-400">Unternehmer, selbständig, Gewerbetreibender</span> oder in einem Verein?
           </h2>
-          <p className="text-white/60 text-lg mb-6">
+          <p className="text-white/75 text-lg mb-6">
             dann profitiere jetzt von unserem Aktionspreis für Webseiten
           </p>
           <div className="inline-block">
             <div className="text-6xl font-display font-black text-cyan-400 mb-1">350,- €</div>
-            <div className="text-white/50 text-sm">Für eine komplette, moderne, funktionelle Webseite</div>
-            <div className="text-white/30 text-xs mt-1">Alle Preise sind netto, zzgl. MwSt.</div>
+            <div className="text-white/70 text-sm">Für eine komplette, moderne, funktionelle Webseite</div>
+            <div className="text-white/55 text-xs mt-1">Alle Preise sind netto, zzgl. MwSt.</div>
           </div>
         </div>
 
@@ -41,7 +41,7 @@ export default function Webseiten() {
           <h2 className="font-display font-bold text-white text-xl mb-4">
             Eine moderne, funktionelle Webseite
           </h2>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-white/75 text-sm mb-4">
             Verwende dein Logo, dein CI mit Fonts und Farben
           </p>
 
@@ -76,7 +76,7 @@ export default function Webseiten() {
                 </div>
                 <div>
                   <h3 className="font-display font-semibold text-white text-sm mb-1">{step.titel}</h3>
-                  <p className="text-white/50 text-sm leading-relaxed">
+                  <p className="text-white/70 text-sm leading-relaxed">
                     {step.text}
                     {step.link && (
                       <> <a href={`mailto:${step.link}`} className="text-cyan-400 hover:text-cyan-300">{step.link}</a></>

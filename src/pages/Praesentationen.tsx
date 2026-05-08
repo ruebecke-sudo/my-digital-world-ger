@@ -25,7 +25,7 @@ export default function Praesentationen() {
             Digitale<br />
             <span className="gradient-text">Präsentationen</span>
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="text-white/70 text-base leading-relaxed">
             Maßgeschneiderte Präsentationen, die wirken
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function Praesentationen() {
           ].map((angebot) => (
             <div key={angebot.titel} className="glass rounded-2xl border border-cyan-500/10 p-6">
               <h3 className="font-display font-bold text-white mb-3">{angebot.titel}</h3>
-              <p className="text-white/50 text-sm leading-relaxed">{angebot.text}</p>
+              <p className="text-white/70 text-sm leading-relaxed">{angebot.text}</p>
               <div className="mt-4">
                 <Link href="/kontakt">
                   <button className="text-cyan-400 text-sm hover:text-cyan-300 transition-colors flex items-center gap-1">
@@ -86,7 +86,7 @@ export default function Praesentationen() {
         {/* Für welche Anlässe */}
         <div className="glass rounded-2xl border border-white/5 p-8">
           <h2 className="font-display font-bold text-white text-xl mb-2">Für welche Anlässe?</h2>
-          <p className="text-white/50 text-sm mb-6">
+          <p className="text-white/70 text-sm mb-6">
             Setzen Sie auf eine Präsentation, die Ihr Unternehmen professionell repräsentiert – visuell überzeugend, inhaltlich auf den Punkt.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

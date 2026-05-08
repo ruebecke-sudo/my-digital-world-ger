@@ -143,7 +143,7 @@ export default function Programme() {
             Alle digitalen<br />
             <span className="gradient-text">Programme & Tools</span>
           </h1>
-          <p className="text-white/50 text-base leading-relaxed" data-testid="text-programme-subtitle">
+          <p className="text-white/70 text-base leading-relaxed" data-testid="text-programme-subtitle">
             Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt –<br />
             von KI-Tools über Social Media bis zu Marketing-Software.
           </p>
@@ -173,7 +173,7 @@ export default function Programme() {
                 </div>
                 <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-cyan-400 transition-colors flex-shrink-0 mt-1" />
               </div>
-              <p className="text-white/50 text-sm leading-relaxed flex-1">{prog.beschreibung}</p>
+              <p className="text-white/70 text-sm leading-relaxed flex-1">{prog.beschreibung}</p>
             </a>
           ))}
         </div>

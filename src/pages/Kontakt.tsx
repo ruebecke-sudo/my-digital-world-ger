@@ -87,7 +87,7 @@ export default function Kontakt() {
             Lasse es mich<br />
             <span className="gradient-text">wissen</span>
           </h1>
-          <p className="text-white/50 text-base leading-relaxed">
+          <p className="text-white/70 text-base leading-relaxed">
             My digital world: Themen zu digitaler Transformation, KI und vieles mehr……..
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function Kontakt() {
                 <MessageCircle className="w-5 h-5 text-green-400" />
               </div>
               <div>
-                <p className="text-white/40 text-xs">WhatsApp</p>
+                <p className="text-white/75 text-xs">WhatsApp</p>
                 <p className="text-white text-sm font-medium group-hover:text-cyan-400 transition-colors">+49 15906146147</p>
               </div>
             </a>
@@ -122,7 +122,7 @@ export default function Kontakt() {
                 <Mail className="w-5 h-5 text-cyan-400" />
               </div>
               <div>
-                <p className="text-white/40 text-xs">E-Mail</p>
+                <p className="text-white/75 text-xs">E-Mail</p>
                 <p className="text-white text-sm font-medium group-hover:text-cyan-400 transition-colors">info@my-digital-world.de</p>
               </div>
             </a>
@@ -138,7 +138,7 @@ export default function Kontakt() {
                 <Globe className="w-5 h-5 text-cyan-400" />
               </div>
               <div>
-                <p className="text-white/40 text-xs">Website</p>
+                <p className="text-white/75 text-xs">Website</p>
                 <p className="text-white text-sm font-medium group-hover:text-cyan-400 transition-colors">www.my-digital-world.de</p>
               </div>
             </a>
@@ -157,7 +157,7 @@ export default function Kontakt() {
                   <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-green-400 font-medium text-sm">Nachricht gesendet!</p>
-                    <p className="text-white/50 text-xs mt-1">Vielen Dank – wir melden uns so bald wie möglich bei Ihnen.</p>
+                    <p className="text-white/70 text-xs mt-1">Vielen Dank – wir melden uns so bald wie möglich bei Ihnen.</p>
                   </div>
                 </div>
               )}
@@ -171,7 +171,7 @@ export default function Kontakt() {
                     {errorDetail && (
                       <p className="text-red-300/70 text-xs mt-1 font-mono break-all">{errorDetail}</p>
                     )}
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="text-white/70 text-xs mt-1">
                       Bitte versuchen Sie es erneut oder schreiben Sie direkt an{' '}
                       <a href="mailto:info@my-digital-world.de" className="text-cyan-400">info@my-digital-world.de</a>
                     </p>
@@ -182,7 +182,7 @@ export default function Kontakt() {
               <form className="space-y-5" onSubmit={handleSubmit}>
                 {/* Interessen */}
                 <div>
-                  <label className="block text-white/60 text-sm mb-3">Ich interessiere mich für:</label>
+                  <label className="block text-white/75 text-sm mb-3">Ich interessiere mich für:</label>
                   <div className="grid grid-cols-2 gap-2">
                     {interessen.map((item) => (
                       <label key={item} className="flex items-center gap-2 cursor-pointer group">
@@ -202,7 +202,7 @@ export default function Kontakt() {
                         </div>
                         <span
                           onClick={() => toggle(item)}
-                          className={`text-xs transition-colors ${selected.includes(item) ? 'text-white' : 'text-white/50 group-hover:text-white/70'}`}
+                          className={`text-xs transition-colors ${selected.includes(item) ? 'text-white' : 'text-white/70 group-hover:text-white/70'}`}
                         >
                           {item}
                         </span>
@@ -213,8 +213,8 @@ export default function Kontakt() {
 
                 {/* Domain */}
                 <div>
-                  <label className="block text-white/60 text-xs mb-1">Meine Domain lautet:</label>
-                  <p className="text-white/30 text-xs mb-2">Bitte hier den Domainnamen eintragen:</p>
+                  <label className="block text-white/75 text-xs mb-1">Meine Domain lautet:</label>
+                  <p className="text-white/55 text-xs mb-2">Bitte hier den Domainnamen eintragen:</p>
                   <input
                     type="text"
                     value={form.domain}
@@ -227,7 +227,7 @@ export default function Kontakt() {
                 {/* Name */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white/60 text-xs mb-1">Vorname *</label>
+                    <label className="block text-white/75 text-xs mb-1">Vorname *</label>
                     <input
                       type="text"
                       value={form.vorname}
@@ -237,7 +237,7 @@ export default function Kontakt() {
                     />
                   </div>
                   <div>
-                    <label className="block text-white/60 text-xs mb-1">Nachname</label>
+                    <label className="block text-white/75 text-xs mb-1">Nachname</label>
                     <input
                       type="text"
                       value={form.nachname}
@@ -249,7 +249,7 @@ export default function Kontakt() {
 
                 {/* E-Mail */}
                 <div>
-                  <label className="block text-white/60 text-xs mb-1">E-Mail-Adresse *</label>
+                  <label className="block text-white/75 text-xs mb-1">E-Mail-Adresse *</label>
                   <input
                     type="email"
                     value={form.email}
@@ -261,8 +261,8 @@ export default function Kontakt() {
 
                 {/* Tel */}
                 <div>
-                  <label className="block text-white/60 text-xs mb-1">Tel. Nr.</label>
-                  <p className="text-white/30 text-xs mb-1">Wir rufen gerne zurück</p>
+                  <label className="block text-white/75 text-xs mb-1">Tel. Nr.</label>
+                  <p className="text-white/55 text-xs mb-1">Wir rufen gerne zurück</p>
                   <input
                     type="tel"
                     value={form.tel}
@@ -273,7 +273,7 @@ export default function Kontakt() {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-white/60 text-xs mb-1">Kommentar oder Nachricht</label>
+                  <label className="block text-white/75 text-xs mb-1">Kommentar oder Nachricht</label>
                   <textarea
                     rows={4}
                     value={form.nachricht}
@@ -297,7 +297,7 @@ export default function Kontakt() {
                         </svg>
                       )}
                     </div>
-                    <span className="text-white/40 text-xs leading-relaxed">
+                    <span className="text-white/75 text-xs leading-relaxed">
                       Ich stimme der Verarbeitung meiner Daten zur Kontaktaufnahme zu. Die Daten werden nicht an Dritte weitergegeben.
                     </span>
                   </label>
