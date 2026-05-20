@@ -67,7 +67,7 @@ const programme = [
   {
     name: 'Virtuelle Raumgestaltung',
     beschreibung: 'KI-Tool zur virtuellen Einrichtung und Gestaltung von Räumen – perfekt für Immobilien, Innenarchitektur und Staging.',
-    link: 'https://www.my-digital-world.de',
+    link: 'https://homedesigns.ai?fpr=xyz7zs',
     kategorie: 'Präsentation & Räume',
     katColor: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
   },
@@ -151,7 +151,7 @@ const programme = [
   {
     name: 'ChatGPT News',
     beschreibung: 'Aktuelle Neuigkeiten und Entwicklungen rund um ChatGPT und OpenAI – immer auf dem neuesten Stand der KI-Welt.',
-    link: 'https://openai.com',
+    link: 'https://www.instagram.com/my_digit_world',
     kategorie: 'ChatGPT',
     katColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
   },
