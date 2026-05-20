@@ -94,7 +94,7 @@ export function Navbar() {
 
             <Link href="/programme" data-testid="link-nav-programme">
               <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/programme' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
-                Zu den Programmen
+                Tools & Programme
               </span>
             </Link>
 
@@ -136,7 +136,7 @@ export function Navbar() {
                 </Link>
               ))}
             </div>
-            <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Zu den Programmen</span></Link>
+            <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Tools & Programme</span></Link>
             <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
             <Link href="/kontakt">
               <button className="btn-primary text-base text-center mt-3 w-full" onClick={() => setIsOpen(false)}>Jetzt anfragen</button>
