@@ -42,6 +42,20 @@ const angebote = [
 export default function Praesentationen() {
   return (
     <div className="pt-24 pb-32">
+      {/* Video */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="rounded-2xl overflow-hidden border border-cyan-500/20 shadow-[0_0_40px_rgba(6,182,212,0.15)]">
+          <video
+            src="/one_place.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-auto block"
+          />
+        </div>
+      </div>
+
       {/* Hero */}
       <div className="relative section-overlay py-24 text-center overflow-hidden">
         <div className="hero-orb w-[600px] h-[600px] bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
