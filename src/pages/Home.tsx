@@ -81,6 +81,18 @@ const gruende = [
 export default function Home() {
   return (
     <div className="overflow-x-hidden">
+      {/* TOP VIDEO */}
+      <div className="w-full pt-16">
+        <video
+          src="/hero_video.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto block"
+        />
+      </div>
+
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center pt-16 bg-grid">
         <div className="hero-orb w-96 h-96 bg-cyan-500/15 top-1/4 -left-48 pulse-cyan" />
