@@ -155,6 +155,13 @@ const programme = [
     kategorie: 'ChatGPT',
     katColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
   },
+  {
+    name: 'Die digitale Akademie',
+    beschreibung: 'MentorTools – die All-in-One Plattform für Online-Kurse, digitale Produkte und Mitgliederbereiche. Erstelle, vermarkte und verkaufe dein Wissen professionell: mit eigenem Kursbereich, automatisierten E-Mails, Coaching-Funktionen und einem kompletten Mitgliederportal – alles ohne technisches Vorwissen.',
+    link: 'https://mentortools.com',
+    kategorie: 'Akademie & Kurse',
+    katColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+  },
 ]
 
 export default function Programme() {
