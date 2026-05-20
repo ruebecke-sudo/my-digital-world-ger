@@ -11,12 +11,9 @@ export default function Webseiten() {
             Leistungen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight">
-            Profitiere jetzt<br />
-            <span className="gradient-text">mit unserer Aktion</span>
+            Profitiere jetzt!<br />
+            <span className="gradient-text">Aktionspreis</span>
           </h1>
-          <p className="text-white/70 text-base leading-relaxed">
-            Zur Zeit bieten wir moderne und funktionelle Webseiten.
-          </p>
         </div>
       </div>
 
