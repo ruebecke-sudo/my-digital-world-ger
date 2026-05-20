@@ -4,6 +4,18 @@ import { Link } from 'wouter'
 export default function DigTransformation() {
   return (
     <div className="pt-24 pb-32">
+      {/* Top Video */}
+      <div className="w-full">
+        <video
+          src="/uhr_video.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto block"
+        />
+      </div>
+
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
