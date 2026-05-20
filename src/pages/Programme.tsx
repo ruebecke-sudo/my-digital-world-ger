@@ -74,7 +74,7 @@ const programme = [
   {
     name: 'ai marketing',
     beschreibung: 'Künstliche Intelligenz für smartes Marketing – automatisierte Analyse, Zielgruppenansprache und Kampagnenoptimierung.',
-    link: 'https://www.my-digital-world.de/ki-agenten',
+    link: 'https://produktstudio.ai/?atp=Cd3Ugz',
     kategorie: 'Marketing',
     katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   },
