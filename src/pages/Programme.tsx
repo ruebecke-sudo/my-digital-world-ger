@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, Tag } from 'lucide-react'
 
 const programme = [
   {
@@ -60,9 +60,11 @@ const programme = [
   {
     name: 'Mate Studio',
     beschreibung: 'KI-gestütztes Design- und Präsentationstool für professionelle Inhalte, Grafiken und digitale Präsentationen.',
-    link: 'https://mate.studio',
+    link: 'https://www.mate-studio.com',
     kategorie: 'Präsentation & Räume',
     katColor: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
+    promoCode: 'mate-k8x3v9m2w7',
+    promoText: 'Erhalte 10% Rabatt mit diesem Code',
   },
   {
     name: 'Virtuelle Raumgestaltung',
@@ -195,7 +197,7 @@ export default function Programme() {
               target="_blank"
               rel="noopener noreferrer"
               data-testid={`card-programm-${prog.name.replace(/\s/g, '-').toLowerCase()}`}
-              className="card-hover glass rounded-xl border border-white/5 hover:border-cyan-500/20 p-5 group flex flex-col gap-3 transition-all"
+              className={`card-hover glass rounded-xl border p-5 group flex flex-col gap-3 transition-all ${(prog as any).promoCode ? 'border-yellow-400/40 hover:border-yellow-400/70 shadow-[0_0_20px_rgba(250,204,21,0.1)] hover:shadow-[0_0_30px_rgba(250,204,21,0.2)]' : 'border-white/5 hover:border-cyan-500/20'}`}
             >
               <div className="flex items-start justify-between gap-2">
                 <div>
@@ -209,6 +211,18 @@ export default function Programme() {
                 <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-cyan-400 transition-colors flex-shrink-0 mt-1" />
               </div>
               <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
+              {(prog as any).promoCode && (
+                <div className="mt-1 rounded-lg bg-yellow-500/10 border border-yellow-400/30 p-3">
+                  <p className="text-yellow-300/80 text-xs mb-1.5 flex items-center gap-1.5">
+                    <Tag className="w-3 h-3" /> {(prog as any).promoText}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <code className="flex-1 text-center font-mono font-bold text-yellow-300 text-sm tracking-widest bg-yellow-400/10 border border-yellow-400/20 rounded-md px-3 py-1.5">
+                      {(prog as any).promoCode}
+                    </code>
+                  </div>
+                </div>
+              )}
             </a>
           ))}
         </div>
