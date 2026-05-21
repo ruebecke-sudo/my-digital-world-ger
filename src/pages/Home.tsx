@@ -265,11 +265,11 @@ export default function Home() {
                 Zu den Programmen
               </div>
               <h2 className="font-display font-bold text-4xl md:text-5xl text-white mb-4" data-testid="text-programmes-teaser-headline">
-                Entdecken Sie alle<br />
-                <span className="gradient-text">digitalen Programme</span>
+                Entdecke die besten<br />
+                <span className="gradient-text">KI Tools & Programme</span>
               </h2>
               <p className="text-white/70 max-w-lg mx-auto text-base mb-8">
-                Eine vollständige Übersicht aller KI-Programme und digitalen Werkzeuge, die My Digital World für Sie bereitstellt.
+                Eine Übersicht der besten KI Tools und Programme die My digital world bereitstellt.
               </p>
               <Link href="/programme">
                 <button className="btn-primary flex items-center gap-2 mx-auto text-base" data-testid="button-to-programmes">
