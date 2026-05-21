@@ -1,6 +1,7 @@
 import { Route, Switch } from 'wouter'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Programme from './pages/Programme'
 import Webseiten from './pages/Webseiten'
@@ -15,6 +16,7 @@ import Datenschutz from './pages/Datenschutz'
 function App() {
   return (
     <div className="min-h-screen bg-[#060b18] text-white">
+      <ScrollToTop />
       <Navbar />
       <Switch>
         <Route path="/" component={Home} />
