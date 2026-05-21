@@ -96,7 +96,7 @@ export default function Praesentationen() {
               {/* Text side */}
               <div className="flex-1 text-center md:text-left">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-sm font-medium mb-5">
-                  <Sparkles className="w-3.5 h-3.5" /> Live Demo ansehen
+                  <Sparkles className="w-3.5 h-3.5" /> Bild & Videogenerierung
                 </div>
                 <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4 leading-tight">
                   Creative AI Marketing<br />
