@@ -112,7 +112,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/aktionspreis-fuer-webseiten">
                 <button className="btn-primary flex items-center gap-2 text-base" data-testid="button-hero-primary">
-                  Alle Leistungen <ArrowRight className="w-4 h-4" />
+                  Website Design <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>
               <Link href="/programme">
