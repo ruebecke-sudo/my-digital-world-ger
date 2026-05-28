@@ -146,7 +146,7 @@ const programme = [
   {
     name: 'Oakgen.ai',
     beschreibung: 'Ein KI-Workspace für alles – nutze führende KI-Modelle für Chat, Bilder, Video, Stimme, Musik, Avatare, UGC-Ads und Bildbearbeitung in einem einzigen Arbeitsbereich mit gemeinsamem Guthaben.',
-    link: 'https://oakgen.ai?ref=MDW26',
+    link: 'https://my-digital-world-main.replit.app/oakgen',
     kategorie: 'KI Allround',
     katColor: 'bg-green-500/10 text-green-400 border-green-500/20',
   },
