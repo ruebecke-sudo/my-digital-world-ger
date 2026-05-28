@@ -95,6 +95,13 @@ const programme = [
     katColor: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
   },
   {
+    name: 'Replit',
+    beschreibung: 'KI-gestützte Entwicklungsplattform im Browser – Apps, Websites und Skripte erstellen ohne lokale Installation. Ideal für Einsteiger und Profis, die schnell und kollaborativ bauen möchten.',
+    link: 'https://replit-affiliate.replit.app/',
+    kategorie: 'No-Code',
+    katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+  },
+  {
     name: 'Flip Magazine',
     beschreibung: 'Digitale Broschüren und Magazine erstellen – interaktive Flipbooks aus PDFs für professionelle Online-Präsentationen.',
     link: 'https://flipsnack.com',
