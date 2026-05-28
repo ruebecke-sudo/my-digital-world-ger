@@ -81,13 +81,6 @@ const programme = [
     katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   },
   {
-    name: 'Oakgen.ai',
-    beschreibung: 'Ein KI-Workspace für alles – nutze führende KI-Modelle für Chat, Bilder, Video, Stimme, Musik, Avatare, UGC-Ads und Bildbearbeitung in einem einzigen Arbeitsbereich mit gemeinsamem Guthaben.',
-    link: 'https://oakgen.ai?ref=MDW26',
-    kategorie: 'Marketing',
-    katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
-  },
-  {
     name: 'GetResponse',
     beschreibung: 'All-in-One E-Mail-Marketing-Plattform mit Newsletter, Landingpages, Webinaren und Marketing-Automatisierung – ideal für kleine und mittlere Unternehmen.',
     link: 'https://try.getresponsetoday.com/hcp4gef2gtvg',
@@ -144,11 +137,11 @@ const programme = [
     katColor: 'bg-red-500/10 text-red-400 border-red-500/20',
   },
   {
-    name: 'ai music',
-    beschreibung: 'KI-generierte Musik für Videos, Präsentationen und Marketinginhalte – lizenzfreie Tracks in Sekunden erstellen.',
-    link: 'https://suno.ai',
-    kategorie: 'Musik',
-    katColor: 'bg-teal-500/10 text-teal-400 border-teal-500/20',
+    name: 'Oakgen.ai',
+    beschreibung: 'Ein KI-Workspace für alles – nutze führende KI-Modelle für Chat, Bilder, Video, Stimme, Musik, Avatare, UGC-Ads und Bildbearbeitung in einem einzigen Arbeitsbereich mit gemeinsamem Guthaben.',
+    link: 'https://oakgen.ai?ref=MDW26',
+    kategorie: 'KI Allround',
+    katColor: 'bg-green-500/10 text-green-400 border-green-500/20',
   },
   {
     name: 'ChatGPT News',

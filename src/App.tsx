@@ -12,6 +12,7 @@ import DigTransformation from './pages/DigTransformation'
 import Kontakt from './pages/Kontakt'
 import Impressum from './pages/Impressum'
 import Datenschutz from './pages/Datenschutz'
+import Oakgen from './pages/Oakgen'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/kontakt" component={Kontakt} />
         <Route path="/impressum" component={Impressum} />
         <Route path="/datenschutz" component={Datenschutz} />
+        <Route path="/oakgen" component={Oakgen} />
       </Switch>
       <Footer />
     </div>

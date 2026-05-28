@@ -98,6 +98,13 @@ export function Navbar() {
               </span>
             </Link>
 
+            <Link href="/oakgen" data-testid="link-nav-oakgen">
+              <span className={`inline-flex items-center gap-1.5 text-base font-medium transition-colors cursor-pointer ${location === '/oakgen' ? 'text-green-400' : 'text-white/70 hover:text-white'}`}>
+                Oakgen.ai
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-500 text-black leading-none animate-pulse">NEU</span>
+              </span>
+            </Link>
+
             <Link href="/kontakt" data-testid="link-nav-kontakt">
               <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/kontakt' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
                 Kontakt
@@ -137,6 +144,7 @@ export function Navbar() {
               ))}
             </div>
             <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Tools & Programme</span></Link>
+            <Link href="/oakgen"><span onClick={() => setIsOpen(false)} className="flex items-center gap-2 py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Oakgen.ai <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-500 text-black leading-none">NEU</span></span></Link>
             <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
             <Link href="/kontakt">
               <button className="btn-primary text-base text-center mt-3 w-full" onClick={() => setIsOpen(false)}>Jetzt anfragen</button>
