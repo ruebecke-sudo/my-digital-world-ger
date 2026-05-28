@@ -171,6 +171,20 @@ export default function Oakgen() {
         </div>
       </section>
 
+      {/* Video */}
+      <section className="max-w-4xl mx-auto px-4 pb-16 -mt-4">
+        <div className="rounded-2xl overflow-hidden border border-white/8 shadow-[0_0_60px_rgba(34,197,94,0.12)]">
+          <video
+            src="/oakgen_video.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-auto block"
+          />
+        </div>
+      </section>
+
       {/* Visual showcase SVG cards */}
       <section className="max-w-5xl mx-auto px-4 pb-20">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
