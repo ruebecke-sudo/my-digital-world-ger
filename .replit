@@ -32,9 +32,10 @@ localPort = 5000
 externalPort = 80
 
 [deployment]
-deploymentTarget = "static"
+deploymentTarget = "autoscale"
 build = ["npm", "run", "build"]
 publicDir = "dist"
+run = ["npm", "run", "start"]
 
 [agent]
 expertMode = true
