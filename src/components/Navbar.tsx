@@ -52,8 +52,8 @@ export function Navbar() {
                 <Zap className="w-4 h-4 text-cyan-400" />
               </div>
               <div className="leading-tight">
-                <span className="font-display font-bold text-white text-base">My digital</span>
-                <span className="font-display font-bold text-cyan-400 text-base"> world</span>
+                <span className="font-display font-bold text-white text-base">my-digital-</span>
+                <span className="font-display font-bold text-cyan-400 text-base">world</span>
               </div>
             </div>
           </Link>

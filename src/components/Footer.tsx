@@ -16,8 +16,8 @@ export function Footer() {
                 <Zap className="w-4 h-4 text-cyan-400" />
               </div>
               <div className="leading-tight">
-                <span className="font-display font-bold text-white text-base">My digital</span>
-                <span className="font-display font-bold text-cyan-400 text-base"> world</span>
+                <span className="font-display font-bold text-white text-base">my-digital-</span>
+                <span className="font-display font-bold text-cyan-400 text-base">world</span>
               </div>
             </div>
             <p className="text-white/75 text-sm leading-relaxed mb-1">Moderne Webseiten | digitale Transformation</p>
