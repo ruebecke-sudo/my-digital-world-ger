@@ -81,9 +81,9 @@ const programme = [
     katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   },
   {
-    name: 'Tanganica',
-    beschreibung: 'E-Commerce Marketing Automatisierung – KI-gesteuerte Werbekampagnen für Online-Shops auf Google, Facebook und mehr.',
-    link: 'https://www.tanganica.com',
+    name: 'Oakgen.ai',
+    beschreibung: 'Ein KI-Workspace für alles – nutze führende KI-Modelle für Chat, Bilder, Video, Stimme, Musik, Avatare, UGC-Ads und Bildbearbeitung in einem einzigen Arbeitsbereich mit gemeinsamem Guthaben.',
+    link: 'https://oakgen.ai?ref=MDW26',
     kategorie: 'Marketing',
     katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   },
