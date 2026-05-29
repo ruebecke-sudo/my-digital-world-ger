@@ -1,4 +1,5 @@
-import { ExternalLink, Tag } from 'lucide-react'
+import { ExternalLink, Tag, X, Zap, Smartphone, Globe, Users } from 'lucide-react'
+import { useState } from 'react'
 
 const programme = [
   {
@@ -102,6 +103,14 @@ const programme = [
     katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
   },
   {
+    name: 'Emergent Lab',
+    beschreibung: 'Full-Stack Web- & Mobile-Apps in Minuten mit KI erstellen – kein Code nötig. Von Y Combinator geförderter App-Builder mit über 3 Mio. Nutzern weltweit.',
+    link: 'https://app.emergent.sh/?via=rudiger',
+    kategorie: 'App Builder',
+    katColor: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
+    hasPopup: true,
+  },
+  {
     name: 'Flip Magazine',
     beschreibung: 'Digitale Broschüren und Magazine erstellen – interaktive Flipbooks aus PDFs für professionelle Online-Präsentationen.',
     link: 'https://flipsnack.com',
@@ -166,9 +175,131 @@ const programme = [
   },
 ]
 
+function EmergentLabPopup({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ backgroundColor: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-sm"
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: 'linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%)',
+          border: '1px solid rgba(139, 92, 246, 0.3)',
+          borderRadius: 20,
+          overflow: 'hidden',
+          boxShadow: '0 25px 60px rgba(139, 92, 246, 0.2), 0 0 0 1px rgba(139,92,246,0.1)',
+        }}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 text-white/40 hover:text-white/80 transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        {/* Header */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(59,130,246,0.1) 100%)',
+            borderBottom: '1px solid rgba(139,92,246,0.2)',
+            padding: '24px 24px 20px',
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <div
+              style={{
+                width: 42,
+                height: 42,
+                background: 'linear-gradient(135deg, #8b5cf6, #3b82f6)',
+                borderRadius: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 20,
+                fontWeight: 700,
+                color: '#fff',
+                flexShrink: 0,
+              }}
+            >
+              e
+            </div>
+            <div>
+              <div className="text-white text-xl font-bold leading-tight">Emergent Lab</div>
+              <div style={{ color: '#8b5cf6', fontSize: 11, fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                YC S24 · AI App Builder
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="p-6">
+          <p className="text-white/60 text-sm leading-relaxed mb-5">
+            Erstelle vollständige <strong className="text-white/90">Full-Stack Web- & Mobile-Apps</strong> in Minuten – mit KI. Kein Code-Wissen nötig.
+          </p>
+
+          {/* Stats */}
+          <div
+            className="flex items-center gap-2 mb-5 rounded-xl px-4 py-3"
+            style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid rgba(139,92,246,0.15)' }}
+          >
+            <Users className="w-4 h-4" style={{ color: '#8b5cf6' }} />
+            <span className="text-sm font-semibold" style={{ color: '#c4b5fd' }}>3M+ Nutzer</span>
+            <span className="text-xs text-white/30">weltweit</span>
+          </div>
+
+          {/* Features */}
+          <div className="flex flex-col gap-2.5 mb-6">
+            {[
+              { Icon: Zap, label: 'Apps in Minuten deployen', color: '#f59e0b' },
+              { Icon: Globe, label: 'Web-Apps mit KI generieren', color: '#22d3ee' },
+              { Icon: Smartphone, label: 'Mobile Apps für iOS & Android', color: '#34d399' },
+            ].map(({ Icon, label, color }, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg"
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+              >
+                <Icon className="w-4 h-4 flex-shrink-0" style={{ color }} />
+                <span className="text-white/70 text-sm">{label}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <a
+            href="https://app.emergent.sh/?via=rudiger"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-white text-sm font-semibold transition-opacity hover:opacity-90"
+            style={{
+              background: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+              boxShadow: '0 4px 20px rgba(139,92,246,0.4)',
+            }}
+          >
+            Jetzt kostenlos starten
+            <ExternalLink className="w-4 h-4" />
+          </a>
+          <p className="text-white/25 text-xs text-center mt-2.5">
+            Kostenlos loslegen · Keine Kreditkarte erforderlich
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function Programme() {
+  const [showEmergentPopup, setShowEmergentPopup] = useState(false)
+
   return (
     <div className="pt-24 pb-32">
+      {showEmergentPopup && <EmergentLabPopup onClose={() => setShowEmergentPopup(false)} />}
+
       {/* Header */}
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
@@ -190,41 +321,69 @@ export default function Programme() {
       {/* Programme Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" data-testid="group-programme-grid">
-          {programme.map((prog) => (
-            <a
-              key={prog.name}
-              href={prog.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-testid={`card-programm-${prog.name.replace(/\s/g, '-').toLowerCase()}`}
-              className={`card-hover glass rounded-xl border p-5 group flex flex-col gap-3 transition-all ${(prog as any).promoCode ? 'border-yellow-400/40 hover:border-yellow-400/70 shadow-[0_0_20px_rgba(250,204,21,0.1)] hover:shadow-[0_0_30px_rgba(250,204,21,0.2)]' : 'border-white/5 hover:border-cyan-500/20'}`}
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h3 className="font-display font-semibold text-white text-base group-hover:text-cyan-400 transition-colors">
-                    {prog.name}
-                  </h3>
-                  <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] border ${prog.katColor}`}>
-                    {prog.kategorie}
-                  </span>
-                </div>
-                <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-cyan-400 transition-colors flex-shrink-0 mt-1" />
-              </div>
-              <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
-              {(prog as any).promoCode && (
-                <div className="mt-1 rounded-lg bg-yellow-500/10 border border-yellow-400/30 p-3">
-                  <p className="text-yellow-300/80 text-xs mb-1.5 flex items-center gap-1.5">
-                    <Tag className="w-3 h-3" /> {(prog as any).promoText}
-                  </p>
-                  <div className="flex items-center gap-2">
-                    <code className="flex-1 text-center font-mono font-bold text-yellow-300 text-sm tracking-widest bg-yellow-400/10 border border-yellow-400/20 rounded-md px-3 py-1.5">
-                      {(prog as any).promoCode}
-                    </code>
+          {programme.map((prog) => {
+            const isEmergent = (prog as any).hasPopup
+
+            if (isEmergent) {
+              return (
+                <button
+                  key={prog.name}
+                  onClick={() => setShowEmergentPopup(true)}
+                  data-testid={`card-programm-${prog.name.replace(/\s/g, '-').toLowerCase()}`}
+                  className="card-hover glass rounded-xl border border-violet-500/30 hover:border-violet-500/60 p-5 group flex flex-col gap-3 transition-all text-left w-full shadow-[0_0_20px_rgba(139,92,246,0.08)] hover:shadow-[0_0_30px_rgba(139,92,246,0.2)]"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="font-display font-semibold text-white text-base group-hover:text-violet-400 transition-colors">
+                        {prog.name}
+                      </h3>
+                      <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] border ${prog.katColor}`}>
+                        {prog.kategorie}
+                      </span>
+                    </div>
+                    <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-violet-400 transition-colors flex-shrink-0 mt-1" />
                   </div>
+                  <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
+                </button>
+              )
+            }
+
+            return (
+              <a
+                key={prog.name}
+                href={prog.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid={`card-programm-${prog.name.replace(/\s/g, '-').toLowerCase()}`}
+                className={`card-hover glass rounded-xl border p-5 group flex flex-col gap-3 transition-all ${(prog as any).promoCode ? 'border-yellow-400/40 hover:border-yellow-400/70 shadow-[0_0_20px_rgba(250,204,21,0.1)] hover:shadow-[0_0_30px_rgba(250,204,21,0.2)]' : 'border-white/5 hover:border-cyan-500/20'}`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 className="font-display font-semibold text-white text-base group-hover:text-cyan-400 transition-colors">
+                      {prog.name}
+                    </h3>
+                    <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] border ${prog.katColor}`}>
+                      {prog.kategorie}
+                    </span>
+                  </div>
+                  <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-cyan-400 transition-colors flex-shrink-0 mt-1" />
                 </div>
-              )}
-            </a>
-          ))}
+                <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
+                {(prog as any).promoCode && (
+                  <div className="mt-1 rounded-lg bg-yellow-500/10 border border-yellow-400/30 p-3">
+                    <p className="text-yellow-300/80 text-xs mb-1.5 flex items-center gap-1.5">
+                      <Tag className="w-3 h-3" /> {(prog as any).promoText}
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <code className="flex-1 text-center font-mono font-bold text-yellow-300 text-sm tracking-widest bg-yellow-400/10 border border-yellow-400/20 rounded-md px-3 py-1.5">
+                        {(prog as any).promoCode}
+                      </code>
+                    </div>
+                  </div>
+                )}
+              </a>
+            )
+          })}
         </div>
       </div>
     </div>
