@@ -811,8 +811,16 @@ function ToolPopup({ name, link, popup, onClose }: PopupProps) {
 
 export default function Programme() {
   const [activePopup, setActivePopup] = useState<string | null>(null)
+  const [query, setQuery] = useState('')
 
   const active = programme.find((p) => p.name === activePopup)
+  const filtered = query.trim()
+    ? programme.filter((p) =>
+        p.name.toLowerCase().includes(query.toLowerCase()) ||
+        p.kategorie.toLowerCase().includes(query.toLowerCase()) ||
+        p.beschreibung.toLowerCase().includes(query.toLowerCase())
+      )
+    : programme
 
   return (
     <div className="pt-24 pb-32">
@@ -845,16 +853,59 @@ export default function Programme() {
 
       {/* Programme Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+
+        {/* Toolbar: count left, search right */}
+        <div className="flex items-center justify-between gap-4 mb-6">
+          <p className="text-white/40 text-sm">
+            {filtered.length} {filtered.length === 1 ? 'Tool' : 'Tools'}
+            {query.trim() && <span className="text-white/25"> gefunden</span>}
+          </p>
+
+          {/* Search input */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Tool suchen …"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-56 sm:w-72 pl-9 pr-9 py-2 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
+              style={{
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                boxShadow: query ? '0 0 0 2px rgba(34,211,238,0.2)' : 'none',
+                borderColor: query ? 'rgba(34,211,238,0.4)' : 'rgba(255,255,255,0.1)',
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(34,211,238,0.4)'
+                e.currentTarget.style.boxShadow = '0 0 0 2px rgba(34,211,238,0.15)'
+              }}
+              onBlur={(e) => {
+                if (!query) {
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'
+                  e.currentTarget.style.boxShadow = 'none'
+                }
+              }}
+            />
+            {query && (
+              <button
+                onClick={() => setQuery('')}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" data-testid="group-programme-grid">
-          {programme.map((prog) => (
+          {filtered.length > 0 ? filtered.map((prog) => (
             <button
               key={prog.name}
               onClick={() => setActivePopup(prog.name)}
               data-testid={`card-programm-${prog.name.replace(/\s/g, '-').toLowerCase()}`}
-              className="card-hover glass rounded-xl border border-white/5 hover:border-white/15 p-5 group flex flex-col gap-3 transition-all text-left w-full"
-              style={{
-                '--hover-border': prog.popup.accentColor + '40',
-              } as React.CSSProperties}
+              className="card-hover glass rounded-xl border border-white/5 p-5 group flex flex-col gap-3 transition-all text-left w-full"
               onMouseEnter={(e) => (e.currentTarget.style.borderColor = prog.popup.accentColor + '40')}
               onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)')}
             >
@@ -869,7 +920,6 @@ export default function Programme() {
                 </div>
                 <ExternalLink
                   className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1"
-                  style={{ color: undefined }}
                 />
               </div>
               <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
@@ -884,7 +934,15 @@ export default function Programme() {
                 </div>
               )}
             </button>
-          ))}
+          )) : (
+            <div className="col-span-3 py-20 text-center">
+              <Search className="w-10 h-10 text-white/10 mx-auto mb-4" />
+              <p className="text-white/40 text-sm">Kein Tool gefunden für „{query}"</p>
+              <button onClick={() => setQuery('')} className="mt-3 text-cyan-400 text-xs hover:underline">
+                Suche zurücksetzen
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
