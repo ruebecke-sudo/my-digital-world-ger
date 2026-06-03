@@ -32,6 +32,7 @@ interface PopupConfig {
   StatIcon: LucideIcon
   features: Feature[]
   cta: string
+  infoLink?: string
   promoCode?: string
   promoText?: string
 }
@@ -382,6 +383,7 @@ const programme: Programme[] = [
         { Icon: Film, label: 'Ads, Stories & Templates mit KI', color: '#fbbf24' },
       ],
       cta: 'MagicFit kostenlos starten',
+      infoLink: 'https://pushowl.replit.app/',
     },
   },
   {
@@ -430,6 +432,7 @@ const programme: Programme[] = [
         { Icon: Zap, label: 'Sofort deployen & teilen', color: '#fbbf24' },
       ],
       cta: 'Replit starten',
+      infoLink: 'https://replit-affiliate.replit.app/',
     },
   },
   {
@@ -454,6 +457,7 @@ const programme: Programme[] = [
         { Icon: Smartphone, label: 'Mobile Apps für iOS & Android', color: '#34d399' },
       ],
       cta: 'Jetzt kostenlos starten',
+      infoLink: 'https://mdw-emergent-ger.replit.app/',
     },
   },
   {
@@ -800,9 +804,26 @@ function ToolPopup({ name, link, popup, onClose }: PopupProps) {
             {popup.cta}
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
-          <p className="text-white/20 text-[11px] text-center mt-2">
-            Kostenlos loslegen · Kein Kreditkarte erforderlich
-          </p>
+          {popup.infoLink && (
+            <div className="mt-3 text-center">
+              <a
+                href={popup.infoLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs transition-colors hover:opacity-80"
+                style={{ color: popup.accentColor }}
+              >
+                <Globe className="w-3 h-3" />
+                weitere Infos hier
+                <ExternalLink className="w-3 h-3 opacity-70" />
+              </a>
+            </div>
+          )}
+          {!popup.infoLink && (
+            <p className="text-white/20 text-[11px] text-center mt-2">
+              Kostenlos loslegen · Kein Kreditkarte erforderlich
+            </p>
+          )}
         </div>
       </div>
     </div>
