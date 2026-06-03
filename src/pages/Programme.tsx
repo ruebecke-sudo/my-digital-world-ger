@@ -626,6 +626,7 @@ const programme: Programme[] = [
         { Icon: Music, label: 'Stimme, Avatare & UGC-Ads', color: '#a78bfa' },
       ],
       cta: 'Oakgen.ai entdecken',
+      infoLink: 'https://my-digital-world-ger.replit.app/oakgen',
     },
   },
   {
