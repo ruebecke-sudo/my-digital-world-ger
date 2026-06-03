@@ -804,26 +804,9 @@ function ToolPopup({ name, link, popup, onClose }: PopupProps) {
             {popup.cta}
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
-          {popup.infoLink && (
-            <div className="mt-3 text-center">
-              <a
-                href={popup.infoLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs transition-colors hover:opacity-80"
-                style={{ color: popup.accentColor }}
-              >
-                <Globe className="w-3 h-3" />
-                weitere Infos hier
-                <ExternalLink className="w-3 h-3 opacity-70" />
-              </a>
-            </div>
-          )}
-          {!popup.infoLink && (
-            <p className="text-white/20 text-[11px] text-center mt-2">
-              Kostenlos loslegen · Kein Kreditkarte erforderlich
-            </p>
-          )}
+          <p className="text-white/20 text-[11px] text-center mt-2">
+            Kostenlos loslegen · Keine Kreditkarte erforderlich
+          </p>
         </div>
       </div>
     </div>
@@ -944,6 +927,21 @@ export default function Programme() {
                 />
               </div>
               <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
+              {prog.popup.infoLink && (
+                <div className="pt-2 border-t border-white/5">
+                  <a
+                    href={prog.popup.infoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium hover:underline transition-all"
+                    style={{ color: prog.popup.accentColor }}
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    weitere Infos hier
+                  </a>
+                </div>
+              )}
               {prog.popup.promoCode && (
                 <div className="mt-1 rounded-lg bg-yellow-500/10 border border-yellow-400/30 p-3">
                   <p className="text-yellow-300/80 text-xs mb-1.5 flex items-center gap-1.5">
