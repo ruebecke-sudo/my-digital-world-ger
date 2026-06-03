@@ -335,6 +335,7 @@ const programme: Programme[] = [
         { Icon: BarChart2, label: 'Detaillierte Performance-Analysen', color: '#60a5fa' },
       ],
       cta: 'ai marketing testen',
+      infoLink: 'https://creative-ai-marketing-mdw.replit.app/',
     },
   },
   {
