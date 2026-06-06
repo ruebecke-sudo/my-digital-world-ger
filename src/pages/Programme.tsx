@@ -141,6 +141,7 @@ const programme: Programme[] = [
         { Icon: Users, label: 'KI-Avatare & Voiceover', color: '#a78bfa' },
       ],
       cta: 'Creatify jetzt starten',
+      infoLink: 'https://mdw-creatify-lab.netlify.app/',
     },
   },
   {
