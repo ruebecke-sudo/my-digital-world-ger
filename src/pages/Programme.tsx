@@ -69,6 +69,7 @@ const programme: Programme[] = [
         { Icon: Globe, label: '50+ Sprachen unterstützt', color: '#60a5fa' },
       ],
       cta: 'HIX.ai jetzt testen',
+      infoLink: 'https://hix.ai/?ref=zju1mti',
     },
   },
   {
