@@ -94,6 +94,7 @@ const programme: Programme[] = [
         { Icon: TrendingUp, label: 'Echtzeit-Analysen & Insights', color: '#60a5fa' },
       ],
       cta: 'Genspark kostenlos testen',
+      infoLink: 'https://mdw-genspark.netlify.app/',
     },
   },
   {
