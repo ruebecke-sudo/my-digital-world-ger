@@ -662,6 +662,7 @@ const programme: Programme[] = [
         { Icon: Zap, label: 'Fertige Templates & kein Technikwissen', color: '#fbbf24' },
       ],
       cta: 'WordPressit jetzt starten',
+      infoLink: 'https://mdw-wordpressit.netlify.app/',
     },
   },
   {
