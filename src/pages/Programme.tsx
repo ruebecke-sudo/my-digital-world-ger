@@ -587,6 +587,7 @@ const programme: Programme[] = [
         { Icon: Package, label: 'E-Commerce & Social Media ready', color: '#fbbf24' },
       ],
       cta: 'Produktstudio testen',
+      infoLink: 'https://mdw-produktstudio.netlify.app/',
     },
   },
   {
