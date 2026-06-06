@@ -118,6 +118,7 @@ const programme: Programme[] = [
         { Icon: Film, label: 'Professionelle Video-Qualität', color: '#f472b6' },
       ],
       cta: 'HeyGen kostenlos testen',
+      infoLink: 'https://mdw-heygen.netlify.app/',
     },
   },
   {
