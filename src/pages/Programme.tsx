@@ -585,7 +585,7 @@ const programme: Programme[] = [
         { Icon: ShoppingBag, label: 'Täglich neue Deals entdecken', color: '#fbbf24' },
       ],
       cta: 'APPSUMO Deals entdecken',
-      infoLink: 'https://appsumo.com/s/150tk1h/',
+      infoLink: 'https://mdw-appsumo.netlify.app/',
     },
   },
   {
