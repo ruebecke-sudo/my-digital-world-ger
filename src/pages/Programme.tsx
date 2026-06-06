@@ -637,6 +637,7 @@ const programme: Programme[] = [
         { Icon: Image, label: 'Hochwertige digitale Ergebnisse', color: '#34d399' },
       ],
       cta: 'Artistly entdecken',
+      infoLink: 'https://mdw-artistly.netlify.app/',
     },
   },
   {
