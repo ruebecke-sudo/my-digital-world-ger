@@ -168,6 +168,7 @@ const programme: Programme[] = [
         { Icon: Target, label: 'Perfekt für E-Commerce & Print', color: '#60a5fa' },
       ],
       cta: 'Lets Enhance testen',
+      infoLink: 'https://mdw-letsenhance.netlify.app/',
     },
   },
   {
