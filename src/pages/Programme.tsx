@@ -364,6 +364,7 @@ const programme: Programme[] = [
         { Icon: Users, label: 'Kontaktmanagement & CRM', color: '#34d399' },
       ],
       cta: 'GetResponse kostenlos testen',
+      infoLink: 'https://mdw-getresponse.netlify.app/',
     },
   },
   {
