@@ -464,7 +464,7 @@ const programme: Programme[] = [
   {
     name: 'Mirr',
     beschreibung: 'Hör auf, dich selbst zu vermarkten – Mirr erledigt es für dich. KI erstellt Carousels, Blogs und Kurzvideos in deiner eigenen Stimme. Was 5 Tools früher brauchten, schafft Mirr in 10 Minuten.',
-    link: 'https://mdw-mirr.netlify.app/',
+    link: 'https://www.mirra.my/de?atp=mdw-ger',
     kategorie: 'Content Marketing',
     katColor: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
     popup: {
