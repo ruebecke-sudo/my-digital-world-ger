@@ -341,6 +341,7 @@ const programme: Programme[] = [
         { Icon: Monitor, label: '3D-Visualisierungen erstellen', color: '#60a5fa' },
       ],
       cta: 'Jetzt Raum gestalten',
+      infoLink: 'https://mdw-homedesign.netlify.app/',
     },
   },
   {
