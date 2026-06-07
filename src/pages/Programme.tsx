@@ -244,6 +244,7 @@ const programme: Programme[] = [
         { Icon: Zap, label: 'Instagram & WhatsApp Flows', color: '#fbbf24' },
       ],
       cta: 'Manychat kostenlos starten',
+      infoLink: 'https://mdw-manychat.netlify.app/',
     },
   },
   {
