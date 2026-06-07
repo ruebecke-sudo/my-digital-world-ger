@@ -448,7 +448,7 @@ const programme: Programme[] = [
   {
     name: 'Make',
     beschreibung: 'Leistungsstarke No-Code Automatisierungsplattform – verbinde Apps, automatisiere Workflows und spare täglich Stunden an manueller Arbeit ohne Programmierkenntnisse.',
-    link: 'https://www.make.com/en?pc=mdwgermany',
+    link: 'https://www.make.com/endwgermany',
     kategorie: 'Automatisierung',
     katColor: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
     popup: {
