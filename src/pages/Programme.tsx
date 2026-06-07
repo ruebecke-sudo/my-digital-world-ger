@@ -69,7 +69,7 @@ const programme: Programme[] = [
         { Icon: Globe, label: '50+ Sprachen unterstützt', color: '#60a5fa' },
       ],
       cta: 'HIX.ai jetzt testen',
-      infoLink: 'https://hix.ai/?ref=zju1mti',
+      infoLink: 'https://mde-hix.netlify.app/',
     },
   },
   {
@@ -589,6 +589,7 @@ const programme: Programme[] = [
         { Icon: Share2, label: 'Alle Social-Media-Plattformen', color: '#fb923c' },
       ],
       cta: 'UGC Creator testen',
+      infoLink: 'https://mdw-creatify-lab.netlify.app/',
     },
   },
   {
