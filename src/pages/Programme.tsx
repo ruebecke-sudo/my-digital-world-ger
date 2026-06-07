@@ -467,6 +467,7 @@ const programme: Programme[] = [
         { Icon: RefreshCw, label: 'Automatisiert rund um die Uhr', color: '#60a5fa' },
       ],
       cta: 'Make kostenlos testen',
+      infoLink: 'https://mdw-make.netlify.app',
     },
   },
   {
