@@ -1,0 +1,61 @@
+<section class="hero-section">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="badge">Next-Gen AI Video Creator</div>
+                <h1 class="hero-title">Professionelle Videos ohne Kamera &amp; Studio mit <span class="gradient-text">HeyGen</span></h1>
+                <p class="hero-lead">Erstellen Sie in Minuten hochwertige Videos aus einfachem Text. Nutzen Sie über 120 fotorealistische KI-Avatare, erstklassige Stimmenklone und automatische Videoübersetzungen in 40+ Sprachen. Perfekt für Marketing, E-Learning, Vertrieb und Social Media.</p>
+                <div class="hero-buttons">
+                    <a href="https://www.heygen.com/?sid=rewardful&amp;utm_content=creator&amp;utm_medium=affiliate&amp;via=rudiger" target="_blank" rel="noopener" class="btn btn-primary btn-lg btn-glow">Kostenlos testen</a>
+                    <a href="#demo" class="btn btn-secondary btn-lg">Live-Demo ansehen</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="trust-item">✓ Keine Kamera oder Mikrofon nötig</div>
+                    <div class="trust-item">✓ Perfekte Lippensynchronisation in Echtzeit</div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="visual-wrapper">
+                    <!-- Video Editor Mockup with Neon Borders -->
+                    <div class="ui-mockup neon-border-purple">
+                        <div class="ui-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="ui-title">heygen.com/editor/new-project</span>
+                        </div>
+                        <div class="ui-body">
+                            <div class="ui-sidebar">
+                                <div class="sidebar-item active">👤 Avatare</div>
+                                <div class="sidebar-item">🔊 Stimmen</div>
+                                <div class="sidebar-item">🎨 Vorlagen</div>
+                                <div class="sidebar-item">📁 Medien</div>
+                            </div>
+                            <div class="ui-main">
+                                <div class="avatar-preview-box">
+                                    <div class="avatar-video-bg">
+                                        <!-- Avatar Image Simulation -->
+                                        <div class="avatar-visual">
+                                            <div class="avatar-head-pulse"></div>
+                                        </div>
+                                    </div>
+                                    <span class="badge-avatar-status">Echtzeit-Vorschau</span>
+                                </div>
+                                <div class="script-editor-demo">
+                                    <span class="input-label">Skript eingeben (Deutsch):</span>
+                                    <div class="script-input-row">
+                                        <div class="script-placeholder">„Hallo! Willkommen bei HeyGen. Lassen Sie uns gemeinsam ein professionelles KI-Video erstellen.“</div>
+                                        <div class="script-btn-play">▶ Abspielen</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="background-decorations">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+        </div>
+    </section>
