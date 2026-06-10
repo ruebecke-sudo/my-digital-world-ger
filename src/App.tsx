@@ -13,6 +13,7 @@ import Kontakt from './pages/Kontakt'
 import Impressum from './pages/Impressum'
 import Datenschutz from './pages/Datenschutz'
 import Oakgen from './pages/Oakgen'
+import ForFree from './pages/ForFree'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/impressum" component={Impressum} />
         <Route path="/datenschutz" component={Datenschutz} />
         <Route path="/oakgen" component={Oakgen} />
+        <Route path="/for-free" component={ForFree} />
       </Switch>
       <Footer />
     </div>
