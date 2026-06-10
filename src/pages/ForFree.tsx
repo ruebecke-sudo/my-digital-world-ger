@@ -869,7 +869,7 @@ export default function ForFree() {
               >
                 <div className="mt-1 w-2 h-2 rounded-full flex-shrink-0" style={{ background: tip.dot, boxShadow: `0 0 6px ${tip.dot}` }} />
                 <div>
-                  <p className="text-sm font-semibold mb-1" style={{ color: tip.color }}>{tip.label}</p>
+                  <p className="text-sm font-bold mb-1" style={{ color: tip.color }}>{tip.label}</p>
                   <p className="text-white/65 text-sm leading-relaxed">{tip.text}</p>
                 </div>
               </div>
