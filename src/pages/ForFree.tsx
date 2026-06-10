@@ -819,6 +819,65 @@ export default function ForFree() {
         </div>
       </section>
 
+      {/* Tipps Section */}
+      <section className="px-4 pb-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              Rüdigers Empfehlungen
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              {
+                label: 'Für Landing Pages',
+                color: '#22d3ee',
+                bg: 'rgba(34,211,238,0.06)',
+                border: 'rgba(34,211,238,0.15)',
+                dot: '#22d3ee',
+                text: 'Lapa Ninja und Land-book sind die besten Quellen für direkte Inspiration, gefiltert nach Branche. Framer ist ideal, wenn du schnell von Mockup zur echten Seite willst.',
+              },
+              {
+                label: 'Für App Flows',
+                color: '#f472b6',
+                bg: 'rgba(244,114,182,0.06)',
+                border: 'rgba(244,114,182,0.15)',
+                dot: '#f472b6',
+                text: 'Mobbin ist unschlagbar — du kannst echte Apps wie Stripe, Notion oder Revolut Schritt für Schritt durchklicken. UX Archive ist perfekt für Onboarding-Flows.',
+              },
+              {
+                label: 'Für Entwickler',
+                color: '#a78bfa',
+                bg: 'rgba(167,139,250,0.06)',
+                border: 'rgba(167,139,250,0.15)',
+                dot: '#a78bfa',
+                text: 'shadcn/ui und Aceternity UI sparen enorm viel Zeit, weil du fertige Komponenten einfach kopierst statt neu zu bauen.',
+              },
+              {
+                label: 'Für UX-Grundlagen',
+                color: '#fbbf24',
+                bg: 'rgba(251,191,36,0.06)',
+                border: 'rgba(251,191,36,0.15)',
+                dot: '#fbbf24',
+                text: 'Laws of UX in einer Stunde durchgehen lohnt sich sehr — prägt, wie du jedes Interface bewertest.',
+              },
+            ].map(tip => (
+              <div
+                key={tip.label}
+                className="rounded-2xl p-4 flex gap-3"
+                style={{ background: tip.bg, border: `1px solid ${tip.border}` }}
+              >
+                <div className="mt-1 w-2 h-2 rounded-full flex-shrink-0" style={{ background: tip.dot, boxShadow: `0 0 6px ${tip.dot}` }} />
+                <div>
+                  <p className="text-sm font-semibold mb-1" style={{ color: tip.color }}>{tip.label}</p>
+                  <p className="text-white/65 text-sm leading-relaxed">{tip.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="px-4 pb-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
