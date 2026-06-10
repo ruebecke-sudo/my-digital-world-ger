@@ -929,7 +929,7 @@ export default function ForFree() {
                         {resource.popup.logoChar}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-white text-sm leading-tight">{resource.name}</h3>
+                        <h3 className="font-bold text-white text-sm leading-tight">{resource.name}</h3>
                         <span className={`inline-block mt-0.5 px-2 py-0.5 rounded-full text-[10px] font-medium border ${resource.katColor}`}>
                           {resource.kategorie}
                         </span>
