@@ -824,7 +824,7 @@ export default function ForFree() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-2 mb-4">
             <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              Rüdigers Empfehlungen
+              mdw´s Empfehlung
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
