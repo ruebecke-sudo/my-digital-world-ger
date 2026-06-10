@@ -835,7 +835,7 @@ export default function ForFree() {
                 bg: 'rgba(34,211,238,0.06)',
                 border: 'rgba(34,211,238,0.15)',
                 dot: '#22d3ee',
-                text: 'Lapa Ninja und Land-book sind die besten Quellen für direkte Inspiration, gefiltert nach Branche. Framer ist ideal, wenn du schnell von Mockup zur echten Seite willst.',
+                content: <><strong>Lapa Ninja</strong> und <strong>Land-book</strong> sind die besten Quellen für direkte Inspiration, gefiltert nach Branche. <strong>Framer</strong> ist ideal, wenn du schnell von Mockup zur echten Seite willst.</>,
               },
               {
                 label: 'Für App Flows',
@@ -843,7 +843,7 @@ export default function ForFree() {
                 bg: 'rgba(244,114,182,0.06)',
                 border: 'rgba(244,114,182,0.15)',
                 dot: '#f472b6',
-                text: 'Mobbin ist unschlagbar — du kannst echte Apps wie Stripe, Notion oder Revolut Schritt für Schritt durchklicken. UX Archive ist perfekt für Onboarding-Flows.',
+                content: <><strong>Mobbin</strong> ist unschlagbar — du kannst echte Apps wie <strong>Stripe</strong>, <strong>Notion</strong> oder <strong>Revolut</strong> Schritt für Schritt durchklicken. <strong>UX Archive</strong> ist perfekt für Onboarding-Flows.</>,
               },
               {
                 label: 'Für Entwickler',
@@ -851,7 +851,7 @@ export default function ForFree() {
                 bg: 'rgba(167,139,250,0.06)',
                 border: 'rgba(167,139,250,0.15)',
                 dot: '#a78bfa',
-                text: 'shadcn/ui und Aceternity UI sparen enorm viel Zeit, weil du fertige Komponenten einfach kopierst statt neu zu bauen.',
+                content: <><strong>shadcn/ui</strong> und <strong>Aceternity UI</strong> sparen enorm viel Zeit, weil du fertige Komponenten einfach kopierst statt neu zu bauen.</>,
               },
               {
                 label: 'Für UX-Grundlagen',
@@ -859,7 +859,7 @@ export default function ForFree() {
                 bg: 'rgba(251,191,36,0.06)',
                 border: 'rgba(251,191,36,0.15)',
                 dot: '#fbbf24',
-                text: 'Laws of UX in einer Stunde durchgehen lohnt sich sehr — prägt, wie du jedes Interface bewertest.',
+                content: <><strong>Laws of UX</strong> in einer Stunde durchgehen lohnt sich sehr — prägt, wie du jedes Interface bewertest.</>,
               },
             ].map(tip => (
               <div
@@ -870,7 +870,7 @@ export default function ForFree() {
                 <div className="mt-1 w-2 h-2 rounded-full flex-shrink-0" style={{ background: tip.dot, boxShadow: `0 0 6px ${tip.dot}` }} />
                 <div>
                   <p className="text-sm font-bold mb-1" style={{ color: tip.color }}>{tip.label}</p>
-                  <p className="text-white/65 text-sm leading-relaxed">{tip.text}</p>
+                  <p className="text-white/65 text-sm leading-relaxed">{tip.content}</p>
                 </div>
               </div>
             ))}
