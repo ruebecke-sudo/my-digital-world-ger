@@ -11,6 +11,8 @@ import {
   Brain, Star, Camera,
   RefreshCw, Search, Hash, Bell, Cpu, Music,
 } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
+import { programmeEN } from '../i18n/programmeEN'
 
 type LucideIcon = React.ComponentType<{ className?: string; style?: React.CSSProperties }>
 
@@ -802,6 +804,7 @@ interface PopupProps {
 }
 
 function ToolPopup({ name, link, popup, onClose }: PopupProps) {
+  const { lang } = useLanguage()
   const { StatIcon } = popup
   return (
     <div
@@ -921,7 +924,7 @@ function ToolPopup({ name, link, popup, onClose }: PopupProps) {
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
           <p className="text-white/20 text-[11px] text-center mt-2">
-            Kostenlos loslegen · Keine Kreditkarte erforderlich
+            {lang === 'de' ? 'Kostenlos loslegen · Keine Kreditkarte erforderlich' : 'Start for free · No credit card required'}
           </p>
         </div>
       </div>
@@ -930,16 +933,39 @@ function ToolPopup({ name, link, popup, onClose }: PopupProps) {
 }
 
 export default function Programme() {
+  const { lang } = useLanguage()
+  const isDE = lang === 'de'
   const [activePopup, setActivePopup] = useState<string | null>(null)
   const [query, setQuery] = useState('')
 
+  const getT = (prog: typeof programme[0]) => {
+    const en = programmeEN[prog.name]
+    if (!en || isDE) return { beschreibung: prog.beschreibung, kategorie: prog.kategorie, popup: prog.popup }
+    return {
+      beschreibung: en.beschreibung,
+      kategorie: en.kategorie,
+      popup: {
+        ...prog.popup,
+        badge: en.badge,
+        description: en.popupDescription,
+        features: prog.popup.features.map((f, i) => ({ ...f, label: en.featureLabels[i] ?? f.label })),
+        cta: en.cta,
+        promoText: en.promoText ?? prog.popup.promoText,
+      },
+    }
+  }
+
   const active = programme.find((p) => p.name === activePopup)
   const filtered = query.trim()
-    ? programme.filter((p) =>
-        p.name.toLowerCase().includes(query.toLowerCase()) ||
-        p.kategorie.toLowerCase().includes(query.toLowerCase()) ||
-        p.beschreibung.toLowerCase().includes(query.toLowerCase())
-      )
+    ? programme.filter((p) => {
+        const t = getT(p)
+        const q = query.toLowerCase()
+        return (
+          p.name.toLowerCase().includes(q) ||
+          t.kategorie.toLowerCase().includes(q) ||
+          t.beschreibung.toLowerCase().includes(q)
+        )
+      })
     : programme
 
   return (
@@ -948,7 +974,7 @@ export default function Programme() {
         <ToolPopup
           name={active.name}
           link={active.link}
-          popup={active.popup}
+          popup={getT(active).popup as typeof active.popup}
           onClose={() => setActivePopup(null)}
         />
       )}
@@ -958,15 +984,16 @@ export default function Programme() {
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
-            Zu den Programmen
+            {isDE ? 'Zu den Programmen' : 'See Programs'}
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight" data-testid="text-programme-headline">
-            Alle digitalen<br />
-            <span className="gradient-text">Programme & Tools</span>
+            {isDE ? <>Alle digitalen<br /><span className="gradient-text">Programme & Tools</span></> : <>All digital<br /><span className="gradient-text">Programs & Tools</span></>}
           </h1>
           <p className="text-white/70 text-base leading-relaxed" data-testid="text-programme-subtitle">
-            Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt,<br />
-            von KI Tools über Social Media bis zu Marketing Software.
+            {isDE
+              ? <>{`Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt,`}<br />{`von KI Tools über Social Media bis zu Marketing Software.`}</>
+              : <>An overview of all programs that My Digital World recommends and uses,<br />from AI tools to social media to marketing software.</>
+            }
           </p>
         </div>
       </div>
@@ -978,7 +1005,7 @@ export default function Programme() {
         <div className="flex items-center justify-between gap-4 mb-6">
           <p className="text-white/40 text-sm">
             {filtered.length} {filtered.length === 1 ? 'Tool' : 'Tools'}
-            {query.trim() && <span className="text-white/25"> gefunden</span>}
+            {query.trim() && <span className="text-white/25"> {isDE ? 'gefunden' : 'found'}</span>}
           </p>
 
           {/* Search input */}
@@ -986,7 +1013,7 @@ export default function Programme() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
             <input
               type="text"
-              placeholder="Tool suchen …"
+              placeholder={isDE ? 'Tool suchen …' : 'Search tools …'}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-56 sm:w-72 pl-9 pr-9 py-2 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
@@ -1035,14 +1062,14 @@ export default function Programme() {
                     {prog.name}
                   </h3>
                   <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] border ${prog.katColor}`}>
-                    {prog.kategorie}
+                    {getT(prog).kategorie}
                   </span>
                 </div>
                 <ExternalLink
                   className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1"
                 />
               </div>
-              <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
+              <p className="text-white/70 text-base leading-relaxed flex-1">{getT(prog).beschreibung}</p>
               {prog.popup.infoLink && (
                 <div className="pt-2 border-t border-white/5">
                   <a
@@ -1072,9 +1099,9 @@ export default function Programme() {
           )) : (
             <div className="col-span-3 py-20 text-center">
               <Search className="w-10 h-10 text-white/10 mx-auto mb-4" />
-              <p className="text-white/40 text-sm">Kein Tool gefunden für „{query}"</p>
+              <p className="text-white/40 text-sm">{isDE ? `Kein Tool gefunden für „${query}"` : `No tool found for "${query}"`}</p>
               <button onClick={() => setQuery('')} className="mt-3 text-cyan-400 text-xs hover:underline">
-                Suche zurücksetzen
+                {isDE ? 'Suche zurücksetzen' : 'Reset search'}
               </button>
             </div>
           )}

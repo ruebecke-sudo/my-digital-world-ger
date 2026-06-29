@@ -1,4 +1,5 @@
 import { ExternalLink, CheckCircle } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
 
 const features = [
   {
@@ -113,6 +114,39 @@ const pricingFeatures = [
 const LINK = 'https://oakgen.ai?ref=MDW26'
 
 export default function Oakgen() {
+  const { lang } = useLanguage()
+  const isDE = lang === 'de'
+
+  const featuresEN = [
+    { icon: '🖼️', title: 'AI Image Generation', text: 'FLUX Pro, Midjourney, DALL-E 3, Ideogram V3 and Stable Diffusion – just enter text and get high-quality images in seconds.', tag: '200+ Models', color: 'bg-green-500/10 border-green-500/20 text-green-400', glow: 'from-green-500/10' },
+    { icon: '🎬', title: 'AI Video Generation', text: 'Sora 2, Veo 3.1, Kling 2.1, Wan 2.6 – text-to-video and image-to-video up to 4K. Cinematic realism at the push of a button.', tag: 'Up to 4K · Audio included', color: 'bg-sky-500/10 border-sky-500/20 text-sky-400', glow: 'from-sky-500/10' },
+    { icon: '🎵', title: 'Music & Voice', text: 'Create songs with Lyria 2, Suno or MiniMax Music. Text-to-speech and voice cloning with ElevenLabs – all from one place.', tag: 'ElevenLabs · Suno', color: 'bg-purple-500/10 border-purple-500/20 text-purple-400', glow: 'from-purple-500/10' },
+    { icon: '🤖', title: 'AI Chat & Assistants', text: 'Access Claude Sonnet, GPT-5, Gemini Pro and DeepSeek – all leading chat models under one roof.', tag: '10+ Chat Models', color: 'bg-amber-500/10 border-amber-500/20 text-amber-400', glow: 'from-amber-500/10' },
+    { icon: '👤', title: 'Talking Avatars & UGC Ads', text: 'Create talking avatars and authentic UGC ad videos for social media. Ideal for creators and marketers.', tag: 'HeyGen Integration', color: 'bg-pink-500/10 border-pink-500/20 text-pink-400', glow: 'from-pink-500/10' },
+    { icon: '⚡', title: 'Image Editing & Upscaling', text: 'AI-powered image editor, face swap, photo studio, image restoration and upscaling up to 4K – all without external software.', tag: '4K Upscaling', color: 'bg-green-500/10 border-green-500/20 text-green-400', glow: 'from-green-500/10' },
+  ]
+
+  const usecasesEN = [
+    { icon: '🎨', title: 'Content Creators & Influencers', text: 'Create fresh content daily: thumbnails, reels, voice-over and music — in one afternoon instead of one week.' },
+    { icon: '🏢', title: 'Marketing & Agencies', text: 'Product videos, UGC ads, brand content and social creatives — all deliverables from one platform, without a freelancer budget.' },
+    { icon: '💻', title: 'Solo Founders & SaaS', text: 'Demo videos, feature announcements, social proof — professional presentation without an expensive creative team.' },
+    { icon: '🎬', title: 'Filmmakers & Videographers', text: 'Complement your production with AI video effects, cinematic clips, music scores and AI voice-overs — scalable for any budget.' },
+  ]
+
+  const pricingFeaturesEN = [
+    '200+ AI models for images & videos',
+    'AI chat: Claude, GPT, Gemini & more',
+    'Voice & music generation',
+    'Talking avatars & UGC ads',
+    'Image editing & 4K upscaling',
+    'One shared credit for everything',
+    'New models automatically included',
+  ]
+
+  const displayFeatures = isDE ? features : featuresEN
+  const displayUsecases = isDE ? usecases : usecasesEN
+  const displayPricingFeatures = isDE ? pricingFeatures : pricingFeaturesEN
+
   return (
     <div className="pt-20 pb-32 overflow-x-hidden">
 
@@ -125,17 +159,20 @@ export default function Oakgen() {
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/25 text-green-400 text-sm font-medium mb-8 tracking-wider">
-            ✦ 200+ KI-Modelle · Ein Workspace · Ab $9/Monat
+            {isDE ? '✦ 200+ KI-Modelle · Ein Workspace · Ab $9/Monat' : '✦ 200+ AI Models · One Workspace · From $9/month'}
           </div>
           <h1 className="font-display font-extrabold leading-[1.05] tracking-tight mb-6" style={{ fontSize: 'clamp(36px,7vw,80px)' }}>
-            Dein kreatives<br />
+            {isDE ? <>Dein kreatives<br /></> : <>Your creative<br /></>}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-sky-400 to-purple-400">
-              KI-Studio
+              {isDE ? 'KI Studio' : 'AI Studio'}
             </span><br />
-            in einer Plattform
+            {isDE ? 'in einer Plattform' : 'in one platform'}
           </h1>
           <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-            Bilder, Videos, Sprache, Musik, Avatare und KI-Chat – alles vereint in Oakgen.ai. Schluss mit 10 verschiedenen Abos.
+            {isDE
+              ? 'Bilder, Videos, Sprache, Musik, Avatare und KI-Chat – alles vereint in Oakgen.ai. Schluss mit 10 verschiedenen Abos.'
+              : 'Images, videos, voice, music, avatars and AI chat — all united in Oakgen.ai. No more 10 different subscriptions.'
+            }
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
@@ -144,24 +181,29 @@ export default function Oakgen() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-green-500 hover:bg-green-400 text-black font-display font-bold text-base transition-all hover:shadow-[0_0_36px_rgba(34,197,94,0.45)] hover:-translate-y-0.5"
             >
-              ✦ Jetzt entdecken <ExternalLink className="w-4 h-4" />
+              ✦ {isDE ? 'Jetzt entdecken' : 'Discover now'} <ExternalLink className="w-4 h-4" />
             </a>
             <a
               href="#features"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-white/10 hover:border-white/20 hover:bg-white/4 text-white font-display font-semibold text-base transition-all"
             >
-              Funktionen ansehen
+              {isDE ? 'Funktionen ansehen' : 'View features'}
             </a>
           </div>
 
           {/* Stats */}
           <div className="flex justify-center gap-12 flex-wrap mt-16 pt-12 border-t border-white/7">
-            {[
+            {(isDE ? [
               { num: '200+', label: 'KI-Modelle verfügbar' },
               { num: '8', label: 'Kreativ-Kategorien' },
               { num: '$9', label: 'Pro Monat alles inklusive' },
               { num: '1', label: 'Einheitliches Guthaben' },
-            ].map(s => (
+            ] : [
+              { num: '200+', label: 'AI models available' },
+              { num: '8', label: 'Creative categories' },
+              { num: '$9', label: 'Per month, all included' },
+              { num: '1', label: 'Unified credit pool' },
+            ]).map(s => (
               <div key={s.label} className="text-center">
                 <span className="block font-display font-extrabold text-4xl text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50">{s.num}</span>
                 <span className="block text-white/50 text-sm mt-1">{s.label}</span>
@@ -253,15 +295,15 @@ export default function Oakgen() {
 
       {/* Features */}
       <section id="features" className="max-w-5xl mx-auto px-4 py-20">
-        <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">Kernfunktionen</p>
+        <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">{isDE ? 'Kernfunktionen' : 'Core Features'}</p>
         <h2 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-4 leading-tight tracking-tight">
-          Alles, was du für<br />Kreativinhalte brauchst
+          {isDE ? <>Alles, was du für<br />Kreativinhalte brauchst</> : <>Everything you need<br />for creative content</>}
         </h2>
         <p className="text-white/50 text-lg max-w-xl mb-12 leading-relaxed">
-          Kein Tab-Wechsel, keine separaten Abos. Oakgen vereint die besten KI-Tools der Welt in einem einzigen Workspace.
+          {isDE ? 'Kein Tab-Wechsel, keine separaten Abos. Oakgen vereint die besten KI-Tools der Welt in einem einzigen Workspace.' : 'No tab-switching, no separate subscriptions. Oakgen unites the best AI tools in the world in a single workspace.'}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {features.map(f => (
+          {displayFeatures.map(f => (
             <div key={f.title} className={`relative rounded-2xl border border-white/7 bg-[#111827] p-7 hover:border-white/14 hover:-translate-y-1 transition-all overflow-hidden group`}>
               <div className={`absolute inset-0 bg-gradient-to-b ${f.glow} to-transparent opacity-0 group-hover:opacity-100 transition-opacity`} />
               <div className="relative z-10">
@@ -279,12 +321,12 @@ export default function Oakgen() {
 
       {/* Models */}
       <section className="max-w-5xl mx-auto px-4 py-20">
-        <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">Modell-Übersicht</p>
+        <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">{isDE ? 'Modell-Übersicht' : 'Model Overview'}</p>
         <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4 tracking-tight">
-          Die besten Modelle.<br />Ein Guthaben.
+          {isDE ? <>Die besten Modelle.<br />Ein Guthaben.</> : <>The best models.<br />One credit.</>}
         </h2>
         <p className="text-white/50 text-lg max-w-lg mb-10 leading-relaxed">
-          Oakgen integriert die leistungsstärksten KI-Modelle der Welt – und erweitert das Angebot laufend.
+          {isDE ? 'Oakgen integriert die leistungsstärksten KI-Modelle der Welt – und erweitert das Angebot laufend.' : 'Oakgen integrates the most powerful AI models in the world — and continuously expands the offering.'}
         </p>
         <div className="flex flex-wrap gap-2.5">
           {models.map(m => (
@@ -296,7 +338,7 @@ export default function Oakgen() {
                   : 'border-white/7 text-white/50 bg-[#111827] hover:border-white/20 hover:text-white/80'
                 }`}
             >
-              {m.label}{m.isNew && <span className="ml-1.5 text-[9px] font-bold bg-amber-400 text-black px-1 py-px rounded align-middle">NEU</span>}
+              {m.label}{m.isNew && <span className="ml-1.5 text-[9px] font-bold bg-amber-400 text-black px-1 py-px rounded align-middle">{isDE ? 'NEU' : 'NEW'}</span>}
             </span>
           ))}
         </div>
@@ -306,13 +348,13 @@ export default function Oakgen() {
 
       {/* Use Cases */}
       <section className="max-w-5xl mx-auto px-4 py-20">
-        <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">Für wen?</p>
-        <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4 tracking-tight">Für jeden Kreativen</h2>
+        <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">{isDE ? 'Für wen?' : 'Who is it for?'}</p>
+        <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4 tracking-tight">{isDE ? 'Für jeden Kreativen' : 'For every creative'}</h2>
         <p className="text-white/50 text-lg max-w-lg mb-12 leading-relaxed">
-          Egal ob Solopreneur, Agentur oder Content Creator – Oakgen passt sich deinem Workflow an.
+          {isDE ? 'Egal ob Solopreneur, Agentur oder Content Creator – Oakgen passt sich deinem Workflow an.' : 'Whether solopreneur, agency or content creator — Oakgen adapts to your workflow.'}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          {usecases.map(u => (
+          {displayUsecases.map(u => (
             <div key={u.title} className="rounded-2xl border border-white/7 bg-[#111827] p-8 flex gap-5 hover:border-white/14 transition-all">
               <span className="text-3xl flex-shrink-0 mt-0.5">{u.icon}</span>
               <div>
@@ -329,17 +371,17 @@ export default function Oakgen() {
       {/* Pricing */}
       <section className="max-w-5xl mx-auto px-4 py-20 text-center">
         <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">Pricing</p>
-        <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4 tracking-tight">Unschlagbares Preis-Leistungs-Verhältnis</h2>
-        <p className="text-white/50 text-lg mb-12">Statt 10 einzelner Abos reicht ein einziger Plan für alle Tools.</p>
+        <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4 tracking-tight">{isDE ? 'Unschlagbares Preis-Leistungs-Verhältnis' : 'Unbeatable value for money'}</h2>
+        <p className="text-white/50 text-lg mb-12">{isDE ? 'Statt 10 einzelner Abos reicht ein einziger Plan für alle Tools.' : 'Instead of 10 separate subscriptions, one single plan covers all tools.'}</p>
         <div className="max-w-sm mx-auto relative rounded-3xl border border-green-500/30 bg-gradient-to-br from-[#111827] to-[#0d1220] p-12 text-center overflow-hidden">
           <div className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-72 h-36 bg-green-500/12 rounded-full blur-[40px]" />
           <p className="text-green-400 text-xs font-bold tracking-widest uppercase mb-4 relative z-10">✦ All-in-One Plan</p>
           <div className="font-display font-extrabold text-7xl text-white leading-none mb-2 relative z-10">
             <sup className="text-3xl align-super">$</sup>9
           </div>
-          <p className="text-white/40 text-sm mb-10 relative z-10">pro Monat · alle Tools inklusive</p>
+          <p className="text-white/40 text-sm mb-10 relative z-10">{isDE ? 'pro Monat · alle Tools inklusive' : 'per month · all tools included'}</p>
           <ul className="text-left space-y-1 mb-10 relative z-10">
-            {pricingFeatures.map(f => (
+            {displayPricingFeatures.map(f => (
               <li key={f} className="flex items-center gap-3 py-2.5 border-b border-white/7 last:border-0 text-white/80 text-sm">
                 <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" /> {f}
               </li>
@@ -351,7 +393,7 @@ export default function Oakgen() {
             rel="noopener noreferrer"
             className="relative z-10 block w-full text-center py-4 rounded-xl bg-green-500 hover:bg-green-400 text-black font-display font-bold text-base transition-all hover:shadow-[0_0_30px_rgba(34,197,94,0.4)]"
           >
-            ✦ Jetzt loslegen
+            ✦ {isDE ? 'Jetzt loslegen' : 'Get started now'}
           </a>
         </div>
       </section>
@@ -361,9 +403,12 @@ export default function Oakgen() {
         <div className="rounded-2xl border border-white/7 bg-[#111827] p-10 text-center">
           <div className="text-amber-400 text-xl tracking-widest mb-4">★★★★★</div>
           <blockquote className="text-white/80 text-lg italic leading-relaxed mb-5">
-            „Als Solo-Gründer ist Oakgen mein komplettes Kreativteam. Demo-Videos, Feature-Ankündigungen, Social Proof – alles in einem Nachmittag erledigt. Kein $2.000-Freelancer-Budget mehr nötig."
+            {isDE
+              ? '„Als Solo-Gründer ist Oakgen mein komplettes Kreativteam. Demo-Videos, Feature-Ankündigungen, Social Proof – alles in einem Nachmittag erledigt. Kein $2.000-Freelancer-Budget mehr nötig."'
+              : '"As a solo founder, Oakgen is my entire creative team. Demo videos, feature announcements, social proof — all done in one afternoon. No more $2,000 freelancer budget needed."'
+            }
           </blockquote>
-          <cite className="text-white/40 text-sm not-italic">— SaaS-Gründer, verifizierter Oakgen-Nutzer</cite>
+          <cite className="text-white/40 text-sm not-italic">{isDE ? '— SaaS-Gründer, verifizierter Oakgen-Nutzer' : '— SaaS Founder, verified Oakgen user'}</cite>
         </div>
       </section>
 
@@ -375,10 +420,10 @@ export default function Oakgen() {
             style={{ background: 'radial-gradient(ellipse, rgba(34,197,94,0.12) 0%, transparent 70%)' }} />
           <div className="relative z-10">
             <h2 className="font-display font-extrabold text-3xl md:text-5xl text-white mb-5 leading-tight tracking-tight">
-              Bereit für dein<br /><span className="text-green-400">KI-Studio?</span>
+              {isDE ? <>Bereit für dein<br /><span className="text-green-400">KI Studio?</span></> : <>Ready for your<br /><span className="text-green-400">AI Studio?</span></>}
             </h2>
             <p className="text-white/50 text-lg mb-10 max-w-md mx-auto">
-              Starte heute mit Oakgen.ai – 200+ Modelle, ein Abo, unbegrenzte Kreativität.
+              {isDE ? 'Starte heute mit Oakgen.ai – 200+ Modelle, ein Abo, unbegrenzte Kreativität.' : 'Start today with Oakgen.ai — 200+ models, one subscription, unlimited creativity.'}
             </p>
             <a
               href={LINK}
@@ -386,9 +431,9 @@ export default function Oakgen() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-12 py-5 rounded-xl bg-green-500 hover:bg-green-400 text-black font-display font-bold text-lg transition-all hover:shadow-[0_0_40px_rgba(34,197,94,0.45)] hover:-translate-y-0.5"
             >
-              ✦ Oakgen.ai jetzt entdecken <ExternalLink className="w-5 h-5" />
+              ✦ {isDE ? 'Oakgen.ai jetzt entdecken' : 'Discover Oakgen.ai now'} <ExternalLink className="w-5 h-5" />
             </a>
-            <p className="text-white/30 text-sm mt-5">Kein Risiko · Sofort nutzbar · Ab $9/Monat</p>
+            <p className="text-white/30 text-sm mt-5">{isDE ? 'Kein Risiko · Sofort nutzbar · Ab $9/Monat' : 'No risk · Immediately usable · From $9/month'}</p>
           </div>
         </div>
       </section>
@@ -396,7 +441,7 @@ export default function Oakgen() {
       {/* Affiliate note */}
       <div className="max-w-5xl mx-auto px-4 text-center">
         <p className="text-white/25 text-xs">
-          Diese Seite enthält Affiliate-Links. Bei einem Kauf erhalten wir eine kleine Provision – für dich entstehen keine Mehrkosten.
+          {isDE ? 'Diese Seite enthält Affiliate-Links. Bei einem Kauf erhalten wir eine kleine Provision – für dich entstehen keine Mehrkosten.' : 'This page contains affiliate links. If you make a purchase, we receive a small commission — at no extra cost to you.'}
         </p>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { Globe, Share2, TrendingUp, Video, Brain, Presentation, Palette, ArrowRight, CheckCircle, Mail, Phone } from 'lucide-react'
 import { Link } from 'wouter'
+import { useLanguage } from '../context/LanguageContext'
 
 const leistungen = [
   {
@@ -124,6 +125,9 @@ const leistungen = [
 ]
 
 export default function Leistungen() {
+  const { lang } = useLanguage()
+  const isDE = lang === 'de'
+
   return (
     <div className="pt-24 pb-32">
       {/* Header */}
@@ -131,15 +135,13 @@ export default function Leistungen() {
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
-            Kreative digitale Leistungen
+            {isDE ? 'Kreative digitale Leistungen' : 'Creative digital services'}
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight" data-testid="text-leistungen-headline">
-            Alles aus einer
-            <br />
-            <span className="gradient-text">digitalen Hand</span>
+            {isDE ? <>Alles aus einer<br /><span className="gradient-text">digitalen Hand</span></> : <>All from one<br /><span className="gradient-text">digital source</span></>}
           </h1>
           <p className="text-white/70 text-base leading-relaxed" data-testid="text-leistungen-subtitle">
-            Von der Website bis zum KI-Marketing – My Digital World bietet Ihnen alle digitalen Leistungen, die Ihr Unternehmen nach vorne bringen.
+            {isDE ? 'Von der Website bis zum KI-Marketing – My Digital World bietet Ihnen alle digitalen Leistungen, die Ihr Unternehmen nach vorne bringen.' : 'From the website to AI marketing — My Digital World offers you all the digital services that move your business forward.'}
           </p>
         </div>
       </div>
@@ -167,7 +169,7 @@ export default function Leistungen() {
                   <p className="text-white/75 text-base leading-relaxed mb-6">{leistung.beschreibung}</p>
                   <Link href="/programme">
                     <button className="btn-outline flex items-center gap-2 text-base" data-testid={`button-leistung-programme-${leistung.id}`}>
-                      Passende Programme ansehen
+                      {isDE ? 'Passende Programme ansehen' : 'View matching programs'}
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </Link>
@@ -175,7 +177,7 @@ export default function Leistungen() {
 
                 {/* Advantages */}
                 <div className={`glass rounded-xl border ${leistung.grenze} p-6 ${!isEven ? 'lg:order-1' : ''}`}>
-                  <h3 className="font-display font-semibold text-white text-base mb-4">Was Sie erhalten</h3>
+                  <h3 className="font-display font-semibold text-white text-base mb-4">{isDE ? 'Was Sie erhalten' : 'What you get'}</h3>
                   <ul className="space-y-3">
                     {leistung.vorteile.map((vorteil) => (
                       <li key={vorteil} className="flex items-start gap-3" data-testid={`item-vorteil-${leistung.id}`}>
@@ -195,17 +197,15 @@ export default function Leistungen() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 text-center">
         <div className="glass rounded-3xl border border-cyan-500/20 p-12">
           <h2 className="font-display font-bold text-3xl md:text-4xl text-white mb-4" data-testid="text-leistungen-cta-headline">
-            Welche Leistung passt
-            <br />
-            <span className="gradient-text">zu Ihrem Unternehmen?</span>
+            {isDE ? <>Welche Leistung passt<br /><span className="gradient-text">zu Ihrem Unternehmen?</span></> : <>Which service fits<br /><span className="gradient-text">your company?</span></>}
           </h2>
           <p className="text-white/70 text-base mb-8">
-            Lassen Sie uns in einem unverbindlichen Gespräch herausfinden, was My Digital World für Sie tun kann.
+            {isDE ? 'Lassen Sie uns in einem unverbindlichen Gespräch herausfinden, was My Digital World für Sie tun kann.' : "Let's find out in a no-obligation conversation what My Digital World can do for you."}
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="mailto:info@my-digital-world.de" data-testid="button-leistungen-email" className="btn-primary flex items-center gap-2">
               <Mail className="w-4 h-4" />
-              Jetzt anfragen
+              {isDE ? 'Jetzt anfragen' : 'Enquire now'}
             </a>
             <a href="tel:+4915906146147" data-testid="button-leistungen-phone" className="btn-outline flex items-center gap-2">
               <Phone className="w-4 h-4" />

@@ -1,8 +1,30 @@
 import { Link } from 'wouter'
 import { Mail, Phone, MessageCircle, Zap } from 'lucide-react'
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
+import { useLanguage } from '../context/LanguageContext'
 
 export function Footer() {
+  const { lang } = useLanguage()
+  const isDE = lang === 'de'
+
+  const navLinks = isDE
+    ? [
+        { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
+        { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
+        { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
+        { href: '/ki-agenten', label: 'KI Agenten' },
+        { href: '/digitale-transformation', label: 'Digitale Transformation' },
+        { href: '/programme', label: 'Zu den Programmen' },
+      ]
+    : [
+        { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
+        { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
+        { href: '/digitale-praesentationen', label: 'Digital Presentations' },
+        { href: '/ki-agenten', label: 'AI Agents' },
+        { href: '/digitale-transformation', label: 'Digital Transformation' },
+        { href: '/programme', label: 'Tools & Programs' },
+      ]
+
   return (
     <footer className="relative bg-[#040810] border-t border-cyan-500/10 mt-24">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
@@ -20,22 +42,21 @@ export function Footer() {
                 <span className="font-display font-bold text-cyan-400 text-base">world</span>
               </div>
             </div>
-            <p className="text-white/75 text-sm leading-relaxed mb-1">Moderne Webseiten | digitale Transformation</p>
-            <p className="text-white/75 text-sm leading-relaxed">Wir bieten Ihnen Lösungen um sichtbarer zu werden</p>
+            <p className="text-white/75 text-sm leading-relaxed mb-1">
+              {isDE ? 'Moderne Webseiten | digitale Transformation' : 'Modern websites | digital transformation'}
+            </p>
+            <p className="text-white/75 text-sm leading-relaxed">
+              {isDE ? 'Wir bieten Ihnen Lösungen um sichtbarer zu werden' : 'We offer solutions to make you more visible'}
+            </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="font-display font-semibold text-white text-base mb-4">Leistungen</h3>
+            <h3 className="font-display font-semibold text-white text-base mb-4">
+              {isDE ? 'Leistungen' : 'Services'}
+            </h3>
             <ul className="space-y-2">
-              {[
-                { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
-                { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
-                { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
-                { href: '/ki-agenten', label: 'KI Agenten' },
-                { href: '/digitale-transformation', label: 'Digitale Transformation' },
-                { href: '/programme', label: 'Zu den Programmen' },
-              ].map(link => (
+              {navLinks.map(link => (
                 <li key={link.href}>
                   <Link href={link.href}>
                     <span className="text-white/70 text-base hover:text-cyan-400 transition-colors cursor-pointer">{link.label}</span>
@@ -47,7 +68,9 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-display font-semibold text-white text-base mb-4">Kontakt</h3>
+            <h3 className="font-display font-semibold text-white text-base mb-4">
+              {isDE ? 'Kontakt' : 'Contact'}
+            </h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-cyan-400 flex-shrink-0" />
@@ -87,7 +110,7 @@ export function Footer() {
           <div className="flex items-center gap-6">
             <Link href="/impressum"><span className="text-white/55 text-sm hover:text-white/75 transition-colors cursor-pointer">Impressum</span></Link>
             <Link href="/datenschutz"><span className="text-white/55 text-sm hover:text-white/75 transition-colors cursor-pointer">Datenschutz</span></Link>
-            <Link href="/kontakt"><span className="text-white/55 text-sm hover:text-white/75 transition-colors cursor-pointer">Kontakt</span></Link>
+            <Link href="/kontakt"><span className="text-white/55 text-sm hover:text-white/75 transition-colors cursor-pointer">{isDE ? 'Kontakt' : 'Contact'}</span></Link>
           </div>
         </div>
       </div>

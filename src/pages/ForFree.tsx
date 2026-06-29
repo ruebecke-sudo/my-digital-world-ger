@@ -5,6 +5,8 @@ import {
   Layout, Star, Search, Users,
   Image, PenTool, Award, TrendingUp, BookOpen,
 } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
+import { forFreeEN } from '../i18n/forFreeEN'
 
 type LucideIcon = React.ComponentType<{ className?: string; style?: React.CSSProperties }>
 
@@ -780,15 +782,34 @@ function ToolPopup({ resource, onClose }: { resource: Resource; onClose: () => v
 }
 
 export default function ForFree() {
+  const { lang } = useLanguage()
+  const isDE = lang === 'de'
   const [activeResource, setActiveResource] = useState<Resource | null>(null)
   const [search, setSearch] = useState('')
 
+  const getT = (r: Resource) => {
+    const en = forFreeEN[r.name]
+    if (!en || isDE) return { beschreibung: r.beschreibung, kategorie: r.kategorie, popup: r.popup }
+    return {
+      beschreibung: en.beschreibung,
+      kategorie: en.kategorie,
+      popup: {
+        ...r.popup,
+        badge: en.badge,
+        description: en.popupDescription,
+        features: r.popup.features.map((f, i) => ({ ...f, label: en.featureLabels[i] ?? f.label })),
+        cta: en.cta,
+      },
+    }
+  }
+
   const filtered = resources.filter(r => {
+    const t = getT(r)
     const q = search.toLowerCase()
     return (
       r.name.toLowerCase().includes(q) ||
-      r.kategorie.toLowerCase().includes(q) ||
-      r.beschreibung.toLowerCase().includes(q)
+      t.kategorie.toLowerCase().includes(q) ||
+      t.beschreibung.toLowerCase().includes(q)
     )
   })
 
@@ -805,16 +826,13 @@ export default function ForFree() {
         </div>
         <div className="max-w-4xl mx-auto text-center relative">
           <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-4">
-            Kostenlose Ressourcen
+            {isDE ? 'Kostenlose Ressourcen' : 'Free Resources'}
           </span>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Die besten{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-              Design Ressourcen
-            </span>
+            {isDE ? <>Die besten{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Design Ressourcen</span></> : <>The best{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Design Resources</span></>}
           </h1>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            Kostenlose Tools und Inspiration für Landing Pages, UI/UX Design, App Flows und Web-Design, kuratiert von My Digital World.
+            {isDE ? 'Kostenlose Tools und Inspiration für Landing Pages, UI/UX Design, App Flows und Web-Design, kuratiert von My Digital World.' : 'Free tools and inspiration for landing pages, UI/UX design, app flows and web design, curated by My Digital World.'}
           </p>
         </div>
       </section>
@@ -828,40 +846,17 @@ export default function ForFree() {
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              {
-                label: 'Für Landing Pages',
-                color: '#22d3ee',
-                bg: 'rgba(34,211,238,0.06)',
-                border: 'rgba(34,211,238,0.15)',
-                dot: '#22d3ee',
-                content: <><strong>Lapa Ninja</strong> und <strong>Land-book</strong> sind die besten Quellen für direkte Inspiration, gefiltert nach Branche. <strong>Framer</strong> ist ideal, wenn du schnell von Mockup zur echten Seite willst.</>,
-              },
-              {
-                label: 'Für App Flows',
-                color: '#f472b6',
-                bg: 'rgba(244,114,182,0.06)',
-                border: 'rgba(244,114,182,0.15)',
-                dot: '#f472b6',
-                content: <><strong>Mobbin</strong> ist unschlagbar, du kannst echte Apps wie <strong>Stripe</strong>, <strong>Notion</strong> oder <strong>Revolut</strong> Schritt für Schritt durchklicken. <strong>UX Archive</strong> ist perfekt für Onboarding Flows.</>,
-              },
-              {
-                label: 'Für Entwickler',
-                color: '#a78bfa',
-                bg: 'rgba(167,139,250,0.06)',
-                border: 'rgba(167,139,250,0.15)',
-                dot: '#a78bfa',
-                content: <><strong>shadcn/ui</strong> und <strong>Aceternity UI</strong> sparen enorm viel Zeit, weil du fertige Komponenten einfach kopierst statt neu zu bauen.</>,
-              },
-              {
-                label: 'Für UX Grundlagen',
-                color: '#fbbf24',
-                bg: 'rgba(251,191,36,0.06)',
-                border: 'rgba(251,191,36,0.15)',
-                dot: '#fbbf24',
-                content: <><strong>Laws of UX</strong> in einer Stunde durchgehen lohnt sich sehr, prägt, wie du jedes Interface bewertest.</>,
-              },
-            ].map(tip => (
+            {(isDE ? [
+              { label: 'Für Landing Pages', color: '#22d3ee', bg: 'rgba(34,211,238,0.06)', border: 'rgba(34,211,238,0.15)', dot: '#22d3ee', content: <><strong>Lapa Ninja</strong> und <strong>Land-book</strong> sind die besten Quellen für direkte Inspiration, gefiltert nach Branche. <strong>Framer</strong> ist ideal, wenn du schnell von Mockup zur echten Seite willst.</> },
+              { label: 'Für App Flows', color: '#f472b6', bg: 'rgba(244,114,182,0.06)', border: 'rgba(244,114,182,0.15)', dot: '#f472b6', content: <><strong>Mobbin</strong> ist unschlagbar, du kannst echte Apps wie <strong>Stripe</strong>, <strong>Notion</strong> oder <strong>Revolut</strong> Schritt für Schritt durchklicken. <strong>UX Archive</strong> ist perfekt für Onboarding Flows.</> },
+              { label: 'Für Entwickler', color: '#a78bfa', bg: 'rgba(167,139,250,0.06)', border: 'rgba(167,139,250,0.15)', dot: '#a78bfa', content: <><strong>shadcn/ui</strong> und <strong>Aceternity UI</strong> sparen enorm viel Zeit, weil du fertige Komponenten einfach kopierst statt neu zu bauen.</> },
+              { label: 'Für UX Grundlagen', color: '#fbbf24', bg: 'rgba(251,191,36,0.06)', border: 'rgba(251,191,36,0.15)', dot: '#fbbf24', content: <><strong>Laws of UX</strong> in einer Stunde durchgehen lohnt sich sehr, prägt, wie du jedes Interface bewertest.</> },
+            ] : [
+              { label: 'For Landing Pages', color: '#22d3ee', bg: 'rgba(34,211,238,0.06)', border: 'rgba(34,211,238,0.15)', dot: '#22d3ee', content: <><strong>Lapa Ninja</strong> and <strong>Land-book</strong> are the best sources for direct inspiration, filtered by industry. <strong>Framer</strong> is ideal when you want to go quickly from mockup to a real page.</> },
+              { label: 'For App Flows', color: '#f472b6', bg: 'rgba(244,114,182,0.06)', border: 'rgba(244,114,182,0.15)', dot: '#f472b6', content: <><strong>Mobbin</strong> is unbeatable — click through real apps like <strong>Stripe</strong>, <strong>Notion</strong> or <strong>Revolut</strong> step by step. <strong>UX Archive</strong> is perfect for onboarding flows.</> },
+              { label: 'For Developers', color: '#a78bfa', bg: 'rgba(167,139,250,0.06)', border: 'rgba(167,139,250,0.15)', dot: '#a78bfa', content: <><strong>shadcn/ui</strong> and <strong>Aceternity UI</strong> save enormous time — just copy ready-made components instead of building from scratch.</> },
+              { label: 'For UX Fundamentals', color: '#fbbf24', bg: 'rgba(251,191,36,0.06)', border: 'rgba(251,191,36,0.15)', dot: '#fbbf24', content: <><strong>Laws of UX</strong> is worth going through in one hour — it shapes how you evaluate every interface.</> },
+            ]).map(tip => (
               <div
                 key={tip.label}
                 className="rounded-2xl p-4 flex gap-3"
@@ -881,12 +876,12 @@ export default function ForFree() {
       <section className="px-4 pb-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-            <p className="text-white/40 text-sm">{filtered.length} Ressourcen</p>
+            <p className="text-white/40 text-sm">{filtered.length} {isDE ? 'Ressourcen' : 'Resources'}</p>
             <div className="relative w-full sm:w-72">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
               <input
                 type="text"
-                placeholder="Ressource suchen ..."
+                placeholder={isDE ? 'Ressource suchen ...' : 'Search resources ...'}
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 transition-all"
@@ -897,14 +892,14 @@ export default function ForFree() {
           {filtered.length === 0 ? (
             <div className="text-center py-20 text-white/30">
               <Search className="w-10 h-10 mx-auto mb-3 opacity-40" />
-              <p>Keine Ressourcen gefunden.</p>
+              <p>{isDE ? 'Keine Ressourcen gefunden.' : 'No resources found.'}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filtered.map(resource => (
                 <button
                   key={resource.name}
-                  onClick={() => setActiveResource(resource)}
+                  onClick={() => setActiveResource({ ...resource, popup: getT(resource).popup as typeof resource.popup })}
                   className="group relative text-left rounded-2xl p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
                   style={{
                     background: 'rgba(255,255,255,0.03)',
@@ -931,7 +926,7 @@ export default function ForFree() {
                       <div>
                         <h3 className="font-bold text-white text-sm leading-tight">{resource.name}</h3>
                         <span className={`inline-block mt-0.5 px-2 py-0.5 rounded-full text-[10px] font-medium border ${resource.katColor}`}>
-                          {resource.kategorie}
+                          {getT(resource).kategorie}
                         </span>
                       </div>
                     </div>
@@ -939,7 +934,7 @@ export default function ForFree() {
                   </div>
 
                   <p className="text-white/55 text-xs leading-relaxed mb-3 line-clamp-3">
-                    {resource.beschreibung}
+                    {getT(resource).beschreibung}
                   </p>
 
                   {resource.popup.infoLink && (
@@ -951,7 +946,7 @@ export default function ForFree() {
                       className="inline-flex items-center gap-1 text-xs font-medium transition-colors hover:opacity-80"
                       style={{ color: resource.popup.accentColor }}
                     >
-                      weitere Infos hier
+                      {isDE ? 'weitere Infos hier' : 'more info here'}
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   )}
