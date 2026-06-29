@@ -965,7 +965,7 @@ export default function Programme() {
             <span className="gradient-text">Programme & Tools</span>
           </h1>
           <p className="text-white/70 text-base leading-relaxed" data-testid="text-programme-subtitle">
-            Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt –<br />
+            Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt,<br />
             von KI-Tools über Social Media bis zu Marketing-Software.
           </p>
         </div>
