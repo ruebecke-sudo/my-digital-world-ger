@@ -1,0 +1,1 @@
+- [Bindestrich-Stil](hyphen-style.md) — Keine Bindestriche in Compound-Wörtern, keine Gedankenstriche; Ausnahme: E-Mail bleibt.
