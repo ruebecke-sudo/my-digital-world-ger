@@ -984,8 +984,8 @@ export default function Programme() {
             Zu den Programmen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight" data-testid="text-programme-headline">
-            Alle digitalen<br />
-            <span className="gradient-text">Programme & Tools</span>
+            Die besten digitalen<br />
+            <span className="gradient-text">Programme und Tools</span>
           </h1>
           <p className="text-white/70 text-base leading-relaxed" data-testid="text-programme-subtitle">
             Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt ,<br />
