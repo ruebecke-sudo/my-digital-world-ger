@@ -11,8 +11,6 @@ import {
   Brain, Star, Camera,
   RefreshCw, Search, Hash, Bell, Cpu, Music,
 } from 'lucide-react'
-import { useLanguage } from '../context/LanguageContext'
-import { programmeEN } from '../i18n/programmeEN'
 
 type LucideIcon = React.ComponentType<{ className?: string; style?: React.CSSProperties }>
 
@@ -51,17 +49,17 @@ interface Programme {
 const programme: Programme[] = [
   {
     name: 'HIX.ai',
-    beschreibung: 'Der KI Alleskönner, All in One KI Plattform für Texte, Marketing, E-Mails und mehr. Über 120 KI gestützte Schreibassistenten in 50+ Sprachen.',
+    beschreibung: 'Der KI-Alleskönner, All-in-One KI-Plattform für Texte, Marketing, E-Mails und mehr. Über 120 KI-gestützte Schreibassistenten in 50+ Sprachen.',
     link: 'https://hix.ai/?ref=zju1mti',
     kategorie: 'KI Allround',
     katColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
     popup: {
-      badge: 'All in One KI Schreibplattform',
+      badge: 'All-in-One KI Schreibplattform',
       accentColor: '#22d3ee',
       gradFrom: '#0891b2',
       gradTo: '#0e7490',
       logoChar: 'H',
-      description: 'Die komplette KI Plattform für professionelle Texte, E-Mails und Marketing Inhalte, in über 50 Sprachen, mit 120+ spezialisierten Assistenten.',
+      description: 'Die komplette KI-Plattform für professionelle Texte, E-Mails und Marketing-Inhalte, in über 50 Sprachen, mit 120+ spezialisierten Assistenten.',
       statValue: '120+ Assistenten',
       statLabel: 'in 50+ Sprachen',
       StatIcon: FileText,
@@ -76,17 +74,17 @@ const programme: Programme[] = [
   },
   {
     name: 'Genspark AI',
-    beschreibung: 'Leistungsstarke KI Such  und Rechercheplatform für tiefgehende Analysen, Zusammenfassungen und intelligente Inhaltsrecherche.',
+    beschreibung: 'Leistungsstarke KI-Such- und Rechercheplatform für tiefgehende Analysen, Zusammenfassungen und intelligente Inhaltsrecherche.',
     link: 'https://genspark.ai?via=rdiger216',
     kategorie: 'KI Allround',
     katColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
     popup: {
-      badge: 'KI Such & Rechercheplattform',
+      badge: 'KI-Such & Rechercheplattform',
       accentColor: '#22d3ee',
       gradFrom: '#0891b2',
       gradTo: '#0e7490',
       logoChar: 'G',
-      description: 'Intelligente KI Suche die wirklich versteht, was du meinst, tiefgehende Analysen, präzise Zusammenfassungen und Echtzeit-Webrecherche.',
+      description: 'Intelligente KI-Suche die wirklich versteht, was du meinst, tiefgehende Analysen, präzise Zusammenfassungen und Echtzeit-Webrecherche.',
       statValue: 'KI Recherche 2.0',
       statLabel: 'in Echtzeit',
       StatIcon: Search,
@@ -101,22 +99,22 @@ const programme: Programme[] = [
   },
   {
     name: 'HeyGen',
-    beschreibung: 'Hochwertige Videoerstellung mit KI, erstelle professionelle Videos mit realistischen KI Avataren, Lippensynchronisation und automatischer Übersetzung.',
+    beschreibung: 'Hochwertige Videoerstellung mit KI, erstelle professionelle Videos mit realistischen KI-Avataren, Lippensynchronisation und automatischer Übersetzung.',
     link: 'https://www.heygen.com',
     kategorie: 'Video mit KI',
     katColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
     popup: {
-      badge: 'KI Video Generator',
+      badge: 'KI-Video Generator',
       accentColor: '#a78bfa',
       gradFrom: '#7c3aed',
       gradTo: '#6d28d9',
       logoChar: 'H',
-      description: 'Erstelle professionelle KI Videos mit realistischen Avataren, perfekter Lippensynchronisation und automatischer Übersetzung in 40+ Sprachen.',
+      description: 'Erstelle professionelle KI-Videos mit realistischen Avataren, perfekter Lippensynchronisation und automatischer Übersetzung in 40+ Sprachen.',
       statValue: '200+ Avatare',
       statLabel: 'in 40+ Sprachen',
       StatIcon: Video,
       features: [
-        { Icon: Users, label: 'Realistische KI Avatare', color: '#a78bfa' },
+        { Icon: Users, label: 'Realistische KI-Avatare', color: '#a78bfa' },
         { Icon: Globe, label: 'Automatische Übersetzung', color: '#60a5fa' },
         { Icon: Film, label: 'Professionelle Video-Qualität', color: '#f472b6' },
       ],
@@ -126,22 +124,22 @@ const programme: Programme[] = [
   },
   {
     name: 'Synthesia',
-    beschreibung: 'Die All in One KI Videoplattform für Unternehmen, Videos in Studioqualität mit KI Avataren und Voiceovers in über 160 Sprachen. Bis zu 90 % günstiger als traditionelle Videoproduktion.',
+    beschreibung: 'Die All-in-One-KI-Videoplattform für Unternehmen, Videos in Studioqualität mit KI-Avataren und Voiceovers in über 160 Sprachen. Bis zu 90 % günstiger als traditionelle Videoproduktion.',
     link: 'https://www.synthesia.io/?via=rudiger',
     kategorie: 'Video mit KI',
     katColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
     popup: {
-      badge: 'KI Videoplattform für Unternehmen',
+      badge: 'KI-Videoplattform für Unternehmen',
       accentColor: '#818cf8',
       gradFrom: '#4f46e5',
       gradTo: '#4338ca',
       logoChar: 'S',
-      description: 'Erstelle professionelle KI Videos in Studioqualität mit realistischen Avataren und Voiceovers, in über 160 Sprachen. Spare bis zu 90 % an Zeit und Kosten.',
+      description: 'Erstelle professionelle KI-Videos in Studioqualität mit realistischen Avataren und Voiceovers, in über 160 Sprachen. Spare bis zu 90 % an Zeit und Kosten.',
       statValue: '2.000+ ★★★★★',
       statLabel: 'Bewertungen auf G2 · 4,7/5',
       StatIcon: Video,
       features: [
-        { Icon: Users, label: 'KI Avatare in 160+ Sprachen', color: '#818cf8' },
+        { Icon: Users, label: 'KI-Avatare in 160+ Sprachen', color: '#818cf8' },
         { Icon: Film, label: 'Studioqualität ohne Kamera', color: '#f472b6' },
         { Icon: Zap, label: 'Bis zu 90 % schneller & günstiger', color: '#fbbf24' },
       ],
@@ -151,24 +149,24 @@ const programme: Programme[] = [
   },
   {
     name: 'Creatify Lab',
-    beschreibung: 'Videoanzeigen in Minuten, KI generierte Video Ads mit Avataren, Voiceover und automatischem Skript-Generator für Social Media.',
+    beschreibung: 'Videoanzeigen in Minuten, KI-generierte Video-Ads mit Avataren, Voiceover und automatischem Skript-Generator für Social Media.',
     link: 'https://creatify.ai/?via=rudiger',
     kategorie: 'Video mit KI',
     katColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
     popup: {
-      badge: 'KI Video Ad Creator',
+      badge: 'KI Video-Ad Creator',
       accentColor: '#a78bfa',
       gradFrom: '#7c3aed',
       gradTo: '#6d28d9',
       logoChar: 'C',
-      description: 'Erstelle hochkonvertierende Video Ads in Minuten, mit KI Avataren, automatischem Voiceover und fertigem Skript für jede Social Media Plattform.',
+      description: 'Erstelle hochkonvertierende Video-Ads in Minuten, mit KI-Avataren, automatischem Voiceover und fertigem Skript für jede Social-Media-Plattform.',
       statValue: 'Ads in Minuten',
       statLabel: 'für jede Plattform',
       StatIcon: Film,
       features: [
-        { Icon: Zap, label: 'Video Ads in Minuten erstellen', color: '#fbbf24' },
-        { Icon: Smartphone, label: 'Alle Social Media Formate', color: '#fb923c' },
-        { Icon: Users, label: 'KI Avatare & Voiceover', color: '#a78bfa' },
+        { Icon: Zap, label: 'Video-Ads in Minuten erstellen', color: '#fbbf24' },
+        { Icon: Smartphone, label: 'Alle Social-Media-Formate', color: '#fb923c' },
+        { Icon: Users, label: 'KI-Avatare & Voiceover', color: '#a78bfa' },
       ],
       cta: 'Creatify jetzt starten',
       infoLink: 'https://mdw-creatify-lab.netlify.app/',
@@ -176,12 +174,12 @@ const programme: Programme[] = [
   },
   {
     name: 'Lets Enhance',
-    beschreibung: 'Bilder perfekt vergrößern, KI gestützte Bildverbesserung, die Auflösung erhöhen und Qualität verbessern ohne Qualitätsverlust.',
+    beschreibung: 'Bilder perfekt vergrößern, KI-gestützte Bildverbesserung, die Auflösung erhöhen und Qualität verbessern ohne Qualitätsverlust.',
     link: 'https://letsenhance.io?via=cx6193',
     kategorie: 'Bildbearbeitung',
     katColor: 'bg-green-500/10 text-green-400 border-green-500/20',
     popup: {
-      badge: 'KI Bildoptimierung',
+      badge: 'KI-Bildoptimierung',
       accentColor: '#34d399',
       gradFrom: '#059669',
       gradTo: '#047857',
@@ -191,7 +189,7 @@ const programme: Programme[] = [
       statLabel: 'Hochauflösung',
       StatIcon: Image,
       features: [
-        { Icon: Image, label: 'KI Hochauflösung ohne Verlust', color: '#34d399' },
+        { Icon: Image, label: 'KI-Hochauflösung ohne Verlust', color: '#34d399' },
         { Icon: Zap, label: 'Batch-Verarbeitung vieler Bilder', color: '#fbbf24' },
         { Icon: Target, label: 'Perfekt für E-Commerce & Print', color: '#60a5fa' },
       ],
@@ -201,17 +199,17 @@ const programme: Programme[] = [
   },
   {
     name: 'Manychat',
-    beschreibung: 'Chat Marketing Automatisierung für Instagram, Facebook Messenger und WhatsApp, automatisierte Antworten und Leadgenerierung.',
+    beschreibung: 'Chat-Marketing-Automatisierung für Instagram, Facebook Messenger und WhatsApp, automatisierte Antworten und Leadgenerierung.',
     link: 'https://manychat.partnerlinks.io/2e84ajwtz501',
     kategorie: 'Social Media',
     katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
     popup: {
-      badge: 'Chat Marketing Automatisierung',
+      badge: 'Chat-Marketing Automatisierung',
       accentColor: '#fb923c',
       gradFrom: '#ea580c',
       gradTo: '#c2410c',
       logoChar: 'M',
-      description: 'Automatisiere dein Chat Marketing auf Instagram, WhatsApp und Messenger, generiere Leads automatisch und beantworte Nachrichten rund um die Uhr.',
+      description: 'Automatisiere dein Chat-Marketing auf Instagram, WhatsApp und Messenger, generiere Leads automatisch und beantworte Nachrichten rund um die Uhr.',
       statValue: '1M+ Unternehmen',
       statLabel: 'vertrauen Manychat',
       StatIcon: MessageCircle,
@@ -226,7 +224,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Social Plus AI',
-    beschreibung: 'KI gestützte Social Media Unterstützung für Planung, Erstellung und Optimierung von Social Media Inhalten.',
+    beschreibung: 'KI-gestützte Social-Media-Unterstützung für Planung, Erstellung und Optimierung von Social-Media-Inhalten.',
     link: 'https://socialplus.ai',
     kategorie: 'Social Media',
     katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
@@ -236,12 +234,12 @@ const programme: Programme[] = [
       gradFrom: '#ea580c',
       gradTo: '#c2410c',
       logoChar: 'S',
-      description: 'Plane, erstelle und optimiere Social Media Inhalte mit KI, mehr Engagement, weniger Zeitaufwand für professionelle Präsenz auf allen Kanälen.',
+      description: 'Plane, erstelle und optimiere Social-Media-Inhalte mit KI, mehr Engagement, weniger Zeitaufwand für professionelle Präsenz auf allen Kanälen.',
       statValue: 'KI Content',
       statLabel: 'für alle Kanäle',
       StatIcon: Share2,
       features: [
-        { Icon: Brain, label: 'KI generierte Inhalte', color: '#22d3ee' },
+        { Icon: Brain, label: 'KI-generierte Inhalte', color: '#22d3ee' },
         { Icon: BarChart2, label: 'Engagement-Analyse & Optimierung', color: '#60a5fa' },
         { Icon: Share2, label: 'Planung & Auto-Publishing', color: '#fb923c' },
       ],
@@ -250,7 +248,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Insta Tipps',
-    beschreibung: 'Expertenwissen und Tipps für erfolgreiches Instagram Marketing, Strategien, Hashtags und Content-Ideen.',
+    beschreibung: 'Expertenwissen und Tipps für erfolgreiches Instagram-Marketing, Strategien, Hashtags und Content-Ideen.',
     link: 'https://www.instagram.com/my_digit_world',
     kategorie: 'Social Media',
     katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
@@ -260,7 +258,7 @@ const programme: Programme[] = [
       gradFrom: '#ea580c',
       gradTo: '#c2410c',
       logoChar: 'I',
-      description: 'Professionelles Instagram Marketing leicht gemacht, praxiserprobte Strategien, Hashtag-Tricks und Content-Ideen für schnelles Follower-Wachstum.',
+      description: 'Professionelles Instagram-Marketing leicht gemacht, praxiserprobte Strategien, Hashtag-Tricks und Content-Ideen für schnelles Follower-Wachstum.',
       statValue: 'Täglich neue',
       statLabel: 'Tipps & Tricks',
       StatIcon: Star,
@@ -274,7 +272,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Metricool',
-    beschreibung: 'Das All in One Social Media Tool, Inhalte planen, Analysen auswerten, Berichte erstellen, Wettbewerber beobachten und Ads verwalten. Vertraut von über 2 Millionen Nutzern weltweit.',
+    beschreibung: 'Das All-in-One Social Media Tool, Inhalte planen, Analysen auswerten, Berichte erstellen, Wettbewerber beobachten und Ads verwalten. Vertraut von über 2 Millionen Nutzern weltweit.',
     link: 'https://f.mtr.cool/IZCUBS',
     kategorie: 'Social Media',
     katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
@@ -284,7 +282,7 @@ const programme: Programme[] = [
       gradFrom: '#ea580c',
       gradTo: '#c2410c',
       logoChar: 'M',
-      description: 'Plane, veröffentliche und analysiere deine Social Media Inhalte auf allen Plattformen, Instagram, TikTok, LinkedIn, YouTube, X und mehr. Alles in einem Tab.',
+      description: 'Plane, veröffentliche und analysiere deine Social-Media-Inhalte auf allen Plattformen, Instagram, TikTok, LinkedIn, YouTube, X und mehr. Alles in einem Tab.',
       statValue: '2M+ Nutzer',
       statLabel: 'weltweit',
       StatIcon: BarChart2,
@@ -298,7 +296,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Mate Studio',
-    beschreibung: 'KI gestütztes Design- und Präsentationstool für professionelle Inhalte, Grafiken und digitale Präsentationen.',
+    beschreibung: 'KI-gestütztes Design- und Präsentationstool für professionelle Inhalte, Grafiken und digitale Präsentationen.',
     link: 'https://www.mate-studio.com',
     kategorie: 'Präsentation & Räume',
     katColor: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
@@ -314,7 +312,7 @@ const programme: Programme[] = [
       StatIcon: Layers,
       features: [
         { Icon: Layers, label: '3D-Präsentationen & Räume', color: '#fbbf24' },
-        { Icon: Brain, label: 'KI Design Assistent', color: '#22d3ee' },
+        { Icon: Brain, label: 'KI-Design-Assistent', color: '#22d3ee' },
         { Icon: Tag, label: '10% Rabatt mit Code', color: '#34d399' },
       ],
       cta: 'Mate Studio testen',
@@ -324,7 +322,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Virtuelle Raumgestaltung',
-    beschreibung: 'KI Tool zur virtuellen Einrichtung und Gestaltung von Räumen, perfekt für Immobilien, Innenarchitektur und Staging.',
+    beschreibung: 'KI-Tool zur virtuellen Einrichtung und Gestaltung von Räumen, perfekt für Immobilien, Innenarchitektur und Staging.',
     link: 'https://homedesigns.ai?fpr=xyz7zs',
     kategorie: 'Präsentation & Räume',
     katColor: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
@@ -339,7 +337,7 @@ const programme: Programme[] = [
       statLabel: 'Räume visualisieren',
       StatIcon: Layout,
       features: [
-        { Icon: Layout, label: 'KI Raumgestaltung & Design', color: '#fbbf24' },
+        { Icon: Layout, label: 'KI-Raumgestaltung & Design', color: '#fbbf24' },
         { Icon: Camera, label: 'Professionelles Immobilien-Staging', color: '#34d399' },
         { Icon: Monitor, label: '3D-Visualisierungen erstellen', color: '#60a5fa' },
       ],
@@ -354,14 +352,14 @@ const programme: Programme[] = [
     kategorie: 'Marketing',
     katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
     popup: {
-      badge: 'KI Marketing Plattform',
+      badge: 'KI-Marketing Plattform',
       accentColor: '#f472b6',
       gradFrom: '#db2777',
       gradTo: '#be185d',
       logoChar: 'A',
       description: 'Smarter Marketing mit KI, automatisierte Zielgruppenanalyse, Kampagnenoptimierung und ROI-Steigerung für dein Unternehmen.',
       statValue: 'ROI maximieren',
-      statLabel: 'mit KI Marketing',
+      statLabel: 'mit KI-Marketing',
       StatIcon: Target,
       features: [
         { Icon: Target, label: 'Präzise Zielgruppenanalyse', color: '#f472b6' },
@@ -374,7 +372,7 @@ const programme: Programme[] = [
   },
   {
     name: 'GetResponse',
-    beschreibung: 'All in One E-Mail Marketing Plattform mit Newsletter, Landingpages, Webinaren und Marketing Automatisierung, ideal für kleine und mittlere Unternehmen.',
+    beschreibung: 'All-in-One E-Mail-Marketing-Plattform mit Newsletter, Landingpages, Webinaren und Marketing-Automatisierung, ideal für kleine und mittlere Unternehmen.',
     link: 'https://try.getresponsetoday.com/hcp4gef2gtvg',
     kategorie: 'Marketing',
     katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
@@ -384,7 +382,7 @@ const programme: Programme[] = [
       gradFrom: '#db2777',
       gradTo: '#be185d',
       logoChar: 'G',
-      description: 'Die All in One Marketing Plattform, E-Mail-Kampagnen, Landingpages, Webinare und Automation für nachhaltiges Unternehmenswachstum.',
+      description: 'Die All-in-One Marketing-Plattform, E-Mail-Kampagnen, Landingpages, Webinare und Automation für nachhaltiges Unternehmenswachstum.',
       statValue: '350.000+',
       statLabel: 'Kunden weltweit',
       StatIcon: Mail,
@@ -399,7 +397,7 @@ const programme: Programme[] = [
   },
   {
     name: 'MagicFit',
-    beschreibung: 'Dein KI Content Studio, verwandle Produktfotos in virale Posts, Stories, Reels und Ads in Minuten. Über 40.000 Marken erzielen damit 4,2x ROAS, 510% mehr Engagement und sparen 85% Zeit.',
+    beschreibung: 'Dein KI-Content-Studio, verwandle Produktfotos in virale Posts, Stories, Reels und Ads in Minuten. Über 40.000 Marken erzielen damit 4,2x ROAS, 510% mehr Engagement und sparen 85% Zeit.',
     link: 'http://magicfit.pushowl.com/?ref=ruediger',
     kategorie: 'Marketing',
     katColor: 'bg-pink-500/10 text-pink-400 border-pink-500/20',
@@ -409,7 +407,7 @@ const programme: Programme[] = [
       gradFrom: '#db2777',
       gradTo: '#be185d',
       logoChar: 'M',
-      description: 'Aus jedem Produktfoto werden in Minuten virale Posts, Stories, Reels und Ads, mit KI Agenten, die Content erstellen, der wirklich verkauft.',
+      description: 'Aus jedem Produktfoto werden in Minuten virale Posts, Stories, Reels und Ads, mit KI-Agenten, die Content erstellen, der wirklich verkauft.',
       statValue: '40.000+ Marken',
       statLabel: '4,2x ROAS im Schnitt',
       StatIcon: TrendingUp,
@@ -424,12 +422,12 @@ const programme: Programme[] = [
   },
   {
     name: 'Make',
-    beschreibung: 'Leistungsstarke No Code Automatisierungsplattform, verbinde Apps, automatisiere Workflows und spare täglich Stunden an manueller Arbeit ohne Programmierkenntnisse.',
+    beschreibung: 'Leistungsstarke No-Code Automatisierungsplattform, verbinde Apps, automatisiere Workflows und spare täglich Stunden an manueller Arbeit ohne Programmierkenntnisse.',
     link: 'https://www.make.com/endwgermany',
     kategorie: 'Automatisierung',
     katColor: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
     popup: {
-      badge: 'No Code Automatisierung',
+      badge: 'No-Code Automatisierung',
       accentColor: '#8b5cf6',
       gradFrom: '#7c3aed',
       gradTo: '#6d28d9',
@@ -449,9 +447,9 @@ const programme: Programme[] = [
   },
   {
     name: 'Replit',
-    beschreibung: 'KI gestützte Entwicklungsplattform im Browser, Apps, Websites und Skripte erstellen ohne lokale Installation. Ideal für Einsteiger und Profis, die schnell und kollaborativ bauen möchten.',
+    beschreibung: 'KI-gestützte Entwicklungsplattform im Browser, Apps, Websites und Skripte erstellen ohne lokale Installation. Ideal für Einsteiger und Profis, die schnell und kollaborativ bauen möchten.',
     link: 'https://replit-affiliate.replit.app/',
-    kategorie: 'No Code',
+    kategorie: 'No-Code',
     katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
     popup: {
       badge: 'KI Browser-Entwicklungsplattform',
@@ -459,13 +457,13 @@ const programme: Programme[] = [
       gradFrom: '#ea580c',
       gradTo: '#c2410c',
       logoChar: 'R',
-      description: 'Entwickle Apps und Websites direkt im Browser, mit KI Unterstützung, ohne Setup-Aufwand. Von der Idee zur fertigen App in Minuten.',
+      description: 'Entwickle Apps und Websites direkt im Browser, mit KI-Unterstützung, ohne Setup-Aufwand. Von der Idee zur fertigen App in Minuten.',
       statValue: 'Millionen',
       statLabel: 'Entwickler weltweit',
       StatIcon: Code,
       features: [
         { Icon: Code, label: 'Coding im Browser, kein Setup', color: '#fb923c' },
-        { Icon: Brain, label: 'KI Assistent beim Entwickeln', color: '#22d3ee' },
+        { Icon: Brain, label: 'KI-Assistent beim Entwickeln', color: '#22d3ee' },
         { Icon: Zap, label: 'Sofort deployen & teilen', color: '#fbbf24' },
       ],
       cta: 'Replit starten',
@@ -476,10 +474,10 @@ const programme: Programme[] = [
     name: 'Floot',
     beschreibung: 'Apps und Websites ohne Code erstellen, beschreibe deine Idee und Floot baut sie direkt auf einer Plattform. Von Y Combinator gefördert und #1 Product of the Day auf Product Hunt.',
     link: 'https://mdw-floot.netlify.app/',
-    kategorie: 'No Code Builder',
+    kategorie: 'No-Code Builder',
     katColor: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
     popup: {
-      badge: 'No Code App & Website Builder',
+      badge: 'No-Code App & Website Builder',
       accentColor: '#fb923c',
       gradFrom: '#ea580c',
       gradTo: '#c2410c',
@@ -490,7 +488,7 @@ const programme: Programme[] = [
       StatIcon: Zap,
       features: [
         { Icon: Monitor, label: 'Apps & Websites ohne Code bauen', color: '#fb923c' },
-        { Icon: Brain, label: 'KI gesteuerte Entwicklung', color: '#22d3ee' },
+        { Icon: Brain, label: 'KI-gesteuerte Entwicklung', color: '#22d3ee' },
         { Icon: Globe, label: 'Alles auf einer Plattform', color: '#34d399' },
       ],
       cta: 'Floot kostenlos starten',
@@ -499,7 +497,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Emergent Lab',
-    beschreibung: 'Full Stack Web- & Mobile-Apps in Minuten mit KI erstellen, kein Code nötig. Von Y Combinator geförderter App-Builder mit über 3 Mio. Nutzern weltweit.',
+    beschreibung: 'Full-Stack Web- & Mobile-Apps in Minuten mit KI erstellen, kein Code nötig. Von Y Combinator geförderter App-Builder mit über 3 Mio. Nutzern weltweit.',
     link: 'https://app.emergent.sh/?via=rudiger',
     kategorie: 'App Builder',
     katColor: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
@@ -509,7 +507,7 @@ const programme: Programme[] = [
       gradFrom: '#7c3aed',
       gradTo: '#6d28d9',
       logoChar: 'e',
-      description: 'Erstelle vollständige Full Stack Web- & Mobile-Apps in Minuten, mit KI. Kein Code-Wissen nötig.',
+      description: 'Erstelle vollständige Full-Stack Web- & Mobile-Apps in Minuten, mit KI. Kein Code-Wissen nötig.',
       statValue: '3M+ Nutzer',
       statLabel: 'weltweit',
       StatIcon: Users,
@@ -541,7 +539,7 @@ const programme: Programme[] = [
       features: [
         { Icon: Zap, label: 'Carousels, Blogs & Videos in 10 Min.', color: '#a78bfa' },
         { Icon: Brain, label: 'KI schreibt in deiner eigenen Stimme', color: '#22d3ee' },
-        { Icon: Share2, label: 'Für alle Social Media Plattformen', color: '#34d399' },
+        { Icon: Share2, label: 'Für alle Social-Media-Plattformen', color: '#34d399' },
       ],
       cta: 'Mirr kostenlos ausprobieren',
       infoLink: 'https://mdw-mirr.netlify.app/',
@@ -549,7 +547,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Flip Magazine',
-    beschreibung: 'Digitale Broschüren und Magazine erstellen, interaktive Flipbooks aus PDFs für professionelle Online Präsentationen.',
+    beschreibung: 'Digitale Broschüren und Magazine erstellen, interaktive Flipbooks aus PDFs für professionelle Online-Präsentationen.',
     link: 'https://flipsnack.com',
     kategorie: 'Content & Magazin',
     katColor: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
@@ -559,7 +557,7 @@ const programme: Programme[] = [
       gradFrom: '#2563eb',
       gradTo: '#1d4ed8',
       logoChar: 'F',
-      description: 'Verwandle PDFs in interaktive, professionelle Online Magazine, Flipbooks für Kataloge, Broschüren und Präsentationen.',
+      description: 'Verwandle PDFs in interaktive, professionelle Online-Magazine, Flipbooks für Kataloge, Broschüren und Präsentationen.',
       statValue: 'PDF → Flipbook',
       statLabel: 'in Sekunden',
       StatIcon: BookOpen,
@@ -583,14 +581,14 @@ const programme: Programme[] = [
       gradFrom: '#2563eb',
       gradTo: '#1d4ed8',
       logoChar: 'U',
-      description: 'Erstelle authentische UGC Videos mit KI Avataren, glaubwürdige Werbeinhalte, die konvertieren, ohne echte Creators zu buchen.',
+      description: 'Erstelle authentische UGC-Videos mit KI-Avataren, glaubwürdige Werbeinhalte, die konvertieren, ohne echte Creators zu buchen.',
       statValue: 'Authentische',
       statLabel: 'Ads & Content',
       StatIcon: Film,
       features: [
-        { Icon: Film, label: 'UGC Videos mit KI Avataren', color: '#60a5fa' },
+        { Icon: Film, label: 'UGC-Videos mit KI-Avataren', color: '#60a5fa' },
         { Icon: Users, label: 'Hohe Glaubwürdigkeit & Reichweite', color: '#34d399' },
-        { Icon: Share2, label: 'Alle Social Media Plattformen', color: '#fb923c' },
+        { Icon: Share2, label: 'Alle Social-Media-Plattformen', color: '#fb923c' },
       ],
       cta: 'UGC Creator testen',
       infoLink: 'https://mdw-creatify-lab.netlify.app/',
@@ -598,12 +596,12 @@ const programme: Programme[] = [
   },
   {
     name: 'Produktstudio',
-    beschreibung: 'KI gestütztes Tool zur professionellen Produktfotografie, erstelle hochwertige Produktbilder für Webshops und Social Media ohne teures Fotostudio.',
+    beschreibung: 'KI-gestütztes Tool zur professionellen Produktfotografie, erstelle hochwertige Produktbilder für Webshops und Social Media ohne teures Fotostudio.',
     link: 'https://produktstudio.ai?atp=Cd3Ugz',
     kategorie: 'Content & Magazin',
     katColor: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
     popup: {
-      badge: 'KI Produktfotografie',
+      badge: 'KI-Produktfotografie',
       accentColor: '#60a5fa',
       gradFrom: '#2563eb',
       gradTo: '#1d4ed8',
@@ -613,7 +611,7 @@ const programme: Programme[] = [
       statLabel: 'professionelle Fotos',
       StatIcon: Camera,
       features: [
-        { Icon: Camera, label: 'KI generierte Produktfotos', color: '#60a5fa' },
+        { Icon: Camera, label: 'KI-generierte Produktfotos', color: '#60a5fa' },
         { Icon: Image, label: 'Custom & weißer Hintergrund', color: '#34d399' },
         { Icon: Package, label: 'E-Commerce & Social Media ready', color: '#fbbf24' },
       ],
@@ -648,7 +646,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Artistly',
-    beschreibung: 'KI gestützte Plattform zur künstlerischen Bildbearbeitung und Erstellung einzigartiger digitaler Kunstwerke.',
+    beschreibung: 'KI-gestützte Plattform zur künstlerischen Bildbearbeitung und Erstellung einzigartiger digitaler Kunstwerke.',
     link: 'https://paykstrt.com/48893/174534',
     kategorie: 'Deals & Tools',
     katColor: 'bg-red-500/10 text-red-400 border-red-500/20',
@@ -660,10 +658,10 @@ const programme: Programme[] = [
       logoChar: 'A',
       description: 'Erstelle einzigartige digitale Kunstwerke mit KI, verschiedene Kunststile, professionelle Bildbearbeitung und kreative Möglichkeiten ohne Ende.',
       statValue: 'Einzigartige',
-      statLabel: 'KI Kunstwerke',
+      statLabel: 'KI-Kunstwerke',
       StatIcon: Star,
       features: [
-        { Icon: Star, label: 'KI Bildgenerierung & Kunst', color: '#f87171' },
+        { Icon: Star, label: 'KI-Bildgenerierung & Kunst', color: '#f87171' },
         { Icon: Layers, label: 'Verschiedene Kunststile', color: '#a78bfa' },
         { Icon: Image, label: 'Hochwertige digitale Ergebnisse', color: '#34d399' },
       ],
@@ -698,7 +696,7 @@ const programme: Programme[] = [
   },
   {
     name: 'Hostinger',
-    beschreibung: 'Dein Online Erfolg beginnt hier, Hosting, Domains, KI Website Builder und alles für deine Web-Präsenz. 30 Tage Geld zurück Garantie und kostenlose Domain im Jahresplan.',
+    beschreibung: 'Dein Online-Erfolg beginnt hier, Hosting, Domains, KI-Website-Builder und alles für deine Web-Präsenz. 30 Tage Geld-zurück-Garantie und kostenlose Domain im Jahresplan.',
     link: 'https://www.hostinger.com/de?REFERRALCODE=OQ5RUEBECRNF',
     kategorie: 'Website & Hosting',
     katColor: 'bg-violet-500/10 text-violet-400 border-violet-500/20',
@@ -708,13 +706,13 @@ const programme: Programme[] = [
       gradFrom: '#6d28d9',
       gradTo: '#5b21b6',
       logoChar: 'H',
-      description: 'Von Website-Hosting bis zum KI Website Builder, Hostinger bietet alles für deinen Online Auftritt. Kostenlose Domain, 30 Tage Geld zurück und KI inklusive.',
+      description: 'Von Website-Hosting bis zum KI-Website-Builder, Hostinger bietet alles für deinen Online-Auftritt. Kostenlose Domain, 30 Tage Geld-zurück und KI inklusive.',
       statValue: '30 Tage',
-      statLabel: 'Geld zurück Garantie',
+      statLabel: 'Geld-zurück-Garantie',
       StatIcon: Globe,
       features: [
         { Icon: Globe, label: 'Hosting & kostenlose Domain', color: '#a78bfa' },
-        { Icon: Brain, label: 'KI Website Builder integriert', color: '#22d3ee' },
+        { Icon: Brain, label: 'KI-Website-Builder integriert', color: '#22d3ee' },
         { Icon: Zap, label: 'Schnell, sicher & günstig', color: '#fbbf24' },
       ],
       cta: 'Hostinger jetzt starten',
@@ -722,72 +720,71 @@ const programme: Programme[] = [
     },
   },
   {
-    name: 'Oakgen.ai',
-    beschreibung: 'Ein KI Workspace für alles, nutze führende KI Modelle für Chat, Bilder, Video, Stimme, Musik, Avatare, UGC Ads und Bildbearbeitung in einem einzigen Arbeitsbereich mit gemeinsamem Guthaben.',
-    link: 'https://my-digital-world-main.replit.app/oakgen',
-    kategorie: 'KI Allround',
-    katColor: 'bg-green-500/10 text-green-400 border-green-500/20',
+    name: 'MDW-AV-Generator',
+    beschreibung: 'Der ultimative KI-Bild- & Video-Generator von My Digital World. Erstelle atemberaubende Kunstwerke, fotorealistische 1080p Full-HD Videos und Bilder im Handumdrehen.',
+    link: 'https://mdw-bild-videogenerator.netlify.app',
+    kategorie: 'Video mit KI',
+    katColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
     popup: {
-      badge: 'All in One KI Workspace',
-      accentColor: '#34d399',
-      gradFrom: '#059669',
-      gradTo: '#047857',
-      logoChar: 'O',
-      description: 'Alle führenden KI Modelle an einem Ort, Chat, Bilder, Video, Musik, Stimme und mehr. Ein gemeinsames Guthaben für sämtliche KI Funktionen.',
-      statValue: '20+ KI Modelle',
-      statLabel: 'in einem Workspace',
-      StatIcon: Cpu,
+      badge: 'KI-Bild & Video Generator',
+      accentColor: '#a78bfa',
+      gradFrom: '#7c3aed',
+      gradTo: '#6d28d9',
+      logoChar: 'M',
+      description: 'Generiere hochauflösende KI-Bilder und Videos in Full-HD (1080p). Nutze FLUX und Luma Dream Machine für ultrarealistische Ergebnisse und spare wertvolle Renderzeit.',
+      statValue: '1080p Full-HD',
+      statLabel: 'Bild & Video',
+      StatIcon: Video,
       features: [
-        { Icon: Brain, label: 'Chat, Bilder, Video & Musik', color: '#34d399' },
-        { Icon: Cpu, label: '20+ führende KI Modelle', color: '#22d3ee' },
-        { Icon: Music, label: 'Stimme, Avatare & UGC Ads', color: '#a78bfa' },
+        { Icon: Image, label: 'KI-Bildgenerierung (FLUX Schnell/Dev)', color: '#34d399' },
+        { Icon: Video, label: 'KI-Videogenerierung (Luma Ray 2)', color: '#a78bfa' },
+        { Icon: Zap, label: 'Inklusive 200 kostenfreier Credits', color: '#fbbf24' },
       ],
-      cta: 'Oakgen.ai entdecken',
-      infoLink: 'https://mdw-oakgen.netlify.app/',
+      cta: 'MDW-AV-Generator starten',
     },
   },
   {
     name: 'ChatGPT News',
-    beschreibung: 'Aktuelle Neuigkeiten und Entwicklungen rund um ChatGPT und OpenAI, immer auf dem neuesten Stand der KI Welt.',
+    beschreibung: 'Aktuelle Neuigkeiten und Entwicklungen rund um ChatGPT und OpenAI, immer auf dem neuesten Stand der KI-Welt.',
     link: 'https://www.instagram.com/my_digit_world',
     kategorie: 'ChatGPT',
     katColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
     popup: {
-      badge: 'KI News & ChatGPT Updates',
+      badge: 'KI-News & ChatGPT Updates',
       accentColor: '#34d399',
       gradFrom: '#059669',
       gradTo: '#047857',
       logoChar: 'C',
-      description: 'Immer up to date über ChatGPT, OpenAI und die gesamte KI Welt, täglich neue Updates, Tipps und Entwicklungen direkt auf Instagram.',
+      description: 'Immer up-to-date über ChatGPT, OpenAI und die gesamte KI-Welt, täglich neue Updates, Tipps und Entwicklungen direkt auf Instagram.',
       statValue: 'Täglich neue',
-      statLabel: 'KI Updates',
+      statLabel: 'KI-Updates',
       StatIcon: Bell,
       features: [
         { Icon: Brain, label: 'Neueste ChatGPT-Updates', color: '#34d399' },
         { Icon: Bell, label: 'OpenAI-News in Echtzeit', color: '#fbbf24' },
-        { Icon: TrendingUp, label: 'KI Trends & Insights', color: '#60a5fa' },
+        { Icon: TrendingUp, label: 'KI-Trends & Insights', color: '#60a5fa' },
       ],
       cta: 'Jetzt folgen',
     },
   },
   {
     name: 'Die digitale Akademie',
-    beschreibung: 'MentorTools, die All in One Plattform für Online Kurse, digitale Produkte und Mitgliederbereiche. Erstelle, vermarkte und verkaufe dein Wissen professionell.',
+    beschreibung: 'MentorTools, die All-in-One Plattform für Online-Kurse, digitale Produkte und Mitgliederbereiche. Erstelle, vermarkte und verkaufe dein Wissen professionell.',
     link: 'https://mentortools.com',
     kategorie: 'Akademie & Kurse',
     katColor: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
     popup: {
-      badge: 'Online Kurs Plattform',
+      badge: 'Online-Kurs Plattform',
       accentColor: '#818cf8',
       gradFrom: '#4f46e5',
       gradTo: '#4338ca',
       logoChar: 'A',
       description: 'Erstelle, vermarkte und verkaufe dein Wissen mit MentorTools, Kurse, Mitgliederbereiche und Coaching-Funktionen in einer Plattform.',
-      statValue: 'All in One',
+      statValue: 'All-in-One',
       statLabel: 'Kurs-System',
       StatIcon: GraduationCap,
       features: [
-        { Icon: GraduationCap, label: 'Online Kurse & Coaching', color: '#818cf8' },
+        { Icon: GraduationCap, label: 'Online-Kurse & Coaching', color: '#818cf8' },
         { Icon: Mail, label: 'Automatisierte E-Mail-Sequenzen', color: '#60a5fa' },
         { Icon: Users, label: 'Mitgliederbereich & Community', color: '#34d399' },
       ],
@@ -804,7 +801,6 @@ interface PopupProps {
 }
 
 function ToolPopup({ name, link, popup, onClose }: PopupProps) {
-  const { lang } = useLanguage()
   const { StatIcon } = popup
   return (
     <div
@@ -924,7 +920,7 @@ function ToolPopup({ name, link, popup, onClose }: PopupProps) {
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
           <p className="text-white/20 text-[11px] text-center mt-2">
-            {lang === 'de' ? 'Kostenlos loslegen · Keine Kreditkarte erforderlich' : 'Start for free · No credit card required'}
+            Kostenlos loslegen · Keine Kreditkarte erforderlich
           </p>
         </div>
       </div>
@@ -933,39 +929,16 @@ function ToolPopup({ name, link, popup, onClose }: PopupProps) {
 }
 
 export default function Programme() {
-  const { lang } = useLanguage()
-  const isDE = lang === 'de'
   const [activePopup, setActivePopup] = useState<string | null>(null)
   const [query, setQuery] = useState('')
 
-  const getT = (prog: typeof programme[0]) => {
-    const en = programmeEN[prog.name]
-    if (!en || isDE) return { beschreibung: prog.beschreibung, kategorie: prog.kategorie, popup: prog.popup }
-    return {
-      beschreibung: en.beschreibung,
-      kategorie: en.kategorie,
-      popup: {
-        ...prog.popup,
-        badge: en.badge,
-        description: en.popupDescription,
-        features: prog.popup.features.map((f, i) => ({ ...f, label: en.featureLabels[i] ?? f.label })),
-        cta: en.cta,
-        promoText: en.promoText ?? prog.popup.promoText,
-      },
-    }
-  }
-
   const active = programme.find((p) => p.name === activePopup)
   const filtered = query.trim()
-    ? programme.filter((p) => {
-        const t = getT(p)
-        const q = query.toLowerCase()
-        return (
-          p.name.toLowerCase().includes(q) ||
-          t.kategorie.toLowerCase().includes(q) ||
-          t.beschreibung.toLowerCase().includes(q)
-        )
-      })
+    ? programme.filter((p) =>
+        p.name.toLowerCase().includes(query.toLowerCase()) ||
+        p.kategorie.toLowerCase().includes(query.toLowerCase()) ||
+        p.beschreibung.toLowerCase().includes(query.toLowerCase())
+      )
     : programme
 
   return (
@@ -974,7 +947,7 @@ export default function Programme() {
         <ToolPopup
           name={active.name}
           link={active.link}
-          popup={getT(active).popup as typeof active.popup}
+          popup={active.popup}
           onClose={() => setActivePopup(null)}
         />
       )}
@@ -984,16 +957,15 @@ export default function Programme() {
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         <div className="relative z-10 max-w-3xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-6">
-            {isDE ? 'Zu den Programmen' : 'See Programs'}
+            Zu den Programmen
           </div>
           <h1 className="font-display font-extrabold text-5xl md:text-6xl text-white mb-4 leading-tight" data-testid="text-programme-headline">
-            {isDE ? <>Alle digitalen<br /><span className="gradient-text">Programme & Tools</span></> : <>All digital<br /><span className="gradient-text">Programs & Tools</span></>}
+            Alle digitalen<br />
+            <span className="gradient-text">Programme & Tools</span>
           </h1>
           <p className="text-white/70 text-base leading-relaxed" data-testid="text-programme-subtitle">
-            {isDE
-              ? <>{`Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt,`}<br />{`von KI Tools über Social Media bis zu Marketing Software.`}</>
-              : <>An overview of all programs that My Digital World recommends and uses,<br />from AI tools to social media to marketing software.</>
-            }
+            Eine Übersicht aller Programme, die My Digital World empfiehlt und einsetzt ,<br />
+            von KI-Tools über Social Media bis zu Marketing-Software.
           </p>
         </div>
       </div>
@@ -1005,7 +977,7 @@ export default function Programme() {
         <div className="flex items-center justify-between gap-4 mb-6">
           <p className="text-white/40 text-sm">
             {filtered.length} {filtered.length === 1 ? 'Tool' : 'Tools'}
-            {query.trim() && <span className="text-white/25"> {isDE ? 'gefunden' : 'found'}</span>}
+            {query.trim() && <span className="text-white/25"> gefunden</span>}
           </p>
 
           {/* Search input */}
@@ -1013,7 +985,7 @@ export default function Programme() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
             <input
               type="text"
-              placeholder={isDE ? 'Tool suchen …' : 'Search tools …'}
+              placeholder="Tool suchen …"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-56 sm:w-72 pl-9 pr-9 py-2 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
@@ -1062,14 +1034,14 @@ export default function Programme() {
                     {prog.name}
                   </h3>
                   <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] border ${prog.katColor}`}>
-                    {getT(prog).kategorie}
+                    {prog.kategorie}
                   </span>
                 </div>
                 <ExternalLink
                   className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1"
                 />
               </div>
-              <p className="text-white/70 text-base leading-relaxed flex-1">{getT(prog).beschreibung}</p>
+              <p className="text-white/70 text-base leading-relaxed flex-1">{prog.beschreibung}</p>
               {prog.popup.infoLink && (
                 <div className="pt-2 border-t border-white/5">
                   <a
@@ -1099,9 +1071,9 @@ export default function Programme() {
           )) : (
             <div className="col-span-3 py-20 text-center">
               <Search className="w-10 h-10 text-white/10 mx-auto mb-4" />
-              <p className="text-white/40 text-sm">{isDE ? `Kein Tool gefunden für „${query}"` : `No tool found for "${query}"`}</p>
+              <p className="text-white/40 text-sm">Kein Tool gefunden für „{query}"</p>
               <button onClick={() => setQuery('')} className="mt-3 text-cyan-400 text-xs hover:underline">
-                {isDE ? 'Suche zurücksetzen' : 'Reset search'}
+                Suche zurücksetzen
               </button>
             </div>
           )}
