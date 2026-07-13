@@ -1,4 +1,4 @@
-﻿import { ExternalLink, CheckCircle } from 'lucide-react'
+import { ExternalLink, CheckCircle } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 const features = [
@@ -280,7 +280,7 @@ export default function Oakgen() {
               </defs>
               <rect width="400" height="300" fill="url(#og3)"/>
               {[30,48,66,84,102,120,138,156,174,192,210,228,246,264,282,300,318,336,354].map((x, i) => (
-                <rect key={x} x={x} y={150, [40,60,30,70,50,80,55,35,75,50,90,60,30,65,45,80,50,35,60][i]} width="10" height={[80,120,60,140,100,160,110,70,150,100,180,120,60,130,90,160,100,70,120][i]} rx="5" fill={i % 3 === 2 ? '#ec4899' : '#a855f7'} opacity="0.75"/>
+                <rect key={x} x={x} y={150 - [40,60,30,70,50,80,55,35,75,50,90,60,30,65,45,80,50,35,60][i]} width="10" height={[80,120,60,140,100,160,110,70,150,100,180,120,60,130,90,160,100,70,120][i]} rx="5" fill={i % 3 === 2 ? '#ec4899' : '#a855f7'} opacity="0.75"/>
               ))}
               <text x="155" y="55" fill="#a855f7" fontSize="28" opacity="0.5">♪</text>
               <rect x="30" y="210" width="340" height="40" rx="8" fill="rgba(0,0,0,0.4)" stroke="rgba(168,85,247,0.2)" strokeWidth="1"/>
