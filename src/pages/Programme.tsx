@@ -791,6 +791,7 @@ const programme: Programme[] = [
         { Icon: Zap, label: 'Inklusive 200 kostenfreier Credits', color: '#fbbf24' },
       ],
       cta: 'MDW-IV-Generator starten',
+      infoLink: '/mdw-iv-generator',
     },
   },
   {

@@ -16,6 +16,7 @@ import Datenschutz from './pages/Datenschutz'
 import Oakgen from './pages/Oakgen'
 import ForFree from './pages/ForFree'
 import FigmaWeave from './pages/FigmaWeave'
+import MdwIvGenerator from './pages/MdwIvGenerator'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/oakgen" component={Oakgen} />
           <Route path="/for-free" component={ForFree} />
           <Route path="/figma-weave" component={FigmaWeave} />
+          <Route path="/mdw-iv-generator" component={MdwIvGenerator} />
         </Switch>
         <Footer />
       </div>
