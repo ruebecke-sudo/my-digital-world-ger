@@ -106,7 +106,7 @@ export function Navbar() {
 
             <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer" data-testid="link-nav-avgenerator">
               <span className="inline-flex items-center gap-1.5 text-base font-medium text-white/70 hover:text-white cursor-pointer">
-                MDW-AV-Generator
+                MDW-IV-Generator
                 <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-500 text-black leading-none animate-pulse">NEU</span>
               </span>
             </a>
@@ -151,7 +151,7 @@ export function Navbar() {
             </div>
             <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Tools & Programme</span></Link>
             <Link href="/for-free"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">For free</span></Link>
-            <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer"><span onClick={() => setIsOpen(false)} className="flex items-center gap-2 py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">MDW-AV-Generator <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-500 text-black leading-none">NEU</span></span></a>
+            <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer"><span onClick={() => setIsOpen(false)} className="flex items-center gap-2 py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">MDW-IV-Generator <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-cyan-500 text-black leading-none">NEU</span></span></a>
             <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
             <Link href="/kontakt">
               <button className="btn-primary text-base text-center mt-3 w-full" onClick={() => setIsOpen(false)}>Jetzt anfragen</button>

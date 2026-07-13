@@ -744,7 +744,7 @@ const programme: Programme[] = [
     },
   },
   {
-    name: 'MDW-AV-Generator',
+    name: 'MDW-IV-Generator',
     beschreibung: 'Der ultimative KI-Bild- & Video-Generator von My Digital World. Erstelle atemberaubende Kunstwerke, fotorealistische 1080p Full-HD Videos und Bilder im Handumdrehen.',
     link: 'https://mdw-bild-videogenerator.netlify.app',
     kategorie: 'Video mit KI',
@@ -764,7 +764,7 @@ const programme: Programme[] = [
         { Icon: Video, label: 'KI-Videogenerierung (Luma Ray 2)', color: '#a78bfa' },
         { Icon: Zap, label: 'Inklusive 200 kostenfreier Credits', color: '#fbbf24' },
       ],
-      cta: 'MDW-AV-Generator starten',
+      cta: 'MDW-IV-Generator starten',
     },
   },
   {
