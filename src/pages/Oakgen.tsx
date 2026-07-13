@@ -1,11 +1,11 @@
-import { ExternalLink, CheckCircle } from 'lucide-react'
+﻿import { ExternalLink, CheckCircle } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 const features = [
   {
     icon: '🖼️',
     title: 'KI-Bildgenerierung',
-    text: 'FLUX Pro, Midjourney, DALL-E 3, Ideogram V3 und Stable Diffusion – einfach Text eingeben und in Sekunden hochwertige Bilder erhalten.',
+    text: 'FLUX Pro, Midjourney, DALL-E 3, Ideogram V3 und Stable Diffusion, einfach Text eingeben und in Sekunden hochwertige Bilder erhalten.',
     tag: '200+ Modelle',
     color: 'bg-green-500/10 border-green-500/20 text-green-400',
     glow: 'from-green-500/10',
@@ -13,7 +13,7 @@ const features = [
   {
     icon: '🎬',
     title: 'KI-Videogenerierung',
-    text: 'Sora 2, Veo 3.1, Kling 2.1, Wan 2.6 – Text-zu-Video und Bild-zu-Video bis 4K. Cinematic Realism auf Knopfdruck.',
+    text: 'Sora 2, Veo 3.1, Kling 2.1, Wan 2.6, Text-zu-Video und Bild-zu-Video bis 4K. Cinematic Realism auf Knopfdruck.',
     tag: 'Bis 4K · Audio inklusive',
     color: 'bg-sky-500/10 border-sky-500/20 text-sky-400',
     glow: 'from-sky-500/10',
@@ -21,7 +21,7 @@ const features = [
   {
     icon: '🎵',
     title: 'Musik & Sprache',
-    text: 'Erstelle Songs mit Lyria 2, Suno oder MiniMax Music. Text-to-Speech und Voice Cloning mit ElevenLabs – alles aus einer Hand.',
+    text: 'Erstelle Songs mit Lyria 2, Suno oder MiniMax Music. Text-to-Speech und Voice Cloning mit ElevenLabs, alles aus einer Hand.',
     tag: 'ElevenLabs · Suno',
     color: 'bg-purple-500/10 border-purple-500/20 text-purple-400',
     glow: 'from-purple-500/10',
@@ -29,7 +29,7 @@ const features = [
   {
     icon: '🤖',
     title: 'KI-Chat & Assistenten',
-    text: 'Greife auf Claude Sonnet, GPT-5, Gemini Pro und DeepSeek zu – alle führenden Chat-Modelle unter einem Dach.',
+    text: 'Greife auf Claude Sonnet, GPT-5, Gemini Pro und DeepSeek zu, alle führenden Chat-Modelle unter einem Dach.',
     tag: '10+ Chat-Modelle',
     color: 'bg-amber-500/10 border-amber-500/20 text-amber-400',
     glow: 'from-amber-500/10',
@@ -45,7 +45,7 @@ const features = [
   {
     icon: '⚡',
     title: 'Bildbearbeitung & Upscaling',
-    text: 'KI-gestützter Image Editor, Face Swap, Photo Studio, Bildrestaurierung und Upscaling auf bis zu 4K – alles ohne externe Software.',
+    text: 'KI-gestützter Image Editor, Face Swap, Photo Studio, Bildrestaurierung und Upscaling auf bis zu 4K, alles ohne externe Software.',
     tag: '4K Upscaling',
     color: 'bg-green-500/10 border-green-500/20 text-green-400',
     glow: 'from-green-500/10',
@@ -82,22 +82,22 @@ const usecases = [
   {
     icon: '🎨',
     title: 'Content Creator & Influencer',
-    text: 'Erstelle täglich frischen Content: Thumbnails, Reels, Voice-Over und Musikuntermalung – in einem Nachmittag statt einer Woche.',
+    text: 'Erstelle täglich frischen Content: Thumbnails, Reels, Voice-Over und Musikuntermalung, in einem Nachmittag statt einer Woche.',
   },
   {
     icon: '🏢',
     title: 'Marketing & Agenturen',
-    text: 'Produktvideos, UGC-Ads, Brand Content und Social Creatives – alle Deliverables aus einer Plattform, ohne Freelancer-Budget.',
+    text: 'Produktvideos, UGC-Ads, Brand Content und Social Creatives, alle Deliverables aus einer Plattform, ohne Freelancer-Budget.',
   },
   {
     icon: '💻',
     title: 'Solo-Gründer & SaaS',
-    text: 'Demo-Videos, Feature Announcements, Social Proof – professionelle Präsentation ohne teures Kreativteam.',
+    text: 'Demo-Videos, Feature Announcements, Social Proof, professionelle Präsentation ohne teures Kreativteam.',
   },
   {
     icon: '🎬',
     title: 'Filmemacher & Videografen',
-    text: 'Ergänze deine Produktion mit KI-Videoeffekten, cineastischen Clips, Musikscores und AI-Voice-Overs – für jedes Budget skalierbar.',
+    text: 'Ergänze deine Produktion mit KI-Videoeffekten, cineastischen Clips, Musikscores und AI-Voice-Overs, für jedes Budget skalierbar.',
   },
 ]
 
@@ -118,12 +118,12 @@ export default function Oakgen() {
   const isDE = lang === 'de'
 
   const featuresEN = [
-    { icon: '🖼️', title: 'AI Image Generation', text: 'FLUX Pro, Midjourney, DALL-E 3, Ideogram V3 and Stable Diffusion – just enter text and get high-quality images in seconds.', tag: '200+ Models', color: 'bg-green-500/10 border-green-500/20 text-green-400', glow: 'from-green-500/10' },
-    { icon: '🎬', title: 'AI Video Generation', text: 'Sora 2, Veo 3.1, Kling 2.1, Wan 2.6 – text-to-video and image-to-video up to 4K. Cinematic realism at the push of a button.', tag: 'Up to 4K · Audio included', color: 'bg-sky-500/10 border-sky-500/20 text-sky-400', glow: 'from-sky-500/10' },
-    { icon: '🎵', title: 'Music & Voice', text: 'Create songs with Lyria 2, Suno or MiniMax Music. Text-to-speech and voice cloning with ElevenLabs – all from one place.', tag: 'ElevenLabs · Suno', color: 'bg-purple-500/10 border-purple-500/20 text-purple-400', glow: 'from-purple-500/10' },
-    { icon: '🤖', title: 'AI Chat & Assistants', text: 'Access Claude Sonnet, GPT-5, Gemini Pro and DeepSeek – all leading chat models under one roof.', tag: '10+ Chat Models', color: 'bg-amber-500/10 border-amber-500/20 text-amber-400', glow: 'from-amber-500/10' },
+    { icon: '🖼️', title: 'AI Image Generation', text: 'FLUX Pro, Midjourney, DALL-E 3, Ideogram V3 and Stable Diffusion, just enter text and get high-quality images in seconds.', tag: '200+ Models', color: 'bg-green-500/10 border-green-500/20 text-green-400', glow: 'from-green-500/10' },
+    { icon: '🎬', title: 'AI Video Generation', text: 'Sora 2, Veo 3.1, Kling 2.1, Wan 2.6, text-to-video and image-to-video up to 4K. Cinematic realism at the push of a button.', tag: 'Up to 4K · Audio included', color: 'bg-sky-500/10 border-sky-500/20 text-sky-400', glow: 'from-sky-500/10' },
+    { icon: '🎵', title: 'Music & Voice', text: 'Create songs with Lyria 2, Suno or MiniMax Music. Text-to-speech and voice cloning with ElevenLabs, all from one place.', tag: 'ElevenLabs · Suno', color: 'bg-purple-500/10 border-purple-500/20 text-purple-400', glow: 'from-purple-500/10' },
+    { icon: '🤖', title: 'AI Chat & Assistants', text: 'Access Claude Sonnet, GPT-5, Gemini Pro and DeepSeek, all leading chat models under one roof.', tag: '10+ Chat Models', color: 'bg-amber-500/10 border-amber-500/20 text-amber-400', glow: 'from-amber-500/10' },
     { icon: '👤', title: 'Talking Avatars & UGC Ads', text: 'Create talking avatars and authentic UGC ad videos for social media. Ideal for creators and marketers.', tag: 'HeyGen Integration', color: 'bg-pink-500/10 border-pink-500/20 text-pink-400', glow: 'from-pink-500/10' },
-    { icon: '⚡', title: 'Image Editing & Upscaling', text: 'AI-powered image editor, face swap, photo studio, image restoration and upscaling up to 4K – all without external software.', tag: '4K Upscaling', color: 'bg-green-500/10 border-green-500/20 text-green-400', glow: 'from-green-500/10' },
+    { icon: '⚡', title: 'Image Editing & Upscaling', text: 'AI-powered image editor, face swap, photo studio, image restoration and upscaling up to 4K, all without external software.', tag: '4K Upscaling', color: 'bg-green-500/10 border-green-500/20 text-green-400', glow: 'from-green-500/10' },
   ]
 
   const usecasesEN = [
@@ -170,7 +170,7 @@ export default function Oakgen() {
           </h1>
           <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
             {isDE
-              ? 'Bilder, Videos, Sprache, Musik, Avatare und KI-Chat – alles vereint in Oakgen.ai. Schluss mit 10 verschiedenen Abos.'
+              ? 'Bilder, Videos, Sprache, Musik, Avatare und KI-Chat, alles vereint in Oakgen.ai. Schluss mit 10 verschiedenen Abos.'
               : 'Images, videos, voice, music, avatars and AI chat — all united in Oakgen.ai. No more 10 different subscriptions.'
             }
           </p>
@@ -280,7 +280,7 @@ export default function Oakgen() {
               </defs>
               <rect width="400" height="300" fill="url(#og3)"/>
               {[30,48,66,84,102,120,138,156,174,192,210,228,246,264,282,300,318,336,354].map((x, i) => (
-                <rect key={x} x={x} y={150 - [40,60,30,70,50,80,55,35,75,50,90,60,30,65,45,80,50,35,60][i]} width="10" height={[80,120,60,140,100,160,110,70,150,100,180,120,60,130,90,160,100,70,120][i]} rx="5" fill={i % 3 === 2 ? '#ec4899' : '#a855f7'} opacity="0.75"/>
+                <rect key={x} x={x} y={150, [40,60,30,70,50,80,55,35,75,50,90,60,30,65,45,80,50,35,60][i]} width="10" height={[80,120,60,140,100,160,110,70,150,100,180,120,60,130,90,160,100,70,120][i]} rx="5" fill={i % 3 === 2 ? '#ec4899' : '#a855f7'} opacity="0.75"/>
               ))}
               <text x="155" y="55" fill="#a855f7" fontSize="28" opacity="0.5">♪</text>
               <rect x="30" y="210" width="340" height="40" rx="8" fill="rgba(0,0,0,0.4)" stroke="rgba(168,85,247,0.2)" strokeWidth="1"/>
@@ -326,7 +326,7 @@ export default function Oakgen() {
           {isDE ? <>Die besten Modelle.<br />Ein Guthaben.</> : <>The best models.<br />One credit.</>}
         </h2>
         <p className="text-white/50 text-lg max-w-lg mb-10 leading-relaxed">
-          {isDE ? 'Oakgen integriert die leistungsstärksten KI-Modelle der Welt – und erweitert das Angebot laufend.' : 'Oakgen integrates the most powerful AI models in the world — and continuously expands the offering.'}
+          {isDE ? 'Oakgen integriert die leistungsstärksten KI-Modelle der Welt, und erweitert das Angebot laufend.' : 'Oakgen integrates the most powerful AI models in the world — and continuously expands the offering.'}
         </p>
         <div className="flex flex-wrap gap-2.5">
           {models.map(m => (
@@ -351,7 +351,7 @@ export default function Oakgen() {
         <p className="text-green-400 text-xs font-bold tracking-[0.12em] uppercase mb-3">{isDE ? 'Für wen?' : 'Who is it for?'}</p>
         <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4 tracking-tight">{isDE ? 'Für jeden Kreativen' : 'For every creative'}</h2>
         <p className="text-white/50 text-lg max-w-lg mb-12 leading-relaxed">
-          {isDE ? 'Egal ob Solopreneur, Agentur oder Content Creator – Oakgen passt sich deinem Workflow an.' : 'Whether solopreneur, agency or content creator — Oakgen adapts to your workflow.'}
+          {isDE ? 'Egal ob Solopreneur, Agentur oder Content Creator, Oakgen passt sich deinem Workflow an.' : 'Whether solopreneur, agency or content creator — Oakgen adapts to your workflow.'}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {displayUsecases.map(u => (
@@ -404,7 +404,7 @@ export default function Oakgen() {
           <div className="text-amber-400 text-xl tracking-widest mb-4">★★★★★</div>
           <blockquote className="text-white/80 text-lg italic leading-relaxed mb-5">
             {isDE
-              ? '„Als Solo-Gründer ist Oakgen mein komplettes Kreativteam. Demo-Videos, Feature-Ankündigungen, Social Proof – alles in einem Nachmittag erledigt. Kein $2.000-Freelancer-Budget mehr nötig."'
+              ? '„Als Solo-Gründer ist Oakgen mein komplettes Kreativteam. Demo-Videos, Feature-Ankündigungen, Social Proof, alles in einem Nachmittag erledigt. Kein $2.000-Freelancer-Budget mehr nötig."'
               : '"As a solo founder, Oakgen is my entire creative team. Demo videos, feature announcements, social proof — all done in one afternoon. No more $2,000 freelancer budget needed."'
             }
           </blockquote>
@@ -423,7 +423,7 @@ export default function Oakgen() {
               {isDE ? <>Bereit für dein<br /><span className="text-green-400">KI Studio?</span></> : <>Ready for your<br /><span className="text-green-400">AI Studio?</span></>}
             </h2>
             <p className="text-white/50 text-lg mb-10 max-w-md mx-auto">
-              {isDE ? 'Starte heute mit Oakgen.ai – 200+ Modelle, ein Abo, unbegrenzte Kreativität.' : 'Start today with Oakgen.ai — 200+ models, one subscription, unlimited creativity.'}
+              {isDE ? 'Starte heute mit Oakgen.ai, 200+ Modelle, ein Abo, unbegrenzte Kreativität.' : 'Start today with Oakgen.ai — 200+ models, one subscription, unlimited creativity.'}
             </p>
             <a
               href={LINK}
@@ -441,9 +441,10 @@ export default function Oakgen() {
       {/* Affiliate note */}
       <div className="max-w-5xl mx-auto px-4 text-center">
         <p className="text-white/25 text-xs">
-          {isDE ? 'Diese Seite enthält Affiliate-Links. Bei einem Kauf erhalten wir eine kleine Provision – für dich entstehen keine Mehrkosten.' : 'This page contains affiliate links. If you make a purchase, we receive a small commission — at no extra cost to you.'}
+          {isDE ? 'Diese Seite enthält Affiliate-Links. Bei einem Kauf erhalten wir eine kleine Provision, für dich entstehen keine Mehrkosten.' : 'This page contains affiliate links. If you make a purchase, we receive a small commission — at no extra cost to you.'}
         </p>
       </div>
     </div>
   )
 }
+

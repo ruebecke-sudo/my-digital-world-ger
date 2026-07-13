@@ -1,4 +1,4 @@
-import { ExternalLink, CheckCircle, Layout, Code, Zap } from 'lucide-react'
+﻿import { ExternalLink, CheckCircle, Layout, Code, Zap } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 const features = [
@@ -196,7 +196,7 @@ export default function FigmaWeave() {
           {isDE ? <>Gebaut für schnelles,<br />präzises Design</> : <>Built for fast,<br />precise design</>}
         </h2>
         <p className="text-white/50 text-lg max-w-xl mb-12 leading-relaxed">
-          {isDE ? 'Egal ob einfache Website oder komplexes Design-System – Figma Weave gibt dir die nötigen Werkzeuge an die Hand.' : 'Whether simple website or complex design system — Figma Weave gives you the tools you need.'}
+          {isDE ? 'Egal ob einfache Website oder komplexes Design-System, Figma Weave gibt dir die nötigen Werkzeuge an die Hand.' : 'Whether simple website or complex design system — Figma Weave gives you the tools you need.'}
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {displayFeatures.map(f => (
@@ -291,3 +291,4 @@ export default function FigmaWeave() {
     </div>
   )
 }
+

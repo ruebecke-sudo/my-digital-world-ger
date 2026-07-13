@@ -1,4 +1,4 @@
-import { ExternalLink, CheckCircle, Video, Image, Zap, Sparkles, TrendingUp } from 'lucide-react'
+﻿import { ExternalLink, CheckCircle, Video, Image, Zap, Sparkles, TrendingUp } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 const features = [
@@ -61,7 +61,7 @@ const usecases = [
   {
     icon: '🛒',
     title: 'E-Commerce Händler',
-    text: 'Präsentiere deine Produkte in verkaufsstarken Kulissen für Shopify, Amazon und Co. – ganz ohne teures physisches Fotostudio.',
+    text: 'Präsentiere deine Produkte in verkaufsstarken Kulissen für Shopify, Amazon und Co., ganz ohne teures physisches Fotostudio.',
   },
   {
     icon: '📐',
@@ -295,3 +295,4 @@ export default function MdwIvGenerator() {
     </div>
   )
 }
+

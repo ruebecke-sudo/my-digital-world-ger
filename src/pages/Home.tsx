@@ -1,4 +1,4 @@
-import { Link } from 'wouter'
+﻿import { Link } from 'wouter'
 import { ArrowRight, Monitor, Share2, Bot, Video, CheckCircle2, Star } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -22,12 +22,12 @@ export default function Home() {
 
   const leistungen = isDE
     ? [
-        { title: 'Website Development', text: 'Eine professionelle Webseite überzeugt Kunden, schafft Vertrauen und macht Sie sichtbar. My digital world erstellt moderne, mobiloptimierte Seiten – individuell, benutzerfreundlich und suchmaschinenoptimiert.', href: '/aktionspreis-fuer-webseiten', cta: 'Mehr Infos' },
-        { title: 'soc. media marketing', text: 'Social Media stärkt Ihre Marke und bringt neue Kunden. My digital world entwickelt individuelle Strategien für Facebook, Instagram & Co. – mit kreativem Content und klarer Planung.', href: '/soc-media-marketing', cta: 'Mehr Infos' },
-        { title: 'print- produkte', text: 'Print bleibt stark – vor allem regional. Wir gestalten hochwertige Flyer, Magazine und Poster, die visuell überzeugen und Ihre Botschaft klar vermitteln – vom Design bis zur Druckdatei.', href: '/kontakt', cta: 'Kontakt' },
-        { title: 'Präsentiere Dich digital', text: 'In der heutigen Geschäftswelt zählt der erste Eindruck – und eine überzeugende Präsentation kann den entscheidenden Unterschied machen. Ich unterstütze Sie dabei, Ihre Inhalte klar, strukturiert und visuell ansprechend darzustellen.', href: '/digitale-praesentationen', cta: 'Mehr Infos' },
-        { title: 'ki applications', text: 'Künstliche Intelligenz macht Marketing smart. Ob Text, Bild oder Analyse – My digital world nutzt moderne KI-Tools, um Ihre Projekte effizient und zielgerichtet umzusetzen.', href: '/ki-agenten', cta: 'Mehr Infos' },
-        { title: 'Dig. Transformation', text: 'Das Bild wird künstlerisch überarbeitet. Ob knallige Farben, abstrahierte Details oder ein Mix aus mehreren Varianten – hier entsteht aus Deinem Bild ein echtes Unikat.', href: '/digitale-transformation', cta: 'Mehr Infos' },
+        { title: 'Website Development', text: 'Eine professionelle Webseite überzeugt Kunden, schafft Vertrauen und macht Sie sichtbar. My digital world erstellt moderne, mobiloptimierte Seiten, individuell, benutzerfreundlich und suchmaschinenoptimiert.', href: '/aktionspreis-fuer-webseiten', cta: 'Mehr Infos' },
+        { title: 'soc. media marketing', text: 'Social Media stärkt Ihre Marke und bringt neue Kunden. My digital world entwickelt individuelle Strategien für Facebook, Instagram & Co., mit kreativem Content und klarer Planung.', href: '/soc-media-marketing', cta: 'Mehr Infos' },
+        { title: 'print- produkte', text: 'Print bleibt stark, vor allem regional. Wir gestalten hochwertige Flyer, Magazine und Poster, die visuell überzeugen und Ihre Botschaft klar vermitteln, vom Design bis zur Druckdatei.', href: '/kontakt', cta: 'Kontakt' },
+        { title: 'Präsentiere Dich digital', text: 'In der heutigen Geschäftswelt zählt der erste Eindruck, und eine überzeugende Präsentation kann den entscheidenden Unterschied machen. Ich unterstütze Sie dabei, Ihre Inhalte klar, strukturiert und visuell ansprechend darzustellen.', href: '/digitale-praesentationen', cta: 'Mehr Infos' },
+        { title: 'ki applications', text: 'Künstliche Intelligenz macht Marketing smart. Ob Text, Bild oder Analyse, My digital world nutzt moderne KI-Tools, um Ihre Projekte effizient und zielgerichtet umzusetzen.', href: '/ki-agenten', cta: 'Mehr Infos' },
+        { title: 'Dig. Transformation', text: 'Das Bild wird künstlerisch überarbeitet. Ob knallige Farben, abstrahierte Details oder ein Mix aus mehreren Varianten, hier entsteht aus Deinem Bild ein echtes Unikat.', href: '/digitale-transformation', cta: 'Mehr Infos' },
       ]
     : [
         { title: 'Website Development', text: 'A professional website convinces customers, builds trust and makes you visible. My digital world creates modern, mobile-optimized pages — individual, user-friendly and SEO-optimized.', href: '/aktionspreis-fuer-webseiten', cta: 'Learn more' },
@@ -40,9 +40,9 @@ export default function Home() {
 
   const gruende = isDE
     ? [
-        { title: 'Digitale Lösungen, die wirklich etwas bewegen', text: 'Mit My Digital World setzen Sie nicht auf Standard – sondern auf maßgeschneiderte Strategien, die exakt auf Ihre Bedürfnisse zugeschnitten sind. Ob Website, Online-Marketing oder digitale Transformation: Wir denken ganzheitlich, handeln effizient und liefern Ergebnisse, die sichtbar und messbar sind.' },
-        { title: 'Partnerschaft auf Augenhöhe statt anonymer Dienstleister', text: 'Bei uns stehen Sie im Mittelpunkt. Als Ihr digitaler Partner begleiten wir Sie transparent, persönlich und engagiert – von der ersten Idee bis zur erfolgreichen Umsetzung. Wir sprechen Ihre Sprache und setzen auf langfristige Zusammenarbeit mit klaren Zielen und echtem Mehrwert.' },
-        { title: 'Mehr Sichtbarkeit. Mehr Reichweite. Mehr Erfolg.', text: 'Mit unserem umfassenden Know-how im digitalen Bereich bringen wir Ihr Business nach vorn. Durch datengetriebenes Online-Marketing, moderne Webtechnologien und kreative Konzepte sorgen wir für nachhaltiges Wachstum – damit Sie nicht nur mithalten, sondern vorausgehen.' },
+        { title: 'Digitale Lösungen, die wirklich etwas bewegen', text: 'Mit My Digital World setzen Sie nicht auf Standard, sondern auf maßgeschneiderte Strategien, die exakt auf Ihre Bedürfnisse zugeschnitten sind. Ob Website, Online-Marketing oder digitale Transformation: Wir denken ganzheitlich, handeln effizient und liefern Ergebnisse, die sichtbar und messbar sind.' },
+        { title: 'Partnerschaft auf Augenhöhe statt anonymer Dienstleister', text: 'Bei uns stehen Sie im Mittelpunkt. Als Ihr digitaler Partner begleiten wir Sie transparent, persönlich und engagiert, von der ersten Idee bis zur erfolgreichen Umsetzung. Wir sprechen Ihre Sprache und setzen auf langfristige Zusammenarbeit mit klaren Zielen und echtem Mehrwert.' },
+        { title: 'Mehr Sichtbarkeit. Mehr Reichweite. Mehr Erfolg.', text: 'Mit unserem umfassenden Know-how im digitalen Bereich bringen wir Ihr Business nach vorn. Durch datengetriebenes Online-Marketing, moderne Webtechnologien und kreative Konzepte sorgen wir für nachhaltiges Wachstum, damit Sie nicht nur mithalten, sondern vorausgehen.' },
       ]
     : [
         { title: 'Digital solutions that truly make a difference', text: "With My Digital World you don't settle for standard — but for tailored strategies precisely suited to your needs. Whether website, online marketing or digital transformation: we think holistically, act efficiently and deliver results that are visible and measurable." },
@@ -118,7 +118,7 @@ export default function Home() {
               <div className="space-y-4 text-white/75 leading-relaxed text-base">
                 {isDE ? (
                   <>
-                    <p>Die digitale Welt ist rasant gewachsen – doch ich bin ihr einen Schritt voraus. Denn meine Reise begann lange vor dem digitalen Zeitalter, in der analogen Welt der klassischen Mediengestaltung.</p>
+                    <p>Die digitale Welt ist rasant gewachsen, doch ich bin ihr einen Schritt voraus. Denn meine Reise begann lange vor dem digitalen Zeitalter, in der analogen Welt der klassischen Mediengestaltung.</p>
                     <p>Als ausgebildeter Mediendesigner habe ich den Wandel zur Digitalisierung nicht nur miterlebt, sondern aktiv mitgestaltet. Dieses Wissen aus beiden Welten setze ich heute gezielt für meine Kunden ein: bei der Erstellung moderner Webseiten, im Social Media Marketing und in der digitalen Content-Produktion.</p>
                     <p>Wer auf digitale Lösungen setzt, profitiert bei mir nicht nur von technischem Know-how, sondern auch von einem breiten Erfahrungsschatz.</p>
                   </>
@@ -281,3 +281,4 @@ export default function Home() {
     </div>
   )
 }
+

@@ -1,4 +1,4 @@
-import { Link } from 'wouter'
+﻿import { Link } from 'wouter'
 import { Mail, Phone, MessageCircle, Zap } from 'lucide-react'
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
 import { useLanguage } from '../context/LanguageContext'
@@ -106,7 +106,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/55 text-sm">© 2025 My digital world – Rüdiger Becker</p>
+          <p className="text-white/55 text-sm">© 2025 My digital world, Rüdiger Becker</p>
           <div className="flex items-center gap-6">
             <Link href="/impressum"><span className="text-white/55 text-sm hover:text-white/75 transition-colors cursor-pointer">Impressum</span></Link>
             <Link href="/datenschutz"><span className="text-white/55 text-sm hover:text-white/75 transition-colors cursor-pointer">Datenschutz</span></Link>
@@ -117,3 +117,4 @@ export function Footer() {
     </footer>
   )
 }
+

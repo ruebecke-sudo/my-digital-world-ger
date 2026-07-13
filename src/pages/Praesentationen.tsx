@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle, ExternalLink, Sparkles, Play, Monitor } from 'lucide-react'
+﻿import { ArrowRight, CheckCircle, ExternalLink, Sparkles, Play, Monitor } from 'lucide-react'
 import { Link } from 'wouter'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -99,7 +99,7 @@ export default function Praesentationen() {
                 </h2>
                 <p className="text-white/70 text-base leading-relaxed mb-6 max-w-lg">
                   {isDE
-                    ? 'Entdecken Sie, wie moderne KI-gestützte Marketing-Präsentationen aussehen können – interaktiv, professionell und auf Ihr Unternehmen zugeschnitten.'
+                    ? 'Entdecken Sie, wie moderne KI-gestützte Marketing-Präsentationen aussehen können, interaktiv, professionell und auf Ihr Unternehmen zugeschnitten.'
                     : 'Discover what modern AI-powered marketing presentations can look like — interactive, professional and tailored to your company.'
                   }
                 </p>
@@ -178,7 +178,7 @@ export default function Praesentationen() {
           </h2>
           <p className="text-white/70 text-base mb-6">
             {isDE
-              ? 'Setzen Sie auf eine Präsentation, die Ihr Unternehmen professionell repräsentiert – visuell überzeugend, inhaltlich auf den Punkt.'
+              ? 'Setzen Sie auf eine Präsentation, die Ihr Unternehmen professionell repräsentiert, visuell überzeugend, inhaltlich auf den Punkt.'
               : 'Rely on a presentation that represents your company professionally — visually convincing, content right on point.'
             }
           </p>
@@ -203,3 +203,4 @@ export default function Praesentationen() {
     </div>
   )
 }
+

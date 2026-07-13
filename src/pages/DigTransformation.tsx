@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle } from 'lucide-react'
+﻿import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Link } from 'wouter'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -22,9 +22,9 @@ export default function DigTransformation() {
 
   const varianten = isDE
     ? [
-        { titel: 'Pop Art Stil', text: 'Knallige Farben und kontrastreiche Darstellung im Stil von Andy Warhol – ausdrucksstark und einzigartig.' },
-        { titel: 'Abstrakte Kunst', text: 'Abstrahierte Details und künstlerische Überarbeitung – aus Ihrem Foto wird ein modernes Kunstwerk.' },
-        { titel: 'Mix & Varianten', text: 'Kombinationen verschiedener Stile und mehrere Varianten – Sie wählen Ihren Favoriten.' },
+        { titel: 'Pop Art Stil', text: 'Knallige Farben und kontrastreiche Darstellung im Stil von Andy Warhol, ausdrucksstark und einzigartig.' },
+        { titel: 'Abstrakte Kunst', text: 'Abstrahierte Details und künstlerische Überarbeitung, aus Ihrem Foto wird ein modernes Kunstwerk.' },
+        { titel: 'Mix & Varianten', text: 'Kombinationen verschiedener Stile und mehrere Varianten, Sie wählen Ihren Favoriten.' },
       ]
     : [
         { titel: 'Pop Art Style', text: 'Bold colors and high-contrast presentation in the style of Andy Warhol — expressive and unique.' },
@@ -58,12 +58,12 @@ export default function DigTransformation() {
         <div className="glass rounded-2xl border border-white/5 p-8">
           <p className="text-white/70 text-base leading-relaxed mb-6">
             <strong className="text-white">
-              {isDE ? 'Ein Bild sagt mehr als tausend Worte – und in einem einzigartigen Kunststil sagt es noch mehr.' : 'A picture says more than a thousand words — and in a unique art style it says even more.'}
+              {isDE ? 'Ein Bild sagt mehr als tausend Worte, und in einem einzigartigen Kunststil sagt es noch mehr.' : 'A picture says more than a thousand words — and in a unique art style it says even more.'}
             </strong>
           </p>
           <p className="text-white/70 text-base leading-relaxed mb-4">
             {isDE
-              ? 'Stellen Sie sich vor, Ihr Lieblingsfoto – ob ein Porträt, ein Familienbild, ein Haustier oder ein besonderer Moment – verwandelt sich in ein modernes Kunstwerk im Stil von Andy Warhol. Ausdrucksstark, farbintensiv und absolut individuell.'
+              ? 'Stellen Sie sich vor, Ihr Lieblingsfoto, ob ein Porträt, ein Familienbild, ein Haustier oder ein besonderer Moment, verwandelt sich in ein modernes Kunstwerk im Stil von Andy Warhol. Ausdrucksstark, farbintensiv und absolut individuell.'
               : 'Imagine your favorite photo — whether a portrait, a family picture, a pet or a special moment — transforming into a modern artwork in the style of Andy Warhol. Expressive, color-intense and absolutely individual.'
             }
           </p>
@@ -109,3 +109,4 @@ export default function DigTransformation() {
     </div>
   )
 }
+

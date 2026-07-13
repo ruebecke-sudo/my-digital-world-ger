@@ -1,4 +1,4 @@
-import { Globe, Share2, TrendingUp, Video, Brain, Presentation, Palette, ArrowRight, CheckCircle, Mail, Phone } from 'lucide-react'
+﻿import { Globe, Share2, TrendingUp, Video, Brain, Presentation, Palette, ArrowRight, CheckCircle, Mail, Phone } from 'lucide-react'
 import { Link } from 'wouter'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -8,7 +8,7 @@ const leistungen = [
     icon: Globe,
     titel: 'Webdesign & Webseitenerstellung',
     untertitel: 'Professionelle Webpräsenzen, die überzeugen',
-    beschreibung: 'Eine professionelle Webseite überzeugt Kunden, schafft Vertrauen und macht sichtbar. My Digital World erstellt moderne, mobiloptimierte Seiten – individuell, benutzerfreundlich und suchmaschinenoptimiert.',
+    beschreibung: 'Eine professionelle Webseite überzeugt Kunden, schafft Vertrauen und macht sichtbar. My Digital World erstellt moderne, mobiloptimierte Seiten, individuell, benutzerfreundlich und suchmaschinenoptimiert.',
     vorteile: [
       'Individuelles Design nach Ihren Wünschen',
       'Vollständig mobiloptimiert (Responsive Design)',
@@ -42,7 +42,7 @@ const leistungen = [
     icon: TrendingUp,
     titel: 'Kunden-Funnel',
     untertitel: 'Systematisch mehr Kunden gewinnen',
-    beschreibung: 'Ein Kundenfunnel beschreibt den strukturierten Weg, den eine Person vom ersten Kontakt mit einem Unternehmen bis zum Kauf durchläuft – er macht aus Fremden Schritt für Schritt zahlende Kunden, systematisch statt zufällig.',
+    beschreibung: 'Ein Kundenfunnel beschreibt den strukturierten Weg, den eine Person vom ersten Kontakt mit einem Unternehmen bis zum Kauf durchläuft, er macht aus Fremden Schritt für Schritt zahlende Kunden, systematisch statt zufällig.',
     vorteile: [
       'Analyse der Zielgruppe und Customer Journey',
       'Landing Pages mit hoher Conversion Rate',
@@ -59,7 +59,7 @@ const leistungen = [
     icon: Video,
     titel: 'Kurzvideos & Reels',
     untertitel: 'Videos, die bewegen und begeistern',
-    beschreibung: 'Mit kurzen, knackigen Social-Media-Videos werden Zielgruppen bewegt – My Digital World produziert professionelle Kurzvideos für Facebook, Instagram, TikTok und Co. mit kreativem Content und klarer Planung.',
+    beschreibung: 'Mit kurzen, knackigen Social-Media-Videos werden Zielgruppen bewegt, My Digital World produziert professionelle Kurzvideos für Facebook, Instagram, TikTok und Co. mit kreativem Content und klarer Planung.',
     vorteile: [
       'Konzeption und Planung des Video-Contents',
       'Professioneller Schnitt und Bearbeitung',
@@ -76,7 +76,7 @@ const leistungen = [
     icon: Brain,
     titel: 'KI-gestütztes Marketing',
     untertitel: 'Marketing intelligent und effizient gestalten',
-    beschreibung: 'Künstliche Intelligenz macht Marketing smart: Ob Text, Bild oder Analyse – My Digital World nutzt moderne KI-Tools, um Projekte effizient und zielgerichtet umzusetzen und so den entscheidenden Wettbewerbsvorteil zu sichern.',
+    beschreibung: 'Künstliche Intelligenz macht Marketing smart: Ob Text, Bild oder Analyse, My Digital World nutzt moderne KI-Tools, um Projekte effizient und zielgerichtet umzusetzen und so den entscheidenden Wettbewerbsvorteil zu sichern.',
     vorteile: [
       'KI-generierte Texte und Copywriting',
       'KI-Bildgenerierung für Marketingmaterial',
@@ -110,7 +110,7 @@ const leistungen = [
     icon: Palette,
     titel: 'Künstlerische Bildbearbeitung',
     untertitel: 'Aus Ihrem Bild wird ein Unikat',
-    beschreibung: 'Ob knallige Farben, abstrahierte Details oder ein Mix aus mehreren Varianten – aus dem eigenen Bild wird ein echtes Unikat. Kreative Bildbearbeitung auf höchstem künstlerischen Niveau.',
+    beschreibung: 'Ob knallige Farben, abstrahierte Details oder ein Mix aus mehreren Varianten, aus dem eigenen Bild wird ein echtes Unikat. Kreative Bildbearbeitung auf höchstem künstlerischen Niveau.',
     vorteile: [
       'Individuelle Bildbearbeitung und Retusche',
       'Kreative Bildkomposita und Montagen',
@@ -141,7 +141,7 @@ export default function Leistungen() {
             {isDE ? <>Alles aus einer<br /><span className="gradient-text">digitalen Hand</span></> : <>All from one<br /><span className="gradient-text">digital source</span></>}
           </h1>
           <p className="text-white/70 text-base leading-relaxed" data-testid="text-leistungen-subtitle">
-            {isDE ? 'Von der Website bis zum KI-Marketing – My Digital World bietet Ihnen alle digitalen Leistungen, die Ihr Unternehmen nach vorne bringen.' : 'From the website to AI marketing — My Digital World offers you all the digital services that move your business forward.'}
+            {isDE ? 'Von der Website bis zum KI-Marketing, My Digital World bietet Ihnen alle digitalen Leistungen, die Ihr Unternehmen nach vorne bringen.' : 'From the website to AI marketing — My Digital World offers you all the digital services that move your business forward.'}
           </p>
         </div>
       </div>
@@ -217,3 +217,4 @@ export default function Leistungen() {
     </div>
   )
 }
+

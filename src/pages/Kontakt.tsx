@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { MessageCircle, Mail, Globe, CheckCircle } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -95,7 +95,7 @@ export default function Kontakt() {
               </h2>
               <p className="text-cyan-400 text-sm mb-6">
                 {isDE
-                  ? 'Das Formular öffnet Ihr E-Mail-Programm mit allen Angaben vorausgefüllt – Sie müssen nur noch auf Senden klicken.'
+                  ? 'Das Formular öffnet Ihr E-Mail-Programm mit allen Angaben vorausgefüllt, Sie müssen nur noch auf Senden klicken.'
                   : 'The form opens your email program with all details pre-filled — you just need to click Send.'
                 }
               </p>
@@ -186,3 +186,4 @@ export default function Kontakt() {
     </div>
   )
 }
+

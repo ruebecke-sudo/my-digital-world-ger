@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle } from 'lucide-react'
+﻿import { ArrowRight, CheckCircle } from 'lucide-react'
 import { Link } from 'wouter'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -10,10 +10,10 @@ export default function KiAgenten() {
     ? [
         { titel: 'Kundenservice', text: 'KI Agenten beantworten automatisch Anfragen, bieten Produktempfehlungen oder leiten komplexe Anliegen an den passenden Mitarbeiter weiter.' },
         { titel: 'Vertrieb & Marketing', text: 'Automatisierte Analyse-Tools erkennen Trends, segmentieren Zielgruppen und personalisieren Kampagnen in Echtzeit.' },
-        { titel: 'Projektmanagement', text: 'Digitale Assistenten können Aufgaben priorisieren, Zeitpläne überwachen und auf Engpässe hinweisen – bevor sie entstehen.' },
+        { titel: 'Projektmanagement', text: 'Digitale Assistenten können Aufgaben priorisieren, Zeitpläne überwachen und auf Engpässe hinweisen, bevor sie entstehen.' },
         { titel: 'Datenanalyse', text: 'KI Agenten durchforsten riesige Datenmengen, erkennen Muster und liefern fundierte Entscheidungsgrundlagen.' },
-        { titel: 'E-Commerce', text: 'Produktvorschläge, Chatbots, Bestellmanagement – KI Agenten sorgen für reibungslose Abläufe im Onlinehandel.' },
-        { titel: 'Personalmanagement', text: 'Vom automatisierten Bewerbungsscreening bis hin zur Mitarbeiterzufriedenheit – KI übernimmt Routineprozesse effizient und objektiv.' },
+        { titel: 'E-Commerce', text: 'Produktvorschläge, Chatbots, Bestellmanagement, KI Agenten sorgen für reibungslose Abläufe im Onlinehandel.' },
+        { titel: 'Personalmanagement', text: 'Vom automatisierten Bewerbungsscreening bis hin zur Mitarbeiterzufriedenheit, KI übernimmt Routineprozesse effizient und objektiv.' },
       ]
     : [
         { titel: 'Customer Service', text: 'AI agents automatically answer inquiries, offer product recommendations or forward complex concerns to the right employee.' },
@@ -26,11 +26,11 @@ export default function KiAgenten() {
 
   const vorteile = isDE
     ? [
-        { titel: '24/7 Verfügbarkeit', text: 'KI Agenten arbeiten ohne Pause – auch nachts, an Wochenenden und an Feiertagen.' },
+        { titel: '24/7 Verfügbarkeit', text: 'KI Agenten arbeiten ohne Pause, auch nachts, an Wochenenden und an Feiertagen.' },
         { titel: 'Kosteneinsparung', text: 'Durch die Automatisierung von Routineaufgaben lassen sich Personalkosten deutlich senken.' },
         { titel: 'Höhere Effizienz', text: 'Aufgaben werden schneller und fehlerfreier erledigt. Das steigert die Produktivität.' },
         { titel: 'Skalierbarkeit', text: 'Egal, ob 10 oder 10.000 Kundenanfragen: KI Agenten passen sich dem Volumen flexibel an.' },
-        { titel: 'Personalisierte Kundenansprache', text: 'Durch intelligentes Nutzerverhalten bieten KI Agenten individuell zugeschnittene Lösungen – automatisch.' },
+        { titel: 'Personalisierte Kundenansprache', text: 'Durch intelligentes Nutzerverhalten bieten KI Agenten individuell zugeschnittene Lösungen, automatisch.' },
         { titel: 'Wettbewerbsvorteil', text: 'Wer früh auf KI setzt, verschafft sich einen Vorsprung gegenüber der Konkurrenz.' },
       ]
     : [
@@ -62,9 +62,9 @@ export default function KiAgenten() {
           <h2 className="font-display font-bold text-white text-xl mb-4">{isDE ? 'Was sind KI Agenten' : 'What are AI Agents'}</h2>
           {isDE ? (
             <>
-              <p className="text-white/70 text-base leading-relaxed mb-4">Künstliche Intelligenz (KI) ist längst kein Zukunftsthema mehr – sie ist Gegenwart. Besonders spannend ist der Einsatz sogenannter <strong className="text-white">KI Agenten</strong>. Dabei handelt es sich um digitale Systeme, die eigenständig Aufgaben erledigen, Entscheidungen treffen oder auf Basis von Daten lernen.</p>
+              <p className="text-white/70 text-base leading-relaxed mb-4">Künstliche Intelligenz (KI) ist längst kein Zukunftsthema mehr, sie ist Gegenwart. Besonders spannend ist der Einsatz sogenannter <strong className="text-white">KI Agenten</strong>. Dabei handelt es sich um digitale Systeme, die eigenständig Aufgaben erledigen, Entscheidungen treffen oder auf Basis von Daten lernen.</p>
               <p className="text-white/70 text-base leading-relaxed mb-4">Anders als herkömmliche Software sind KI Agenten adaptiv: Sie passen sich an neue Situationen an, lernen aus Fehlern und optimieren ihr Verhalten im Laufe der Zeit.</p>
-              <p className="text-white/70 text-base leading-relaxed">Ob in der Kundenkommunikation, im Vertrieb, im Projektmanagement oder im E-Commerce – KI Agenten lassen sich flexibel in Geschäftsprozesse integrieren. Sie agieren rund um die Uhr, reagieren blitzschnell auf Veränderungen und entlasten Mitarbeiter effektiv.</p>
+              <p className="text-white/70 text-base leading-relaxed">Ob in der Kundenkommunikation, im Vertrieb, im Projektmanagement oder im E-Commerce, KI Agenten lassen sich flexibel in Geschäftsprozesse integrieren. Sie agieren rund um die Uhr, reagieren blitzschnell auf Veränderungen und entlasten Mitarbeiter effektiv.</p>
             </>
           ) : (
             <>
@@ -79,8 +79,8 @@ export default function KiAgenten() {
           <h2 className="font-display font-bold text-white text-xl mb-4">{isDE ? 'Warum Sie jetzt handeln sollten' : 'Why you should act now'}</h2>
           {isDE ? (
             <>
-              <p className="text-white/70 text-base leading-relaxed mb-4">Die digitale Transformation ist kein vorübergehender Trend – sie ist ein Muss für zukunftsorientierte Unternehmen. KI Agenten bieten Ihnen die Möglichkeit, komplexe Prozesse zu automatisieren, Ressourcen effizienter zu nutzen und Ihre Kundenbindung zu verbessern.</p>
-              <p className="text-white/70 text-base leading-relaxed">Unsere KI-Lösungen sind <strong className="text-cyan-400">individuell anpassbar, sofort einsatzbereit und skalierbar</strong> – ganz gleich, ob Sie erste Schritte gehen oder bestehende Systeme erweitern möchten.</p>
+              <p className="text-white/70 text-base leading-relaxed mb-4">Die digitale Transformation ist kein vorübergehender Trend, sie ist ein Muss für zukunftsorientierte Unternehmen. KI Agenten bieten Ihnen die Möglichkeit, komplexe Prozesse zu automatisieren, Ressourcen effizienter zu nutzen und Ihre Kundenbindung zu verbessern.</p>
+              <p className="text-white/70 text-base leading-relaxed">Unsere KI-Lösungen sind <strong className="text-cyan-400">individuell anpassbar, sofort einsatzbereit und skalierbar</strong>, ganz gleich, ob Sie erste Schritte gehen oder bestehende Systeme erweitern möchten.</p>
             </>
           ) : (
             <>
@@ -128,7 +128,7 @@ export default function KiAgenten() {
           <h2 className="font-display font-bold text-white text-xl mb-4">{isDE ? 'Jetzt beraten lassen' : 'Get advice now'}</h2>
           <p className="text-white/70 text-base mb-6">
             {isDE
-              ? 'Diese Vorteile machen KI Agenten zu einem echten Game-Changer – besonders in einem zunehmend digitalen Marktumfeld.'
+              ? 'Diese Vorteile machen KI Agenten zu einem echten Game-Changer, besonders in einem zunehmend digitalen Marktumfeld.'
               : 'These advantages make AI agents a real game-changer — especially in an increasingly digital market environment.'
             }
           </p>
@@ -142,3 +142,4 @@ export default function KiAgenten() {
     </div>
   )
 }
+
