@@ -467,6 +467,7 @@ const programme: Programme[] = [
         { Icon: Zap, label: 'Interaktive Vektor-Prototypen', color: '#fbbf24' },
       ],
       cta: 'Figma Weave starten',
+      infoLink: '/figma-weave',
     },
   },
   {
