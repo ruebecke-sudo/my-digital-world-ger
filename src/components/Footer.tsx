@@ -114,6 +114,8 @@ export function Footer() {
           </div>
         </div>
       </div>
+      {/* Metricool Tracking Code */}
+      <img src="https://tracker.metricool.com/c3po.jpg?hash=f752fefe127edc83947dedc1ff6fd22c" alt="" style={{ display: 'none' }} />
     </footer>
   )
 }

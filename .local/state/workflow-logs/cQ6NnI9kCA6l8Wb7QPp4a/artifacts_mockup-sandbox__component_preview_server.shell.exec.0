@@ -1,0 +1,16 @@
+[1G[0K⠙[1G[0K
+> mockup-sandbox@0.0.0 dev
+> vite --config vite.config.ts --host 0.0.0.0
+
+[1G[0K⠙[1G[0K[31merror when starting dev server:
+Error: Port 23636 is already in use
+    at Server.onError$1 (file:///home/runner/workspace/artifacts/mockup-sandbox/node_modules/vite/dist/node/chunks/config.js:14949:28)
+    at Server.emit (node:events:524:28)
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)[39m
+[1G[0K⠙[1G[0K[1mnpm[22m [96mnotice[39m
+[1mnpm[22m [96mnotice[39m New [31mmajor[39m version of npm available! [31m10.8.2[39m -> [34m11.16.0[39m
+[1mnpm[22m [96mnotice[39m Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.16.0[39m
+[1mnpm[22m [96mnotice[39m To update run: [4mnpm install -g npm@11.16.0[24m
+[1mnpm[22m [96mnotice[39m
+[1G[0K⠙[1G[0K
