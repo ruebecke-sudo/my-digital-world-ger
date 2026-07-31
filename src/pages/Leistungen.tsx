@@ -1,4 +1,4 @@
-﻿import { Globe, Share2, TrendingUp, Video, Brain, Presentation, Palette, ArrowRight, CheckCircle, Mail, Phone } from 'lucide-react'
+import { Globe, Share2, TrendingUp, Video, Brain, Presentation, Palette, ArrowRight, CheckCircle, Mail, Phone, Star } from 'lucide-react'
 import { Link } from 'wouter'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -122,6 +122,22 @@ const leistungen = [
     grenze: 'border-rose-500/30',
     iconFarbe: 'text-rose-400',
   },
+  {
+    id: 'empfehlungen',
+    icon: Star,
+    titel: 'Empfehlungen & Deals',
+    untertitel: 'Sparen mit exklusiven Angeboten',
+    beschreibung: 'Wir teilen unsere besten Empfehlungen und exklusiven Rabatte für erstklassige Tools und Dienstleistungen unserer Partner wie rabot.energy, damit Ihr Business wachsen kann und Sie Kosten sparen.',
+    vorteile: [
+      'Exklusive Rabattcodes und Wechselboni',
+      'Geprüfte und nützliche Partner-Dienste',
+      'Einfaches Kopieren der Aktionscodes',
+      'Regelmäßige Updates neuer Deals',
+    ],
+    farbe: 'from-amber-500/20 to-yellow-500/10',
+    grenze: 'border-amber-500/30',
+    iconFarbe: 'text-amber-400',
+  },
 ]
 
 export default function Leistungen() {
@@ -167,9 +183,11 @@ export default function Leistungen() {
                   <p className={`text-sm font-medium mb-2 ${leistung.iconFarbe}`}>{leistung.untertitel}</p>
                   <h2 className="font-display font-bold text-white text-2xl md:text-3xl mb-4 leading-tight">{leistung.titel}</h2>
                   <p className="text-white/75 text-base leading-relaxed mb-6">{leistung.beschreibung}</p>
-                  <Link href="/programme">
+                  <Link href={leistung.id === 'empfehlungen' ? '/empfehlungen' : '/programme'}>
                     <button className="btn-outline flex items-center gap-2 text-base" data-testid={`button-leistung-programme-${leistung.id}`}>
-                      {isDE ? 'Passende Programme ansehen' : 'View matching programs'}
+                      {leistung.id === 'empfehlungen' 
+                        ? (isDE ? 'Zu den Deals' : 'View deals') 
+                        : (isDE ? 'Passende Programme ansehen' : 'View matching programs')}
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </Link>

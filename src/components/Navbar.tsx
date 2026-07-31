@@ -104,6 +104,12 @@ export function Navbar() {
               </span>
             </Link>
 
+            <Link href="/empfehlungen" data-testid="link-nav-empfehlungen">
+              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/empfehlungen' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+                Empfehlungen
+              </span>
+            </Link>
+
             <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer" data-testid="link-nav-avgenerator">
               <span className="inline-flex items-center gap-1.5 text-base font-medium text-orange-400 hover:text-orange-300 cursor-pointer">
                 MDW-IV-Generator
@@ -151,6 +157,7 @@ export function Navbar() {
             </div>
             <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Tools & Programme</span></Link>
             <Link href="/for-free"><span onClick={() => setIsOpen(false)} className={`block py-2 text-base font-medium transition-colors cursor-pointer ${location === '/for-free' ? 'text-green-400' : 'text-green-400 hover:text-green-300'}`}>For free</span></Link>
+            <Link href="/empfehlungen"><span onClick={() => setIsOpen(false)} className={`block py-2 text-base font-medium transition-colors cursor-pointer ${location === '/empfehlungen' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>Empfehlungen</span></Link>
             <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer"><span onClick={() => setIsOpen(false)} className="flex items-center gap-2 py-2 text-base font-medium text-orange-400 hover:text-orange-300 cursor-pointer">MDW-IV-Generator <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-500 text-black leading-none">NEU</span></span></a>
             <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
             <Link href="/kontakt">

@@ -1,4 +1,4 @@
-﻿import { Link } from 'wouter'
+import { Link } from 'wouter'
 import { ArrowRight, Monitor, Share2, Bot, Video, CheckCircle2, Star } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -28,6 +28,7 @@ export default function Home() {
         { title: 'Präsentiere Dich digital', text: 'In der heutigen Geschäftswelt zählt der erste Eindruck, und eine überzeugende Präsentation kann den entscheidenden Unterschied machen. Ich unterstütze Sie dabei, Ihre Inhalte klar, strukturiert und visuell ansprechend darzustellen.', href: '/digitale-praesentationen', cta: 'Mehr Infos' },
         { title: 'ki applications', text: 'Künstliche Intelligenz macht Marketing smart. Ob Text, Bild oder Analyse, My digital world nutzt moderne KI-Tools, um Ihre Projekte effizient und zielgerichtet umzusetzen.', href: '/ki-agenten', cta: 'Mehr Infos' },
         { title: 'Dig. Transformation', text: 'Das Bild wird künstlerisch überarbeitet. Ob knallige Farben, abstrahierte Details oder ein Mix aus mehreren Varianten, hier entsteht aus Deinem Bild ein echtes Unikat.', href: '/digitale-transformation', cta: 'Mehr Infos' },
+        { title: 'Empfehlungen & Deals', text: 'Sparen Sie bares Geld mit unseren exklusiven Empfehlungen und Rabattcodes für erstklassige Partnerdienste wie rabot.energy.', href: '/empfehlungen', cta: 'Zu den Deals' },
       ]
     : [
         { title: 'Website Development', text: 'A professional website convinces customers, builds trust and makes you visible. My digital world creates modern, mobile-optimized pages — individual, user-friendly and SEO-optimized.', href: '/aktionspreis-fuer-webseiten', cta: 'Learn more' },
@@ -36,6 +37,7 @@ export default function Home() {
         { title: 'Present Yourself Digitally', text: "In today's business world, first impressions count — and a compelling presentation can make the decisive difference. I support you in presenting your content clearly, structured and visually appealing.", href: '/digitale-praesentationen', cta: 'Learn more' },
         { title: 'AI Applications', text: 'Artificial intelligence makes marketing smart. Whether text, image or analysis — My digital world uses modern AI tools to implement your projects efficiently and purposefully.', href: '/ki-agenten', cta: 'Learn more' },
         { title: 'Dig. Transformation', text: 'Your photo is artistically reworked. Whether bold colors, abstracted details or a mix of several variants — your image becomes a unique artwork.', href: '/digitale-transformation', cta: 'Learn more' },
+        { title: 'Recommendations & Deals', text: 'Save real money with our exclusive recommendations and discount codes for premium partner services like rabot.energy.', href: '/empfehlungen', cta: 'View Deals' },
       ]
 
   const gruende = isDE
