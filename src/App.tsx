@@ -18,6 +18,7 @@ import ForFree from './pages/ForFree'
 import FigmaWeave from './pages/FigmaWeave'
 import MdwIvGenerator from './pages/MdwIvGenerator'
 import Empfehlungen from './pages/Empfehlungen'
+import ComicStil from './pages/ComicStil'
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/figma-weave" component={FigmaWeave} />
           <Route path="/mdw-iv-generator" component={MdwIvGenerator} />
           <Route path="/empfehlungen" component={Empfehlungen} />
+          <Route path="/comic-stil" component={ComicStil} />
         </Switch>
         <Footer />
       </div>

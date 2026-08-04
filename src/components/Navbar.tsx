@@ -8,6 +8,7 @@ const leistungenLinks = [
   { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
   { href: '/ki-agenten', label: 'KI Agenten' },
   { href: '/digitale-transformation', label: 'Digitale Transformation' },
+  { href: '/comic-stil', label: 'Comicstil' },
 ]
 
 export function Navbar() {

@@ -1,4 +1,4 @@
-﻿import { Link } from 'wouter'
+import { Link } from 'wouter'
 import { Mail, Phone, MessageCircle, Zap } from 'lucide-react'
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
 import { useLanguage } from '../context/LanguageContext'
@@ -14,6 +14,7 @@ export function Footer() {
         { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
         { href: '/ki-agenten', label: 'KI Agenten' },
         { href: '/digitale-transformation', label: 'Digitale Transformation' },
+        { href: '/comic-stil', label: 'Comicstil' },
         { href: '/programme', label: 'Zu den Programmen' },
       ]
     : [
@@ -22,6 +23,7 @@ export function Footer() {
         { href: '/digitale-praesentationen', label: 'Digital Presentations' },
         { href: '/ki-agenten', label: 'AI Agents' },
         { href: '/digitale-transformation', label: 'Digital Transformation' },
+        { href: '/comic-stil', label: 'Comic Style' },
         { href: '/programme', label: 'Tools & Programs' },
       ]
 
