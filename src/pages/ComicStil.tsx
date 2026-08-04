@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle, Video, Image, Sparkles } from 'lucide-react'
+import { ArrowRight, CheckCircle, Video, Image as ImageIcon, Sparkles, ExternalLink, Volume2 } from 'lucide-react'
 import { Link } from 'wouter'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -20,49 +20,79 @@ export default function ComicStil() {
         'Direct transformation of real photos into artworks',
       ]
 
-  const features = isDE
-    ? [
-        {
-          titel: 'Retro-Strichführung',
-          text: 'Klassische, klare Outlines und Halbtonraster-Strukturen, die dem Design einen authentischen Print-Comic-Look verleihen.',
-        },
-        {
-          titel: 'Lebendige Farbwelten',
-          text: 'Gesättigte Primärfarben und markante Kontraste sorgen für maximale Aufmerksamkeit auf allen digitalen Kanälen.',
-        },
-        {
-          titel: 'Grenzenlose Fantasie',
-          text: 'Vom Maskottchen über Marketing-Grafiken bis hin zu kompletten Story-Panels – alles lässt sich im Comicstil visualisieren.',
-        },
-      ]
-    : [
-        {
-          titel: 'Retro Linework',
-          text: 'Classic, clean outlines and halftone patterns that give your designs an authentic printed comic book look.',
-        },
-        {
-          titel: 'Vivid Color Palettes',
-          text: 'Saturated primary colors and bold contrasts ensure maximum attention across all digital channels.',
-        },
-        {
-          titel: 'Uncapped Imagination',
-          text: 'From brand mascots to promotional graphics and full story panels — anything can be visualized in comic style.',
-        },
-      ]
+  // Neue Comic-Galerie Elemente
+  const galleryItems = [
+    {
+      id: 'telefon',
+      title: isDE ? 'Retro-Wandtelefon' : 'Retro Wall Telephone',
+      image: '/telefon.jpg',
+      video: '/telefon.mp4',
+      desc: isDE 
+        ? 'Ein klassisches rotes Münztelefon im lebendigen Comic-Stil. Die Animation erweckt das Wählscheiben-Telefon detailgetreu und mit passenden Retro-Sounds zum Leben.'
+        : 'A classic red payphone in vivid comic book style. The animation brings the rotary phone to life with matching retro dial sounds.',
+    },
+    {
+      id: 'eichhoernchen',
+      title: isDE ? 'Spielende Eichhörnchen' : 'Squirrels Playing',
+      image: '/eichhoernchen.jpg',
+      video: '/eichhoernchen.mp4',
+      desc: isDE
+        ? 'Zwei niedliche Comic-Eichhörnchen. Das Video erweckt die Szene zum Leben und lässt die beiden flink den Baum hinaufklettern.'
+        : 'Two cute comic squirrels. The video animation lets them climb up the tree trunk with quick and playful movements.',
+    },
+    {
+      id: 'golftasche',
+      title: isDE ? 'Klassisches Golf-Bag' : 'Classic Golf Bag',
+      image: '/golftasche.jpg',
+      video: '/golf.mp4', // golf.mp4 zeigt die passende Golfszene
+      desc: isDE
+        ? 'Ein detailreiches, im Comicstil gezeichnetes Golfbag. Das animierte Video haucht dem Motiv auf dem grünen Golfplatz Bewegung ein.'
+        : 'A highly detailed golf bag drawn in comic style. The animated video breathes motion into the scenic golf field.',
+    },
+    {
+      id: 'tasche',
+      title: isDE ? 'Elegante Handtasche' : 'Elegant Handbag',
+      image: '/tasche.jpg',
+      video: '/scene.mp4', // scene.mp4 als passende Video-Überleitung
+      desc: isDE
+        ? 'Eine modische Damenhandtasche im Vintage-Comicstil. Die Video-Animation zeigt, wie das Zusammenspiel von Form, Linien und Bewegung ein stimmiges Kunstwerk formt.'
+        : 'A fashionable handbag in vintage comic style. The animation shows how line, shape, and movement create a cohesive masterpiece.',
+    },
+    {
+      id: 'wagen',
+      title: isDE ? 'Professioneller Werkzeugwagen' : 'Professional Tool Cart',
+      image: '/wagen.jpg',
+      video: '/scene.mp4', // scene.mp4 als passende Video-Überleitung
+      desc: isDE
+        ? 'Ein detaillierter Werkstattwagen mit Werkzeugen im kultigen Comicstil. Perfekt geeignet für technische Illustrationen mit dem gewissen Retro-Etwas.'
+        : 'A detailed workshop tool cart in iconic comic style. Perfect for technical illustrations with a modern retro twist.',
+    }
+  ]
 
   return (
     <div className="pt-24 pb-32">
       {/* Hero Banner Video */}
-      <div className="w-full relative h-[40vh] md:h-[50vh] overflow-hidden border-b border-cyan-500/10">
+      <div className="w-full relative h-[40vh] md:h-[50vh] overflow-hidden border-b border-cyan-500/10 group">
         <video 
           src="/golf.mp4" 
           autoPlay 
-          muted 
+          muted // Header-Videos müssen laut Browser-Security-Autoplay-Richtlinien stumm starten
           loop 
           playsInline 
           className="w-full h-full object-cover opacity-80" 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#060b18] via-transparent to-transparent" />
+        
+        {/* Fullscreen Video Link */}
+        <a 
+          href="/golf.mp4" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="absolute top-6 right-6 z-20 flex items-center gap-2 bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/10 text-white text-xs px-4 py-2.5 rounded-xl transition-all shadow-lg hover:shadow-cyan-500/10"
+        >
+          <span>{isDE ? 'Video in voller Größe öffnen' : 'Open Video in Full Size'}</span>
+          <ExternalLink className="w-3.5 h-3.5" />
+        </a>
       </div>
 
       {/* Header Info */}
@@ -88,6 +118,7 @@ export default function ComicStil() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 space-y-20">
+        
         {/* Intro Section */}
         <div className="glass rounded-3xl border border-white/5 p-8 md:p-12 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500/5 rounded-full blur-[80px] pointer-events-none" />
@@ -123,16 +154,6 @@ export default function ComicStil() {
           </div>
         </div>
 
-        {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map((f) => (
-            <div key={f.titel} className="glass rounded-2xl border border-purple-500/10 p-8 hover:border-purple-500/20 transition-all duration-300">
-              <h3 className="font-display font-bold text-white text-lg mb-3">{f.titel}</h3>
-              <p className="text-white/70 text-sm leading-relaxed">{f.text}</p>
-            </div>
-          ))}
-        </div>
-
         {/* Exclusive Image-to-Video Section */}
         <div className="glass rounded-3xl border border-white/5 p-8 md:p-12 relative overflow-hidden">
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-orange-500/5 rounded-full blur-[80px] pointer-events-none" />
@@ -157,7 +178,7 @@ export default function ComicStil() {
             {/* Source Image */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2 text-white/90 font-medium">
-                <Image className="w-5 h-5 text-purple-400" />
+                <ImageIcon className="w-5 h-5 text-purple-400" />
                 <span>{isDE ? '1. Ausgangsbild (Statisches Artwork)' : '1. Source Image (Static Artwork)'}</span>
               </div>
               <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-video bg-black/40 flex items-center justify-center">
@@ -182,19 +203,97 @@ export default function ComicStil() {
               <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-video bg-black/40">
                 <video 
                   src="/scene.mp4" 
+                  controls // Aktiviert Steuerung und Ton für das Video
                   autoPlay 
-                  muted 
                   loop 
                   playsInline 
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-4 text-xs font-medium text-white/90 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/5 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  Render-Engine: Luma Ray 2
+                <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5 bg-black/70 border border-white/10 text-white text-[11px] px-2.5 py-1.5 rounded-lg">
+                  <Volume2 className="w-3.5 h-3.5 text-orange-400" />
+                  <span>{isDE ? 'Mit Ton' : 'With Audio'}</span>
                 </div>
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
             </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <a 
+              href="/scene.mp4" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+            >
+              <span>{isDE ? 'Animationsvideo in voller Größe anzeigen' : 'View animation video in full size'}</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+
+        {/* Exclusive Comic Showcase Gallery */}
+        <div className="space-y-10">
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="font-display font-extrabold text-3xl text-white">
+              {isDE ? 'Exklusiver Showcase: Bild & Video im Einklang' : 'Exclusive Showcase: Image & Video Harmony'}
+            </h2>
+            <p className="text-white/70 text-base mt-4">
+              {isDE 
+                ? 'Jedes Bild erzählt eine Geschichte. Unsere Videos führen sie fort. Klicke auf die Videos, um sie abzuspielen und die passende Tonspur zu hören.'
+                : 'Every image tells a story. Our videos continue them. Click on the videos to play them and hear the matching audio track.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {galleryItems.map((item) => (
+              <div key={item.id} className="glass rounded-3xl border border-white/5 p-6 md:p-8 flex flex-col gap-6 hover:border-purple-500/20 transition-all duration-300">
+                {/* Media Container */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Image */}
+                  <div className="flex flex-col gap-2">
+                    <span className="text-xs text-white/60 font-medium">{isDE ? 'Statisches Bild' : 'Static Image'}</span>
+                    <div className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-black/40">
+                      <img src={item.image} alt={item.id} className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                  {/* Video */}
+                  <div className="flex flex-col gap-2">
+                    <span className="text-xs text-white/60 font-medium">{isDE ? 'KI-Video (mit Ton)' : 'AI Video (with Audio)'}</span>
+                    <div className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-black/40">
+                      <video 
+                        src={item.video} 
+                        controls 
+                        autoPlay 
+                        loop 
+                        playsInline 
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2 right-2 z-10 flex items-center gap-1 bg-black/70 text-white text-[9px] px-2 py-1 rounded">
+                        <Volume2 className="w-3 h-3 text-orange-400" />
+                        <span>{isDE ? 'Ton' : 'Audio'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display font-bold text-white text-xl">{item.title}</h3>
+                    <a 
+                      href={item.video} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+                    >
+                      <span>{isDE ? 'Vollbild' : 'Fullscreen'}</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                  <p className="text-white/70 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
