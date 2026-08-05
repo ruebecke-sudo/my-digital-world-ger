@@ -20,8 +20,17 @@ export default function ComicStil() {
         'Direct transformation of real photos into artworks',
       ]
 
-  // Neue Comic-Galerie Elemente
+  // Comic-Galerie Elemente (Jetzt inklusive Ford Cortina)
   const galleryItems = [
+    {
+      id: 'auto',
+      title: isDE ? 'Klassischer Ford Cortina' : 'Classic Ford Cortina',
+      image: '/auto.jpg',
+      video: '/auto.mp4',
+      desc: isDE
+        ? 'Ein stilvoller hellblauer Ford Cortina aus den 60er Jahren im kultigen Comic-Stil. Die handgemachte Video-Animation erweckt das Auto in einer dynamischen Szene zum Leben.'
+        : 'A stylish light blue Ford Cortina from the 60s in iconic comic style. The hand-crafted video animation brings the car to life in a dynamic scene.',
+    },
     {
       id: 'telefon',
       title: isDE ? 'Retro-Wandtelefon' : 'Retro Wall Telephone',
@@ -75,13 +84,12 @@ export default function ComicStil() {
       <div className="w-full relative h-[40vh] md:h-[50vh] overflow-hidden border-b border-cyan-500/10 group">
         <video 
           src="/golf.mp4" 
-          autoPlay 
-          muted // Header-Videos müssen laut Browser-Security-Autoplay-Richtlinien stumm starten
+          controls // Muss manuell gestartet werden laut User-Wunsch
           loop 
           playsInline 
           className="w-full h-full object-cover opacity-80" 
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#060b18] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#060b18] via-transparent to-transparent pointer-events-none" />
         
         {/* Fullscreen Video Link */}
         <a 
@@ -204,7 +212,6 @@ export default function ComicStil() {
                 <video 
                   src="/scene.mp4" 
                   controls // Aktiviert Steuerung und Ton für das Video
-                  autoPlay 
                   loop 
                   playsInline 
                   className="w-full h-full object-cover"
@@ -239,8 +246,8 @@ export default function ComicStil() {
             </h2>
             <p className="text-white/70 text-base mt-4">
               {isDE 
-                ? 'Jedes Bild erzählt eine Geschichte. Unsere Videos führen sie fort. Klicke auf die Videos, um sie abzuspielen und die passende Tonspur zu hören.'
-                : 'Every image tells a story. Our videos continue them. Click on the videos to play them and hear the matching audio track.'}
+                ? 'Jedes Bild erzählt eine Geschichte. Unsere Videos führen sie fort. Klicke auf die Videos, um sie manuell abzuspielen und die passende Tonspur zu hören.'
+                : 'Every image tells a story. Our videos continue them. Click on the videos to play them manually and hear the matching audio track.'}
             </p>
           </div>
 
@@ -263,7 +270,6 @@ export default function ComicStil() {
                       <video 
                         src={item.video} 
                         controls 
-                        autoPlay 
                         loop 
                         playsInline 
                         className="w-full h-full object-cover"
