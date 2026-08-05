@@ -20,7 +20,7 @@ export default function ComicStil() {
         'Direct transformation of real photos into artworks',
       ]
 
-  // Comic-Galerie Elemente (Jetzt inklusive Ford Cortina)
+  // Die 5 vom Benutzer gewünschten Paare
   const galleryItems = [
     {
       id: 'auto',
@@ -32,15 +32,6 @@ export default function ComicStil() {
         : 'A stylish light blue Ford Cortina from the 60s in iconic comic style. The hand-crafted video animation brings the car to life in a dynamic scene.',
     },
     {
-      id: 'telefon',
-      title: isDE ? 'Retro-Wandtelefon' : 'Retro Wall Telephone',
-      image: '/telefon.jpg',
-      video: '/telefon.mp4',
-      desc: isDE 
-        ? 'Ein klassisches rotes Münztelefon im lebendigen Comic-Stil. Die Animation erweckt das Wählscheiben-Telefon detailgetreu und mit passenden Retro-Sounds zum Leben.'
-        : 'A classic red payphone in vivid comic book style. The animation brings the rotary phone to life with matching retro dial sounds.',
-    },
-    {
       id: 'eichhoernchen',
       title: isDE ? 'Spielende Eichhörnchen' : 'Squirrels Playing',
       image: '/eichhoernchen.jpg',
@@ -50,31 +41,31 @@ export default function ComicStil() {
         : 'Two cute comic squirrels. The video animation lets them climb up the tree trunk with quick and playful movements.',
     },
     {
-      id: 'golftasche',
-      title: isDE ? 'Klassisches Golf-Bag' : 'Classic Golf Bag',
-      image: '/golftasche.jpg',
-      video: '/golf.mp4', // golf.mp4 zeigt die passende Golfszene
+      id: 'mdw',
+      title: isDE ? 'My Digital World' : 'My Digital World',
+      image: '/mdw.jpg',
+      video: '/mdw.mp4',
       desc: isDE
-        ? 'Ein detailreiches, im Comicstil gezeichnetes Golfbag. Das animierte Video haucht dem Motiv auf dem grünen Golfplatz Bewegung ein.'
-        : 'A highly detailed golf bag drawn in comic style. The animated video breathes motion into the scenic golf field.',
+        ? 'Die offizielle Visualisierung von My Digital World im detailreichen Comic-Stil. Das animierte Video haucht dem Motiv spektakuläre Bewegung ein.'
+        : 'The official visualization of My Digital World in detailed comic style. The animated video breathes spectacular motion into the motif.',
     },
     {
-      id: 'tasche',
-      title: isDE ? 'Elegante Handtasche' : 'Elegant Handbag',
-      image: '/tasche.jpg',
-      video: '/scene.mp4', // scene.mp4 als passende Video-Überleitung
+      id: 'naehmaschine',
+      title: isDE ? 'Nähmaschine' : 'Sewing Machine',
+      image: '/naehmaschine.jpg',
+      video: '/naehmaschine.mp4',
       desc: isDE
-        ? 'Eine modische Damenhandtasche im Vintage-Comicstil. Die Video-Animation zeigt, wie das Zusammenspiel von Form, Linien und Bewegung ein stimmiges Kunstwerk formt.'
-        : 'A fashionable handbag in vintage comic style. The animation shows how line, shape, and movement create a cohesive masterpiece.',
+        ? 'Eine nostalgische Nähmaschine im detailreichen Retro-Look. Die Nähmaschine rattert im Takt der manuell startbaren Animation.'
+        : 'A nostalgic sewing machine in detailed retro look. The machine rattles along with the manually playable video animation.',
     },
     {
-      id: 'wagen',
-      title: isDE ? 'Professioneller Werkzeugwagen' : 'Professional Tool Cart',
-      image: '/wagen.jpg',
-      video: '/scene.mp4', // scene.mp4 als passende Video-Überleitung
-      desc: isDE
-        ? 'Ein detaillierter Werkstattwagen mit Werkzeugen im kultigen Comicstil. Perfekt geeignet für technische Illustrationen mit dem gewissen Retro-Etwas.'
-        : 'A detailed workshop tool cart in iconic comic style. Perfect for technical illustrations with a modern retro twist.',
+      id: 'telefon',
+      title: isDE ? 'Retro-Wandtelefon' : 'Retro Wall Telephone',
+      image: '/telefon.jpg',
+      video: '/telefon.mp4',
+      desc: isDE 
+        ? 'Ein klassisches rotes Münztelefon im lebendigen Comic-Stil. Die Animation erweckt das Wählscheiben-Telefon detailgetreu und mit passenden Retro-Sounds zum Leben.'
+        : 'A classic red payphone in vivid comic book style. The animation brings the rotary phone to life with matching retro dial sounds.',
     }
   ]
 
