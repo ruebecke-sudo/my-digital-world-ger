@@ -182,8 +182,8 @@ export default function ComicStil() {
               </div>
               <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-video bg-black/40 flex items-center justify-center">
                 <img 
-                  src="/scene.jpg" 
-                  alt="scene" 
+                  src="/eichhoernchen.jpg" 
+                  alt="eichhoernchen" 
                   className="w-full h-full object-cover" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
