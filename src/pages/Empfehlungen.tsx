@@ -74,16 +74,14 @@ export default function Empfehlungen() {
     if (!formData.dsgvoChecked) return
 
     // Stripe URL mit Custom-Parametern anreichern
-    // Stripe erlaubt es, über client_reference_id oder URL-Parameter Daten an Make.com zu übergeben
     const baseStripeUrl = 'https://buy.stripe.com/cNi5kCaAwg0NdtraZGfQI00'
     const params = new URLSearchParams({
-      // Wir übergeben die Posterdaten als client_reference_id, getrennt durch Doppelpunkte
-      client_reference_id: `${selectedPoster}:${formData.wunschName || 'KeinName'}:${formData.wunschText || 'KeinText'}`,
-      // Stripe befüllt die E-Mail-Adresse voraus, wenn wir prefilled_email übergeben (nicht zwingend)
+      client_reference_id: `${selectedPoster}:${formData.wunschName || 'KeinName'}:${formData.wunschText || 'KeinText'}`.substring(0, 100) // Stripe limit is 100 chars
     })
 
-    // Weiterleitung zu Stripe Checkout
-    window.location.href = `${baseStripeUrl}?${params.toString()}`
+    // Weiterleitung zu Stripe Checkout (sicherste Methode)
+    const destination = `${baseStripeUrl}?${params.toString()}`
+    window.location.assign(destination)
   }
 
   const recommendationsEN = [
