@@ -114,10 +114,41 @@ export default function Empfehlungen() {
             </p>
           </div>
 
-          {/* Einzeldarstellung wie beim 1. Bild */}
-          <div className="max-w-xs mx-auto">
+          {/* Grid mit zwei Vorschaubildern (Miesmacher 1 und Spaßvogel) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {/* Bild 1: Miesmacher des Jahres */}
             <div className="glass bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center gap-4">
-              <div className="relative w-48 aspect-[2/3] rounded-xl overflow-hidden border border-white/5 shadow-md">
+              <div className="relative w-44 aspect-[2/3] rounded-xl overflow-hidden border border-white/5 shadow-md">
+                <img 
+                  src="/miesmacher1.jpg" 
+                  alt="Miesmacher des Jahres Poster" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex gap-2 w-full">
+                <a 
+                  href="/miesmacher1.jpg" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/95 text-xs font-medium transition-colors"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  {isDE ? 'Ansehen' : 'View'}
+                </a>
+                <a 
+                  href="/miesmacher1.jpg" 
+                  download="miesmacher-des-jahres-poster.jpg"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-xs font-semibold transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  {isDE ? 'Download' : 'Download'}
+                </a>
+              </div>
+            </div>
+
+            {/* Bild 2: Spaßvogel des Jahres */}
+            <div className="glass bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center gap-4">
+              <div className="relative w-44 aspect-[2/3] rounded-xl overflow-hidden border border-white/5 shadow-md">
                 <img 
                   src="/spassvogel.jpg" 
                   alt="Spaßvogel des Jahres Poster" 
