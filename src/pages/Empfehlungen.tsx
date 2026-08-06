@@ -475,22 +475,28 @@ export default function Empfehlungen() {
                     name="selectedPoster"
                     value={selectedPoster}
                     onChange={(e) => setSelectedPoster(e.target.value)}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                    className="w-full bg-[#030712] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors [&>option]:bg-[#030712] [&>option]:text-white"
                   >
-                    <option value="Spassvogel">{isDE ? 'Spaßvogel des Jahres' : 'Joker of the Year'}</option>
-                    <option value="Miesmacher">{isDE ? 'Miesmacher des Jahres' : 'Spoilsport of the Year'}</option>
-                    <option value="Chaosmanager">{isDE ? 'Chaosmanager' : 'Chaos Manager'}</option>
-                    <option value="Fitnessprofi">{isDE ? 'Fitnessprofi' : 'Fitness Pro'}</option>
-                    <option value="Fotograf">{isDE ? 'Fotograf' : 'Photographer'}</option>
-                    <option value="Grillmeister">{isDE ? 'Grillmeister' : 'Grill Master'}</option>
-                    <option value="Gute Laune Botschafter">{isDE ? 'Gute Laune Botschafter' : 'Good Mood Ambassador'}</option>
-                    <option value="Gaertner">{isDE ? 'Gärtner' : 'Gardener'}</option>
-                    <option value="Handyprofi">{isDE ? 'Handyprofi' : 'Phone Expert'}</option>
-                    <option value="Heimwerker">{isDE ? 'Heimwerker' : 'Handyman'}</option>
-                    <option value="Montagshasser">{isDE ? 'Montagshasser' : 'Monday Hater'}</option>
-                    <option value="Noergler">{isDE ? 'Nörgler' : 'Grumbler'}</option>
-                    <option value="Optimist">{isDE ? 'Optimist' : 'Optimist'}</option>
-                    <option value="Sternekoch">{isDE ? 'Sternekoch' : 'Star Chef'}</option>
+                    <option value="spassvogel">{isDE ? 'Spaßvogel des Jahres' : 'Joker of the Year'}</option>
+                    <option value="miesmacher">{isDE ? 'Miesmacher des Jahres' : 'Spoilsport of the Year'}</option>
+                    <option value="chaosmanager">{isDE ? 'Chaosmanager' : 'Chaos Manager'}</option>
+                    <option value="fitness">{isDE ? 'Fitnessprofi' : 'Fitness Pro'}</option>
+                    <option value="fotograf">{isDE ? 'Fotograf' : 'Photographer'}</option>
+                    <option value="grillmeister">{isDE ? 'Grillmeister' : 'Grill Master'}</option>
+                    <option value="gutelaunebotschafter">{isDE ? 'Gute Laune Botschafter' : 'Good Mood Ambassador'}</option>
+                    <option value="gaertner">{isDE ? 'Gärtner' : 'Gardener'}</option>
+                    <option value="handyprofi">{isDE ? 'Handyprofi' : 'Phone Expert'}</option>
+                    <option value="heimwerker">{isDE ? 'Heimwerker' : 'Handyman'}</option>
+                    <option value="heimwerker2">{isDE ? 'Heimwerker Pro' : 'Handyman Pro'}</option>
+                    <option value="montagshasser">{isDE ? 'Montagshasser' : 'Monday Hater'}</option>
+                    <option value="noergler">{isDE ? 'Nörgler' : 'Grumbler'}</option>
+                    <option value="optimist">{isDE ? 'Optimist' : 'Optimist'}</option>
+                    <option value="parkplatzsucher">{isDE ? 'Parkplatzsucher' : 'Parking Spot Seeker'}</option>
+                    <option value="schnaeppchenjaeger">{isDE ? 'Schnäppchenjäger' : 'Bargain Hunter'}</option>
+                    <option value="serienjunkie">{isDE ? 'Serienjunkie' : 'Series Addict'}</option>
+                    <option value="sternekoch">{isDE ? 'Sternekoch' : 'Star Chef'}</option>
+                    <option value="urlaubsplaner">{isDE ? 'Urlaubsplaner' : 'Holiday Planner'}</option>
+                    <option value="weihnachtsfan">{isDE ? 'Weihnachtsfan' : 'Christmas Fan'}</option>
                   </select>
                 </div>
 
