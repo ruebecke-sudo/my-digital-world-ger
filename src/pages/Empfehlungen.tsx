@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ExternalLink, CheckCircle, Copy, Check, Info } from 'lucide-react'
+import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 interface Recommendation {
@@ -89,14 +89,93 @@ export default function Empfehlungen() {
           </h1>
           <p className="text-white/70 text-base leading-relaxed max-w-xl mx-auto">
             {isDE
-              ? 'Nutzen Sie unsere exklusiven Rabattcodes und Partnerlinks, um bei führenden Anbietern bares Geld zu sparen.'
+              ? 'Nutze unsere exklusiven Rabattcodes und Partnerlinks, um bei führenden Anbietern bares Geld zu sparen.'
               : 'Use our exclusive discount codes and partner links to save real money with leading providers.'}
           </p>
         </div>
       </div>
 
+      {/* Freier Download Bereich (Unter Headline platziert) */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 mb-16">
+        <div className="glass rounded-3xl border border-purple-500/15 p-6 md:p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-[60px] pointer-events-none" />
+          
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <h2 className="font-display font-extrabold text-2xl text-white mb-2">
+              {isDE ? 'Miesmacher des Jahres' : 'Spoilsport of the Year'}
+            </h2>
+            <span className="inline-block px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold">
+              ✦ {isDE ? 'Zum freien Download' : 'For free download'}
+            </span>
+          </div>
+
+          {/* Grid mit zwei Vorschaubildern */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto">
+            {/* Bild 1 */}
+            <div className="glass bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center gap-4">
+              <div className="relative w-44 aspect-[2/3] rounded-xl overflow-hidden border border-white/5 shadow-md">
+                <img 
+                  src="/miesmacher1.jpg" 
+                  alt="Miesmacher Version 1" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex gap-2 w-full">
+                <a 
+                  href="/miesmacher1.jpg" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/95 text-xs font-medium transition-colors"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  {isDE ? 'Ansehen' : 'View'}
+                </a>
+                <a 
+                  href="/miesmacher1.jpg" 
+                  download="miesmacher-des-jahres-comic.jpg"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-xs font-semibold transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  {isDE ? 'Download' : 'Download'}
+                </a>
+              </div>
+            </div>
+
+            {/* Bild 2 */}
+            <div className="glass bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center gap-4">
+              <div className="relative w-44 aspect-[2/3] rounded-xl overflow-hidden border border-white/5 shadow-md">
+                <img 
+                  src="/miesmacher2.jpg" 
+                  alt="Miesmacher Version 2" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex gap-2 w-full">
+                <a 
+                  href="/miesmacher2.jpg" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white/95 text-xs font-medium transition-colors"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                  {isDE ? 'Ansehen' : 'View'}
+                </a>
+                <a 
+                  href="/miesmacher2.jpg" 
+                  download="miesmacher-des-jahres-real.jpg"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-purple-500 hover:bg-purple-400 text-white text-xs font-semibold transition-colors"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  {isDE ? 'Download' : 'Download'}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Recommendations Cards */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8">
           {displayRecs.map((rec) => (
             <div
