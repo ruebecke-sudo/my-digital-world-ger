@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2, X } from 'lucide-react'
+import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2, X, CreditCard } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 interface Recommendation {
@@ -46,16 +46,12 @@ export default function Empfehlungen() {
   
   // Popup / Formular States
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedPoster, setSelectedPoster] = useState('Spassvogel')
+  const [selectedPoster, setSelectedPoster] = useState('spassvogel')
   const [formData, setFormData] = useState({
-    name: '',
-    adresse: '',
-    email: '',
     wunschName: '',
     wunschText: '',
     dsgvoChecked: false
   })
-  const [formSubmitted, setFormSubmitted] = useState(false)
 
   const copyToClipboard = (code: string) => {
     navigator.clipboard.writeText(code)
@@ -72,45 +68,22 @@ export default function Empfehlungen() {
     setFormData(prev => ({ ...prev, dsgvoChecked: e.target.checked }))
   }
 
-  // Helper for Netlify Forms URL encoding
-  const encode = (data: { [key: string]: string | boolean }) => {
-    return Object.keys(data)
-      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(String(data[key])))
-      .join('&')
-  }
-
+  // Stripe Checkout Redirect
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.dsgvoChecked) return
 
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encode({
-        'form-name': 'poster-personalization',
-        selectedPoster,
-        ...formData
-      })
+    // Stripe URL mit Custom-Parametern anreichern
+    // Stripe erlaubt es, über client_reference_id oder URL-Parameter Daten an Make.com zu übergeben
+    const baseStripeUrl = 'https://buy.stripe.com/cNi5kCaAwg0NdtraZGfQI00'
+    const params = new URLSearchParams({
+      // Wir übergeben die Posterdaten als client_reference_id, getrennt durch Doppelpunkte
+      client_reference_id: `${selectedPoster}:${formData.wunschName || 'KeinName'}:${formData.wunschText || 'KeinText'}`,
+      // Stripe befüllt die E-Mail-Adresse voraus, wenn wir prefilled_email übergeben (nicht zwingend)
     })
-      .then(() => {
-        setFormSubmitted(true)
-        setTimeout(() => {
-          setIsModalOpen(false)
-          setFormSubmitted(false)
-          setFormData({
-            name: '',
-            adresse: '',
-            email: '',
-            wunschName: '',
-            wunschText: '',
-            dsgvoChecked: false
-          })
-        }, 4000)
-      })
-      .catch(error => {
-        console.error('Netlify Form submission error:', error)
-        alert(isDE ? 'Es gab einen Fehler beim Senden. Bitte versuche es erneut.' : 'There was an error sending. Please try again.')
-      })
+
+    // Weiterleitung zu Stripe Checkout
+    window.location.href = `${baseStripeUrl}?${params.toString()}`
   }
 
   const recommendationsEN = [
@@ -468,182 +441,120 @@ export default function Empfehlungen() {
               </h3>
               <p className="text-white/60 text-xs leading-relaxed">
                 {isDE 
-                  ? 'Gib deine Daten ein, um deine individuelle Poster-Anpassung zu beantragen. Jedes personalisierte Poster kostet einmalig 3,- €.'
-                  : 'Enter your details to request your custom poster modification. Each customized poster costs €3.00.'}
+                  ? 'Wähle dein Motiv und gib deine Änderungswünsche ein. Nach dem Klick auf Bezahlen wirst du direkt zur sicheren Stripe-Kassenseite geleitet.'
+                  : 'Select your motif and enter your customization details. Clicking pay will redirect you to the Stripe checkout page.'}
               </p>
             </div>
 
-            {formSubmitted ? (
-              <div className="py-8 text-center flex flex-col items-center justify-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-400 text-2xl">
-                  ✓
-                </div>
-                <h4 className="text-white font-bold text-lg">
-                  {isDE ? 'Anfrage erfolgreich gesendet!' : 'Request sent successfully!'}
-                </h4>
-                <p className="text-white/60 text-sm">
-                  {isDE 
-                    ? 'Vielen Dank. Wir senden dir in Kürze eine E-Mail mit der Zahlungsbestätigung und deinem Download-Link.'
-                    : 'Thank you. We will send you an email shortly with the payment details and your download link.'}
-                </p>
-              </div>
-            ) : (
-              <form 
-                onSubmit={handleSubmit} 
-                className="space-y-4"
-                name="poster-personalization"
-                data-netlify="true"
-              >
-                {/* Posterauswahl */}
-                <div>
-                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Gewünschtes Poster-Design' : 'Poster Design'}</label>
-                  <select
-                    name="selectedPoster"
-                    value={selectedPoster}
-                    onChange={(e) => setSelectedPoster(e.target.value)}
-                    className="w-full bg-[#030712] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors [&>option]:bg-[#030712] [&>option]:text-white"
-                  >
-                    <option value="spassvogel">{isDE ? 'Spaßvogel des Jahres' : 'Joker of the Year'}</option>
-                    <option value="miesmacher">{isDE ? 'Miesmacher des Jahres' : 'Spoilsport of the Year'}</option>
-                    <option value="chaosmanager">{isDE ? 'Chaosmanager' : 'Chaos Manager'}</option>
-                    <option value="fitness">{isDE ? 'Fitnessprofi' : 'Fitness Pro'}</option>
-                    <option value="fotograf">{isDE ? 'Fotograf' : 'Photographer'}</option>
-                    <option value="grillmeister">{isDE ? 'Grillmeister' : 'Grill Master'}</option>
-                    <option value="gutelaunebotschafter">{isDE ? 'Gute Laune Botschafter' : 'Good Mood Ambassador'}</option>
-                    <option value="gaertner">{isDE ? 'Gärtner' : 'Gardener'}</option>
-                    <option value="handyprofi">{isDE ? 'Handyprofi' : 'Phone Expert'}</option>
-                    <option value="heimwerker">{isDE ? 'Heimwerker' : 'Handyman'}</option>
-                    <option value="heimwerker2">{isDE ? 'Heimwerker Pro' : 'Handyman Pro'}</option>
-                    <option value="montagshasser">{isDE ? 'Montagshasser' : 'Monday Hater'}</option>
-                    <option value="noergler">{isDE ? 'Nörgler' : 'Grumbler'}</option>
-                    <option value="optimist">{isDE ? 'Optimist' : 'Optimist'}</option>
-                    <option value="parkplatzsucher">{isDE ? 'Parkplatzsucher' : 'Parking Spot Seeker'}</option>
-                    <option value="schnaeppchenjaeger">{isDE ? 'Schnäppchenjäger' : 'Bargain Hunter'}</option>
-                    <option value="serienjunkie">{isDE ? 'Serienjunkie' : 'Series Addict'}</option>
-                    <option value="sternekoch">{isDE ? 'Sternekoch' : 'Star Chef'}</option>
-                    <option value="urlaubsplaner">{isDE ? 'Urlaubsplaner' : 'Holiday Planner'}</option>
-                    <option value="weihnachtsfan">{isDE ? 'Weihnachtsfan' : 'Christmas Fan'}</option>
-                  </select>
-                </div>
-
-                {/* Name */}
-                <div>
-                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Vollständiger Name' : 'Full Name'}</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    placeholder={isDE ? 'z. B. Max Mustermann' : 'e.g. John Doe'}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
-                  />
-                </div>
-
-                {/* Email */}
-                <div>
-                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'E-Mail-Adresse' : 'Email Address'}</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="name@beispiel.de"
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
-                  />
-                </div>
-
-                {/* Adresse */}
-                <div>
-                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Rechnungsadresse' : 'Billing Address'}</label>
-                  <input
-                    type="text"
-                    name="adresse"
-                    required
-                    value={formData.adresse}
-                    onChange={handleInputChange}
-                    placeholder={isDE ? 'Straße, Hausnummer, PLZ, Ort' : 'Street, Zip, City'}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
-                  />
-                </div>
-
-                {/* Trennlinie für visuelle Struktur */}
-                <div className="border-t border-purple-500/20 my-6 pt-4">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-purple-400">
-                    {isDE ? 'Personalisierungswünsche' : 'Customization Details'}
-                  </span>
-                </div>
-
-                {/* Änderungswunsch Name */}
-                <div className="mt-4">
-                  <label className="block text-purple-300 text-xs font-bold mb-1.5">{isDE ? 'Änderungswunsch: Name (im Bild)' : 'Custom Name (in Poster)'}</label>
-                  <input
-                    type="text"
-                    name="wunschName"
-                    value={formData.wunschName}
-                    onChange={handleInputChange}
-                    placeholder={isDE ? 'z. B. Roger' : 'e.g. Roger'}
-                    className="w-full bg-black/60 border border-purple-500/40 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-400 focus:border-purple-400 transition-all placeholder-white/30"
-                  />
-                </div>
-
-                {/* Änderungswunsch Text */}
-                <div className="mt-6">
-                  <label className="block text-purple-300 text-xs font-bold mb-1.5">{isDE ? 'Änderungswunsch: Text (im Bild)' : 'Custom Description Text'}</label>
-                  <textarea
-                    name="wunschText"
-                    rows={2}
-                    value={formData.wunschText}
-                    onChange={handleInputChange}
-                    placeholder={isDE ? 'z. B. Ich bin so stolz auf mich...' : 'e.g. I am so proud of...'}
-                    className="w-full bg-black/60 border border-purple-500/40 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-400 focus:border-purple-400 transition-all resize-none placeholder-white/30"
-                  />
-                </div>
-
-                {/* Preis-Hinweis & DSGVO Checkbox */}
-                <div className="pt-2">
-                  <div className="flex items-start gap-2.5">
-                    <input
-                      type="checkbox"
-                      id="dsgvoChecked"
-                      required
-                      checked={formData.dsgvoChecked}
-                      onChange={handleCheckboxChange}
-                      className="mt-1 accent-purple-500 focus:ring-purple-500 h-4 w-4 text-purple-600 border-white/10 rounded"
-                    />
-                    <label htmlFor="dsgvoChecked" className="text-white/60 text-[11px] leading-relaxed cursor-pointer select-none">
-                      {isDE ? (
-                        <>
-                          Ich stimme zu, dass meine Angaben zur Bearbeitung meiner Personalisierungsanfrage gespeichert werden. Ich habe die{' '}
-                          <a href="/datenschutz" target="_blank" className="text-purple-400 hover:underline">
-                            Datenschutzerklärung
-                          </a>{' '}
-                          gelesen und akzeptiere sie. Die Personalisierung inklusive hochauflösendem Download beträgt einmalig **3,- €**.
-                        </>
-                      ) : (
-                        <>
-                          I agree that my details will be stored for processing my request. I have read and accept the{' '}
-                          <a href="/datenschutz" target="_blank" className="text-purple-400 hover:underline">
-                            Privacy Policy
-                          </a>
-                          . The customization including high-resolution download is a one-time fee of **€3.00**.
-                        </>
-                      )}
-                    </label>
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={!formData.dsgvoChecked}
-                  className="w-full py-3 mt-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-display font-bold text-sm transition-all shadow-lg hover:shadow-[0_0_24px_rgba(168,85,247,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Posterauswahl */}
+              <div>
+                <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Gewünschtes Poster-Design' : 'Poster Design'}</label>
+                <select
+                  name="selectedPoster"
+                  value={selectedPoster}
+                  onChange={(e) => setSelectedPoster(e.target.value)}
+                  className="w-full bg-[#030712] border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors [&>option]:bg-[#030712] [&>option]:text-white"
                 >
-                  {isDE ? 'Verbindlich bestellen & personalisieren (3,- €)' : 'Order & Personalize (€3.00)'}
-                </button>
-              </form>
-            )}
+                  <option value="spassvogel">{isDE ? 'Spaßvogel des Jahres' : 'Joker of the Year'}</option>
+                  <option value="miesmacher">{isDE ? 'Miesmacher des Jahres' : 'Spoilsport of the Year'}</option>
+                  <option value="chaosmanager">{isDE ? 'Chaosmanager' : 'Chaos Manager'}</option>
+                  <option value="fitness">{isDE ? 'Fitnessprofi' : 'Fitness Pro'}</option>
+                  <option value="fotograf">{isDE ? 'Fotograf' : 'Photographer'}</option>
+                  <option value="grillmeister">{isDE ? 'Grillmeister' : 'Grill Master'}</option>
+                  <option value="gutelaunebotschafter">{isDE ? 'Gute Laune Botschafter' : 'Good Mood Ambassador'}</option>
+                  <option value="gaertner">{isDE ? 'Gärtner' : 'Gardener'}</option>
+                  <option value="handyprofi">{isDE ? 'Handyprofi' : 'Phone Expert'}</option>
+                  <option value="heimwerker">{isDE ? 'Heimwerker' : 'Handyman'}</option>
+                  <option value="heimwerker2">{isDE ? 'Heimwerker Pro' : 'Handyman Pro'}</option>
+                  <option value="montagshasser">{isDE ? 'Montagshasser' : 'Monday Hater'}</option>
+                  <option value="noergler">{isDE ? 'Nörgler' : 'Grumbler'}</option>
+                  <option value="optimist">{isDE ? 'Optimist' : 'Optimist'}</option>
+                  <option value="parkplatzsucher">{isDE ? 'Parkplatzsucher' : 'Parking Spot Seeker'}</option>
+                  <option value="schnaeppchenjaeger">{isDE ? 'Schnäppchenjäger' : 'Bargain Hunter'}</option>
+                  <option value="serienjunkie">{isDE ? 'Serienjunkie' : 'Series Addict'}</option>
+                  <option value="sternekoch">{isDE ? 'Sternekoch' : 'Star Chef'}</option>
+                  <option value="urlaubsplaner">{isDE ? 'Urlaubsplaner' : 'Holiday Planner'}</option>
+                  <option value="weihnachtsfan">{isDE ? 'Weihnachtsfan' : 'Christmas Fan'}</option>
+                </select>
+              </div>
+
+              {/* Trennlinie für visuelle Struktur */}
+              <div className="border-t border-purple-500/20 my-6 pt-4">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-purple-400">
+                  {isDE ? 'Personalisierungswünsche' : 'Customization Details'}
+                </span>
+              </div>
+
+              {/* Änderungswunsch Name */}
+              <div className="mt-4">
+                <label className="block text-purple-300 text-xs font-bold mb-1.5">{isDE ? 'Änderungswunsch: Name (im Bild)' : 'Custom Name (in Poster)'}</label>
+                <input
+                  type="text"
+                  name="wunschName"
+                  value={formData.wunschName}
+                  onChange={handleInputChange}
+                  placeholder={isDE ? 'z. B. Roger' : 'e.g. Roger'}
+                  className="w-full bg-black/60 border border-purple-500/40 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-400 focus:border-purple-400 transition-all placeholder-white/30"
+                />
+              </div>
+
+              {/* Änderungswunsch Text */}
+              <div className="mt-6">
+                <label className="block text-purple-300 text-xs font-bold mb-1.5">{isDE ? 'Änderungswunsch: Text (im Bild)' : 'Custom Description Text'}</label>
+                <textarea
+                  name="wunschText"
+                  rows={2}
+                  value={formData.wunschText}
+                  onChange={handleInputChange}
+                  placeholder={isDE ? 'z. B. Ich bin so stolz auf mich...' : 'e.g. I am so proud of...'}
+                  className="w-full bg-black/60 border border-purple-500/40 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-400 focus:border-purple-400 transition-all resize-none placeholder-white/30"
+                />
+              </div>
+
+              {/* Preis-Hinweis & DSGVO Checkbox */}
+              <div className="pt-2">
+                <div className="flex items-start gap-2.5">
+                  <input
+                    type="checkbox"
+                    id="dsgvoChecked"
+                    required
+                    checked={formData.dsgvoChecked}
+                    onChange={handleCheckboxChange}
+                    className="mt-1 accent-purple-500 focus:ring-purple-500 h-4 w-4 text-purple-600 border-white/10 rounded"
+                  />
+                  <label htmlFor="dsgvoChecked" className="text-white/60 text-[11px] leading-relaxed cursor-pointer select-none">
+                    {isDE ? (
+                      <>
+                        Ich stimme zu, dass meine Angaben zur Weiterverarbeitung bei Stripe gespeichert werden. Ich habe die{' '}
+                        <a href="/datenschutz" target="_blank" className="text-purple-400 hover:underline">
+                          Datenschutzerklärung
+                        </a>{' '}
+                        gelesen und akzeptiere sie. Die Personalisierung inklusive hochauflösendem Download beträgt einmalig **3,- €**.
+                      </>
+                    ) : (
+                      <>
+                        I agree that my details will be stored for processing at Stripe. I have read and accept the{' '}
+                        <a href="/datenschutz" target="_blank" className="text-purple-400 hover:underline">
+                          Privacy Policy
+                        </a>
+                        . The customization including high-resolution download is a one-time fee of **€3.00**.
+                      </>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={!formData.dsgvoChecked}
+                className="w-full py-3.5 mt-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-display font-bold text-sm transition-all shadow-lg hover:shadow-[0_0_24px_rgba(168,85,247,0.3)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                <CreditCard className="w-4 h-4" />
+                {isDE ? 'Jetzt mit Stripe bezahlen (3,- €)' : 'Pay with Stripe (€3.00)'}
+              </button>
+            </form>
           </div>
         </div>
       )}
