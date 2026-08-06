@@ -179,6 +179,84 @@ export default function Empfehlungen() {
         </div>
       </div>
 
+      {/* Pixar Annoncen Section */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 mb-16">
+        <div className="glass rounded-3xl border border-cyan-500/15 p-6 md:p-10 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[90px] pointer-events-none" />
+          
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <h2 className="font-display font-extrabold text-3xl text-white mb-3">
+              {isDE ? 'Pixar-Stil Charakter-Poster' : 'Pixar Style Character Posters'}
+            </h2>
+            <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold mb-4">
+              ✦ {isDE ? 'Kostenfreier Download der Kollektion' : 'Free collection download'}
+            </span>
+            <p className="text-white/70 text-sm leading-relaxed">
+              {isDE
+                ? 'Entdecke unsere liebevoll gestalteten Charaktere im unverkennbaren Pixar-Animationsstil. Jedes Bild steht dir zur freien privaten Nutzung zur Verfügung. Klicke auf die Vorschau, um das Poster hochauflösend anzuzeigen, oder lade es direkt herunter.'
+                : 'Discover our lovingly crafted characters in the unique Pixar animation style. Each image is freely available for private use. Click the preview to view the high-resolution poster or download it directly.'}
+            </p>
+          </div>
+
+          {/* Grid mit kompakten Vorschauen */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {[
+              { id: 'chaosmanager', title: isDE ? 'Chaosmanager' : 'Chaos Manager', file: '/chaosmanager.png' },
+              { id: 'fitness', title: isDE ? 'Fitnessprofi' : 'Fitness Pro', file: '/fitness.png' },
+              { id: 'fotograf', title: isDE ? 'Fotograf' : 'Photographer', file: '/fotograf.png' },
+              { id: 'grillmeister', title: isDE ? 'Grillmeister' : 'Grill Master', file: '/grillmeister.png' },
+              { id: 'gutelaunebotschafter', title: isDE ? 'Gute Laune Botschafter' : 'Good Mood Ambassador', file: '/gutelaunebotschafter.png' },
+              { id: 'gaertner', title: isDE ? 'Gärtner' : 'Gardener', file: '/gaertner.png' },
+              { id: 'handyprofi', title: isDE ? 'Handyprofi' : 'Phone Expert', file: '/handyprofi.png' },
+              { id: 'heimwerker', title: isDE ? 'Heimwerker' : 'Handyman', file: '/heimwerker.png' },
+              { id: 'heimwerker2', title: isDE ? 'Heimwerker Pro' : 'Handyman Pro', file: '/heimwerker2.png' },
+              { id: 'miesmacher_logo', title: isDE ? 'Miesmacher des Jahres' : 'Spoilsport of the Year', file: '/miesmacher_logo.png' },
+              { id: 'montagshasser', title: isDE ? 'Montagshasser' : 'Monday Hater', file: '/montagshasser.png' },
+              { id: 'noergler', title: isDE ? 'Nörgler' : 'Grumbler', file: '/noergler.png' },
+              { id: 'optimist', title: isDE ? 'Optimist' : 'Optimist', file: '/optimist.png' },
+              { id: 'parkplatzsucher', title: isDE ? 'Parkplatzsucher' : 'Parking Spot Seeker', file: '/parkplatzsucher.png' },
+              { id: 'schnaeppchenjaeger', title: isDE ? 'Schnäppchenjäger' : 'Bargain Hunter', file: '/schnaeppchenjaeger.png' },
+              { id: 'serienjunkie', title: isDE ? 'Serienjunkie' : 'Series Addict', file: '/serienjunkie.png' },
+              { id: 'spassvogel_logo', title: isDE ? 'Spaßvogel' : 'Joker', file: '/spassvogel_logo.png' },
+              { id: 'sternekoch', title: isDE ? 'Sternekoch' : 'Star Chef', file: '/sternekoch.png' },
+              { id: 'urlaubsplaner', title: isDE ? 'Urlaubsplaner' : 'Holiday Planner', file: '/urlaubsplaner.png' },
+              { id: 'weihnachtsfan', title: isDE ? 'Weihnachtsfan' : 'Christmas Fan', file: '/weihnachtsfan.png' }
+            ].map((item) => (
+              <div key={item.id} className="glass bg-white/5 border border-white/10 rounded-xl p-3 flex flex-col items-center justify-between gap-3 hover:border-cyan-500/30 transition-all duration-300 group">
+                <a 
+                  href={item.file} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="relative w-full aspect-[2/3] rounded-lg overflow-hidden border border-white/5 shadow-sm block cursor-zoom-in"
+                  title={isDE ? 'In voller Größe anzeigen' : 'Open in full size'}
+                >
+                  <img 
+                    src={item.file} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Maximize2 className="w-6 h-6 text-white" />
+                  </div>
+                </a>
+                
+                <div className="text-center w-full">
+                  <h3 className="text-white text-xs font-bold truncate max-w-full mb-2" title={item.title}>{item.title}</h3>
+                  <a 
+                    href={item.file} 
+                    download={`${item.id}.png`}
+                    className="w-full flex items-center justify-center gap-1 py-1.5 px-2 rounded-md bg-cyan-500 hover:bg-cyan-400 text-black text-[10px] font-bold transition-colors"
+                  >
+                    <Download className="w-3 h-3" />
+                    {isDE ? 'Download' : 'Download'}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Recommendations Cards */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8">
