@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2 } from 'lucide-react'
+import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2, X } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 interface Recommendation {
@@ -43,11 +43,53 @@ export default function Empfehlungen() {
   const { lang } = useLanguage()
   const isDE = lang === 'de'
   const [copiedCode, setCopiedCode] = useState<string | null>(null)
+  
+  // Popup / Formular States
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedPoster, setSelectedPoster] = useState('Spassvogel')
+  const [formData, setFormData] = useState({
+    name: '',
+    adresse: '',
+    email: '',
+    wunschName: '',
+    wunschText: '',
+    dsgvoChecked: false
+  })
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   const copyToClipboard = (code: string) => {
     navigator.clipboard.writeText(code)
     setCopiedCode(code)
     setTimeout(() => setCopiedCode(null), 2000)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({ ...prev, dsgvoChecked: e.target.checked }))
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!formData.dsgvoChecked) return
+    
+    // Simuliere Übermittlung
+    setFormSubmitted(true)
+    setTimeout(() => {
+      setIsModalOpen(false)
+      setFormSubmitted(false)
+      setFormData({
+        name: '',
+        adresse: '',
+        email: '',
+        wunschName: '',
+        wunschText: '',
+        dsgvoChecked: false
+      })
+    }, 3000)
   }
 
   const recommendationsEN = [
@@ -107,11 +149,24 @@ export default function Empfehlungen() {
             <span className="inline-block px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-4">
               ✦ {isDE ? 'Zum freien Download & personalisierbar' : 'For free download & personalizable'}
             </span>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white/70 text-sm leading-relaxed mb-6">
               {isDE 
-                ? 'Dieses exklusive Poster kannst du in voller Auflösung herunterladen. Möchtest du es mit deinem eigenen Wunschnamen oder einem individuellen Text bedrucken lassen? Kontaktiere uns einfach und bestelle dein ganz persönliches Unikat!'
-                : 'You can download this exclusive poster in full resolution. Would you like to have it printed with your own name or an individual text? Just contact us to order your very own unique print!'}
+                ? 'Dieses exklusive Poster kannst du in voller Auflösung herunterladen. Möchtest du es mit deinem eigenen Wunschnamen oder einem individuellen Text bedrucken lassen? Bestelle dein ganz persönliches Unikat!'
+                : 'You can download this exclusive poster in full resolution. Would you like to have it printed with your own name or an individual text? Order your very own unique print!'}
             </p>
+
+            <div className="p-4 bg-purple-500/10 border border-purple-500/20 rounded-2xl max-w-md mx-auto text-purple-300 text-sm font-semibold mb-6">
+              {isDE 
+                ? 'Die Personalisierung des Bildes inkl. Download in höchster Auflösung beträgt pro Bild 3,- €' 
+                : 'Personalizing the image including download in highest resolution is €3.00 per image'}
+            </div>
+
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-display font-bold text-sm transition-all hover:shadow-[0_0_24px_rgba(168,85,247,0.3)]"
+            >
+              {isDE ? 'Jetzt Poster personalisieren (3,- €)' : 'Personalize Poster now (€3.00)'}
+            </button>
           </div>
 
           {/* Grid mit zwei Vorschaubildern (Miesmacher 1 und Spaßvogel) */}
@@ -191,11 +246,18 @@ export default function Empfehlungen() {
             <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold mb-4">
               ✦ {isDE ? 'Kostenfreier Download der Kollektion' : 'Free collection download'}
             </span>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white/70 text-sm leading-relaxed mb-6">
               {isDE
                 ? 'Entdecke unsere liebevoll gestalteten Charaktere im unverkennbaren Pixar-Animationsstil. Jedes Bild steht dir zur freien privaten Nutzung zur Verfügung. Klicke auf die Vorschau, um das Poster hochauflösend anzuzeigen, oder lade es direkt herunter.'
                 : 'Discover our lovingly crafted characters in the unique Pixar animation style. Each image is freely available for private use. Click the preview to view the high-resolution poster or download it directly.'}
             </p>
+            
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-black font-display font-bold text-sm transition-all hover:shadow-[0_0_24px_rgba(6,182,212,0.3)]"
+            >
+              {isDE ? 'Pixar Poster personalisiert bestellen (3,- €)' : 'Order personalized Pixar Poster (€3.00)'}
+            </button>
           </div>
 
           {/* Grid mit kompakten Vorschauen */}
@@ -247,7 +309,7 @@ export default function Empfehlungen() {
                     download={`${item.id}.png`}
                     className="w-full flex items-center justify-center gap-1 py-1.5 px-2 rounded-md bg-cyan-500 hover:bg-cyan-400 text-black text-[10px] font-bold transition-colors"
                   >
-                    <Download className="w-3 h-3" />
+                    <Download className="w-3.5 h-3.5" />
                     {isDE ? 'Download' : 'Download'}
                   </a>
                 </div>
@@ -358,6 +420,194 @@ export default function Empfehlungen() {
           ))}
         </div>
       </div>
+
+      {/* Personalisierungs-Formular als DSGVO Popup Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4 sm:px-6">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm cursor-pointer"
+            onClick={() => setIsModalOpen(false)}
+          />
+
+          {/* Modal Container */}
+          <div className="relative z-10 w-full max-w-lg glass bg-[#070d19]/95 border border-purple-500/30 rounded-3xl p-6 md:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+            {/* Close Button */}
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white/70 hover:text-white transition-all"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Header */}
+            <div className="mb-6">
+              <h3 className="font-display font-extrabold text-2xl text-white mb-2">
+                {isDE ? 'Poster personalisieren' : 'Personalize Poster'}
+              </h3>
+              <p className="text-white/60 text-xs leading-relaxed">
+                {isDE 
+                  ? 'Gib deine Daten ein, um deine individuelle Poster-Anpassung zu beantragen. Jedes personalisierte Poster kostet einmalig 3,- €.'
+                  : 'Enter your details to request your custom poster modification. Each customized poster costs €3.00.'}
+              </p>
+            </div>
+
+            {formSubmitted ? (
+              <div className="py-8 text-center flex flex-col items-center justify-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-400 text-2xl">
+                  ✓
+                </div>
+                <h4 className="text-white font-bold text-lg">
+                  {isDE ? 'Anfrage erfolgreich gesendet!' : 'Request sent successfully!'}
+                </h4>
+                <p className="text-white/60 text-sm">
+                  {isDE 
+                    ? 'Vielen Dank. Wir senden dir in Kürze eine E-Mail mit der Zahlungsbestätigung und deinem Download-Link.'
+                    : 'Thank you. We will send you an email shortly with the payment details and your download link.'}
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Posterauswahl */}
+                <div>
+                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Gewünschtes Poster-Design' : 'Poster Design'}</label>
+                  <select
+                    name="selectedPoster"
+                    value={selectedPoster}
+                    onChange={(e) => setSelectedPoster(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                  >
+                    <option value="Spassvogel">{isDE ? 'Spaßvogel des Jahres' : 'Joker of the Year'}</option>
+                    <option value="Miesmacher">{isDE ? 'Miesmacher des Jahres' : 'Spoilsport of the Year'}</option>
+                    <option value="Chaosmanager">{isDE ? 'Chaosmanager' : 'Chaos Manager'}</option>
+                    <option value="Fitnessprofi">{isDE ? 'Fitnessprofi' : 'Fitness Pro'}</option>
+                    <option value="Fotograf">{isDE ? 'Fotograf' : 'Photographer'}</option>
+                    <option value="Grillmeister">{isDE ? 'Grillmeister' : 'Grill Master'}</option>
+                    <option value="Gute Laune Botschafter">{isDE ? 'Gute Laune Botschafter' : 'Good Mood Ambassador'}</option>
+                    <option value="Gaertner">{isDE ? 'Gärtner' : 'Gardener'}</option>
+                    <option value="Handyprofi">{isDE ? 'Handyprofi' : 'Phone Expert'}</option>
+                    <option value="Heimwerker">{isDE ? 'Heimwerker' : 'Handyman'}</option>
+                    <option value="Montagshasser">{isDE ? 'Montagshasser' : 'Monday Hater'}</option>
+                    <option value="Noergler">{isDE ? 'Nörgler' : 'Grumbler'}</option>
+                    <option value="Optimist">{isDE ? 'Optimist' : 'Optimist'}</option>
+                    <option value="Sternekoch">{isDE ? 'Sternekoch' : 'Star Chef'}</option>
+                  </select>
+                </div>
+
+                {/* Name */}
+                <div>
+                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Vollständiger Name' : 'Full Name'}</label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder={isDE ? 'z. B. Max Mustermann' : 'e.g. John Doe'}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'E-Mail-Adresse' : 'Email Address'}</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="name@beispiel.de"
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+
+                {/* Adresse */}
+                <div>
+                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Rechnungsadresse' : 'Billing Address'}</label>
+                  <input
+                    type="text"
+                    name="adresse"
+                    required
+                    value={formData.adresse}
+                    onChange={handleInputChange}
+                    placeholder={isDE ? 'Straße, Hausnummer, PLZ, Ort' : 'Street, Zip, City'}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+
+                {/* Änderungswunsch Name */}
+                <div>
+                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Änderungswunsch: Name (im Bild)' : 'Custom Name (in Poster)'}</label>
+                  <input
+                    type="text"
+                    name="wunschName"
+                    value={formData.wunschName}
+                    onChange={handleInputChange}
+                    placeholder={isDE ? 'z. B. Roger' : 'e.g. Roger'}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                  />
+                </div>
+
+                {/* Änderungswunsch Text */}
+                <div>
+                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Änderungswunsch: Text (im Bild)' : 'Custom Description Text'}</label>
+                  <textarea
+                    name="wunschText"
+                    rows={2}
+                    value={formData.wunschText}
+                    onChange={handleInputChange}
+                    placeholder={isDE ? 'z. B. Ich bin so stolz auf mich...' : 'e.g. I am so proud of...'}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                  />
+                </div>
+
+                {/* Preis-Hinweis & DSGVO Checkbox */}
+                <div className="pt-2">
+                  <div className="flex items-start gap-2.5">
+                    <input
+                      type="checkbox"
+                      id="dsgvoChecked"
+                      required
+                      checked={formData.dsgvoChecked}
+                      onChange={handleCheckboxChange}
+                      className="mt-1 accent-purple-500 focus:ring-purple-500 h-4 w-4 text-purple-600 border-white/10 rounded"
+                    />
+                    <label htmlFor="dsgvoChecked" className="text-white/60 text-[11px] leading-relaxed cursor-pointer select-none">
+                      {isDE ? (
+                        <>
+                          Ich stimme zu, dass meine Angaben zur Bearbeitung meiner Personalisierungsanfrage gespeichert werden. Ich habe die{' '}
+                          <a href="/datenschutz" target="_blank" className="text-purple-400 hover:underline">
+                            Datenschutzerklärung
+                          </a>{' '}
+                          gelesen und akzeptiere sie. Die Personalisierung inklusive hochauflösendem Download beträgt einmalig **3,- €**.
+                        </>
+                      ) : (
+                        <>
+                          I agree that my details will be stored for processing my request. I have read and accept the{' '}
+                          <a href="/datenschutz" target="_blank" className="text-purple-400 hover:underline">
+                            Privacy Policy
+                          </a>
+                          . The customization including high-resolution download is a one-time fee of **€3.00**.
+                        </>
+                      )}
+                    </label>
+                  </div>
+                </div>
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={!formData.dsgvoChecked}
+                  className="w-full py-3 mt-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-display font-bold text-sm transition-all shadow-lg hover:shadow-[0_0_24px_rgba(168,85,247,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isDE ? 'Verbindlich bestellen & personalisieren (3,- €)' : 'Order & Personalize (€3.00)'}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
