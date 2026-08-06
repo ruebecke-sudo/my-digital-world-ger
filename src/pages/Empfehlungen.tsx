@@ -542,29 +542,36 @@ export default function Empfehlungen() {
                   />
                 </div>
 
+                {/* Trennlinie für visuelle Struktur */}
+                <div className="border-t border-purple-500/20 my-6 pt-4">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-purple-400">
+                    {isDE ? 'Personalisierungswünsche' : 'Customization Details'}
+                  </span>
+                </div>
+
                 {/* Änderungswunsch Name */}
-                <div>
-                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Änderungswunsch: Name (im Bild)' : 'Custom Name (in Poster)'}</label>
+                <div className="mt-4">
+                  <label className="block text-purple-300 text-xs font-bold mb-1.5">{isDE ? 'Änderungswunsch: Name (im Bild)' : 'Custom Name (in Poster)'}</label>
                   <input
                     type="text"
                     name="wunschName"
                     value={formData.wunschName}
                     onChange={handleInputChange}
                     placeholder={isDE ? 'z. B. Roger' : 'e.g. Roger'}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors"
+                    className="w-full bg-black/60 border border-purple-500/40 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-400 focus:border-purple-400 transition-all placeholder-white/30"
                   />
                 </div>
 
                 {/* Änderungswunsch Text */}
-                <div>
-                  <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Änderungswunsch: Text (im Bild)' : 'Custom Description Text'}</label>
+                <div className="mt-6">
+                  <label className="block text-purple-300 text-xs font-bold mb-1.5">{isDE ? 'Änderungswunsch: Text (im Bild)' : 'Custom Description Text'}</label>
                   <textarea
                     name="wunschText"
                     rows={2}
                     value={formData.wunschText}
                     onChange={handleInputChange}
                     placeholder={isDE ? 'z. B. Ich bin so stolz auf mich...' : 'e.g. I am so proud of...'}
-                    className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                    className="w-full bg-black/60 border border-purple-500/40 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:ring-1 focus:ring-purple-400 focus:border-purple-400 transition-all resize-none placeholder-white/30"
                   />
                 </div>
 
