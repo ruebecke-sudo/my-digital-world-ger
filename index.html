@@ -23,6 +23,17 @@
     <title>My Digital World, Kreative digitale Lösungen</title>
   </head>
   <body>
+    <!-- Hidden form for Netlify Forms detection in Single Page App (React/Vite) -->
+    <form name="poster-personalization" data-netlify="true" hidden>
+      <input type="text" name="selectedPoster" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="adresse" />
+      <input type="text" name="wunschName" />
+      <textarea name="wunschText"></textarea>
+      <input type="checkbox" name="dsgvoChecked" />
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
