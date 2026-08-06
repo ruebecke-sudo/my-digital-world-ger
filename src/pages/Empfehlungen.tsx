@@ -72,24 +72,45 @@ export default function Empfehlungen() {
     setFormData(prev => ({ ...prev, dsgvoChecked: e.target.checked }))
   }
 
+  // Helper for Netlify Forms URL encoding
+  const encode = (data: { [key: string]: string | boolean }) => {
+    return Object.keys(data)
+      .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(String(data[key])))
+      .join('&')
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.dsgvoChecked) return
-    
-    // Simuliere Übermittlung
-    setFormSubmitted(true)
-    setTimeout(() => {
-      setIsModalOpen(false)
-      setFormSubmitted(false)
-      setFormData({
-        name: '',
-        adresse: '',
-        email: '',
-        wunschName: '',
-        wunschText: '',
-        dsgvoChecked: false
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encode({
+        'form-name': 'poster-personalization',
+        selectedPoster,
+        ...formData
       })
-    }, 3000)
+    })
+      .then(() => {
+        setFormSubmitted(true)
+        setTimeout(() => {
+          setIsModalOpen(false)
+          setFormSubmitted(false)
+          setFormData({
+            name: '',
+            adresse: '',
+            email: '',
+            wunschName: '',
+            wunschText: '',
+            dsgvoChecked: false
+          })
+        }, 4000)
+      })
+      .catch(error => {
+        console.error('Netlify Form submission error:', error)
+        alert(isDE ? 'Es gab einen Fehler beim Senden. Bitte versuche es erneut.' : 'There was an error sending. Please try again.')
+      })
   }
 
   const recommendationsEN = [
@@ -467,7 +488,12 @@ export default function Empfehlungen() {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form 
+                onSubmit={handleSubmit} 
+                className="space-y-4"
+                name="poster-personalization"
+                data-netlify="true"
+              >
                 {/* Posterauswahl */}
                 <div>
                   <label className="block text-white/80 text-xs font-semibold mb-1.5">{isDE ? 'Gewünschtes Poster-Design' : 'Poster Design'}</label>
