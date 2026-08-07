@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
-import { CheckCircle2, Download } from 'lucide-react'
+import { CheckCircle2, Download, X } from 'lucide-react'
 
 const FN = '/.netlify/functions'
 
 export default function PosterDanke() {
   const [status, setStatus] = useState<'warten' | 'fertig' | 'fehler'>('warten')
   const [fortschritt, setFortschritt] = useState(4)
+  const [popupOpen, setPopupOpen] = useState(false)
   const params = new URLSearchParams(window.location.search)
   const order = params.get('order')
   const token = params.get('token')
   const bildUrl = `${FN}/download?id=${order}&token=${token}`
 
-  // Fortschrittsbalken: nähert sich langsam 95 %, springt bei "fertig" auf 100 %
   useEffect(() => {
     if (status !== 'warten') return
     const iv = setInterval(() => {
@@ -64,7 +64,8 @@ export default function PosterDanke() {
             <img
               src={`${bildUrl}&disposition=inline`}
               alt="Vorschau deines persönlichen Posters"
-              className="rounded-xl border border-white/15 shadow-2xl shadow-black/40 max-h-[70vh] w-auto mx-auto mb-6"
+              onClick={() => setPopupOpen(true)}
+              className="rounded-xl border border-white/15 shadow-2xl shadow-black/40 max-h-[70vh] w-auto mx-auto mb-6 cursor-pointer hover:opacity-90 transition-opacity"
             />
             <a href={bildUrl} className="btn-primary inline-flex items-center gap-2">
               <Download className="w-4 h-4" /> Poster in voller Auflösung herunterladen
@@ -79,6 +80,29 @@ export default function PosterDanke() {
           </p>
         )}
       </div>
+
+      {/* Popup Modal für Originalgröße */}
+      {popupOpen && (
+        <div 
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setPopupOpen(false)}
+        >
+          <div className="relative max-w-4xl max-h-[90vh] flex items-center justify-center">
+            <button
+              onClick={() => setPopupOpen(false)}
+              className="absolute top-2 right-2 bg-white/10 hover:bg-white/20 rounded-full p-2 text-white"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <img
+              src={`${bildUrl}&disposition=inline`}
+              alt="Dein Poster in Originalgröße"
+              className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
+              onClick={e => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </main>
   )
 }

@@ -94,9 +94,9 @@ export default function PosterShop() {
           <textarea
             value={text}
             onChange={e => setText(e.target.value)}
-            maxLength={250}
+            maxLength={70}
             rows={3}
-            placeholder="z. B. Keiner meckert so charmant wie du!"
+            placeholder="z. B. max. 10 Worte"
             className="w-full mb-6 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-cyan-400/50"
           />
           <button onClick={kaufen} disabled={laedt} className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-60">
