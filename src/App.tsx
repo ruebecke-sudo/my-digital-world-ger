@@ -19,6 +19,8 @@ import FigmaWeave from './pages/FigmaWeave'
 import MdwIvGenerator from './pages/MdwIvGenerator'
 import Empfehlungen from './pages/Empfehlungen'
 import ComicStil from './pages/ComicStil'
+import PosterShop from './pages/PosterShop'
+import PosterDanke from './pages/PosterDanke'
 
 function App() {
   return (
@@ -42,6 +44,8 @@ function App() {
           <Route path="/figma-weave" component={FigmaWeave} />
           <Route path="/mdw-iv-generator" component={MdwIvGenerator} />
           <Route path="/empfehlungen" component={Empfehlungen} />
+          <Route path="/empfehlung/poster" component={PosterShop} />
+          <Route path="/empfehlung/poster/danke" component={PosterDanke} />
           <Route path="/comic-stil" component={ComicStil} />
         </Switch>
         <Footer />

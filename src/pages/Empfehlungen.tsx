@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'wouter'
 import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2, X, CreditCard } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -223,6 +224,29 @@ export default function Empfehlungen() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* KI-Poster-Shop mit Sofort-Download */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 mb-16">
+        <div className="glass rounded-3xl border border-purple-500/15 p-6 md:p-10 relative overflow-hidden text-center">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500/5 rounded-full blur-[90px] pointer-events-none" />
+          <span className="inline-block px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-semibold mb-4">
+            ✦ {isDE ? 'NEU: Vollautomatisch mit Sofort-Download' : 'NEW: Fully automated with instant download'}
+          </span>
+          <h2 className="font-display font-extrabold text-3xl text-white mb-3">
+            {isDE ? 'Dein persönliches KI-Poster in 1 Minute' : 'Your personal AI poster in 1 minute'}
+          </h2>
+          <p className="text-white/60 max-w-2xl mx-auto mb-6">
+            {isDE
+              ? 'Wähle aus 20 Motiven, gib deinen Namen und Wunschtext ein – nach der Bezahlung wird dein Poster automatisch per KI erstellt und steht sofort zum Download bereit. Kein Warten auf E-Mails!'
+              : 'Choose from 20 designs, enter your name and text – after payment your poster is generated automatically by AI and ready for download immediately. No waiting for emails!'}
+          </p>
+          <Link href="/empfehlung/poster">
+            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-display font-bold text-sm transition-all hover:shadow-[0_0_24px_rgba(168,85,247,0.3)]">
+              {isDE ? 'Zum KI-Poster-Shop (3,- €)' : 'To the AI poster shop (€3.00)'}
+            </button>
+          </Link>
         </div>
       </div>
 
