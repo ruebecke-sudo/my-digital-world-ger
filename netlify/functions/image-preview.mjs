@@ -3,6 +3,7 @@ import { ordersStore, imagesStore } from '../lib/blobs.mjs';
 export async function handler(event) {
   const orderId = event.queryStringParameters?.order_id;
   const downloadToken = event.queryStringParameters?.token;
+  const type = event.queryStringParameters?.type || 'preview'; // 'preview' (mit Logo) oder 'download' (ohne)
 
   if (!orderId || !downloadToken) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Missing parameters' }) };
@@ -24,12 +25,19 @@ export async function handler(event) {
 
     // Prüfe Status
     if (order.status !== 'done') {
-      return { statusCode: 202, body: JSON.stringify({ status: order.status, message: 'Image still generating' }) };
+      return { statusCode: 202, body: JSON.stringify({ status: order.status }) };
     }
 
-    // ====== NEUE LOGIK: Hole OHNE-Logo Version ======
-    const imageBuffer = await imagesStore.get(`${orderId}_download`);
-    // ================================================
+    // ====== NEUE LOGIK: Je nach type ======
+    let imageBuffer;
+    if (type === 'preview') {
+      // Mit Logo (für Website-Anzeige)
+      imageBuffer = await imagesStore.get(`${orderId}_preview`);
+    } else {
+      // Ohne Logo (für Download)
+      imageBuffer = await imagesStore.get(`${orderId}_download`);
+    }
+    // ======================================
 
     if (!imageBuffer) {
       return { statusCode: 404, body: JSON.stringify({ error: 'Image not found' }) };
@@ -39,13 +47,13 @@ export async function handler(event) {
       statusCode: 200,
       headers: {
         'Content-Type': 'image/png',
-        'Content-Disposition': `attachment; filename="mdw-poster-${orderId}.png"`,
+        'Cache-Control': 'public, max-age=3600', // 1 Stunde cachen
       },
       body: imageBuffer.toString('base64'),
       isBase64Encoded: true,
     };
   } catch (error) {
-    console.error('Download error:', error);
+    console.error('Preview error:', error);
     return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
 }

@@ -1,118 +1,113 @@
-// POST /api/generate-background (intern)
-// Wird vom Webhook aufgerufen – generiert Bild mit Stable Diffusion 3
-import { getOrder, saveOrder, addBranding, imagesStore } from "../../lib/shared.mjs";
+import fetch from 'node-fetch';
+import { Readable } from 'stream';
+import sharp from 'sharp';
+import { ordersStore, imagesStore } from '../lib/blobs.mjs';
+import { addBranding } from '../lib/shared.mjs';
 
-export default async (req) => {
-  const { orderId, internalSecret } = await req.json();
+const REPLICATE_API_TOKEN = process.env.REPLICATE_API_TOKEN;
+const SD3_MODEL_VERSION = 'a6c0daea3c4a01b5ef380f6a9f62c12d02d0f1e3f8e3b5c8d9e0f1a2b3c4d5e6';
 
-  if (req.headers.get("x-internal-key") !== internalSecret) {
-    return new Response("Unauthorized", { status: 401 });
+export async function handler(event) {
+  const orderId = event.queryStringParameters?.order_id;
+
+  if (!orderId) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Missing order_id' }) };
   }
 
   try {
-    const order = await getOrder(orderId);
-    if (!order) return new Response("Order not found", { status: 404 });
-
-    console.log(`[${orderId}] Starte SD3-Bildgenerierung...`);
-
-    // Replicate API aufrufen (Stable Diffusion 3)
-    const replicateResponse = await fetch(
-      "https://api.replicate.com/v1/predictions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Token ${process.env.REPLICATE_API_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          version:
-            "7762fd07cf82c948538e41f63dcdc30ba1375dc20e9716c00e1358aa9c7f87df", // SD3 Medium
-          input: { prompt: order.prompt },
-        }),
-      }
-    );
-
-    if (!replicateResponse.ok) {
-      throw new Error(
-        `Replicate API error: ${replicateResponse.status} ${replicateResponse.statusText}`
-      );
+    // Hole Order-Daten
+    const orderData = await ordersStore.get(orderId);
+    if (!orderData) {
+      return { statusCode: 404, body: JSON.stringify({ error: 'Order not found' }) };
     }
 
-    const prediction = await replicateResponse.json();
+    const order = JSON.parse(orderData);
+
+    // Prüfe ob bereits vorhanden
+    const existingImage = await imagesStore.get(`${orderId}_download`).catch(() => null);
+    if (existingImage) {
+      await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'done' }));
+      return { statusCode: 200, body: JSON.stringify({ status: 'done' }) };
+    }
+
+    // Update Status → "generating"
+    await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'generating' }));
+
+    // Starte Prediction bei Replicate
+    const predictionRes = await fetch('https://api.replicate.com/v1/predictions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Token ${REPLICATE_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        version: SD3_MODEL_VERSION,
+        input: {
+          prompt: order.prompt,
+          width: 1024,
+          height: 1536,
+          num_outputs: 1,
+          guidance_scale: 7,
+        },
+      }),
+    });
+
+    if (!predictionRes.ok) {
+      throw new Error(`Replicate API error: ${predictionRes.statusText}`);
+    }
+
+    const prediction = await predictionRes.json();
     const predictionId = prediction.id;
 
-    console.log(`[${orderId}] Prediction ID: ${predictionId}`);
-
-    // Warte auf Fertigstellung (Poll)
-    let result = prediction;
+    // Polling: Warte auf Completion (max 10 min, alle 5 sek)
+    let completed = false;
     let attempts = 0;
-    const maxAttempts = 120; // 10 Min bei 5s Intervals
+    const maxAttempts = 120;
 
-    while (
-      (result.status === "processing" || result.status === "starting") &&
-      attempts < maxAttempts
-    ) {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-
-      const pollResponse = await fetch(
-        `https://api.replicate.com/v1/predictions/${predictionId}`,
-        {
-          headers: { Authorization: `Token ${process.env.REPLICATE_API_TOKEN}` },
-        }
-      );
-
-      result = await pollResponse.json();
+    while (!completed && attempts < maxAttempts) {
       attempts++;
-      console.log(`[${orderId}] Versuch ${attempts}: ${result.status}`);
+
+      const statusRes = await fetch(`https://api.replicate.com/v1/predictions/${predictionId}`, {
+        headers: { 'Authorization': `Token ${REPLICATE_API_TOKEN}` },
+      });
+
+      const status = await statusRes.json();
+
+      if (status.status === 'succeeded') {
+        completed = true;
+        const imageUrl = status.output[0];
+
+        // Download Bild von Replicate
+        const imgRes = await fetch(imageUrl);
+        const imgBuffer = await imgRes.buffer();
+
+        // ====== NEUE LOGIK: Zwei Versionen ======
+
+        // Version 1: MIT Logo (für Preview)
+        const imageWithBranding = await addBranding(imgBuffer);
+        await imagesStore.put(`${orderId}_preview`, imageWithBranding);
+
+        // Version 2: OHNE Logo (für Download)
+        await imagesStore.put(`${orderId}_download`, imgBuffer);
+
+        // ========================================
+
+        // Update Status → "done"
+        await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'done' }));
+
+        return { statusCode: 200, body: JSON.stringify({ status: 'done' }) };
+      } else if (status.status === 'failed') {
+        throw new Error(`Prediction failed: ${status.error}`);
+      }
+
+      // Warte 5 Sekunden vor nächstem Poll
+      await new Promise(resolve => setTimeout(resolve, 5000));
     }
 
-    if (result.status !== "succeeded") {
-      throw new Error(`Generation failed: ${result.status}`);
-    }
-
-    // Bild-URL aus Output
-    const imageUrl = result.output && result.output[0];
-    if (!imageUrl) {
-      throw new Error("No image URL in response");
-    }
-
-    console.log(`[${orderId}] Bild generiert: ${imageUrl}`);
-
-    // Bild downloaden
-    const imageResponse = await fetch(imageUrl);
-    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
-
-    // Branding hinzufügen
-    const brandedImage = await addBranding(imageBuffer);
-
-    // In Blobs speichern
-    await imagesStore().set(orderId, brandedImage, {
-      metadata: { contentType: "image/png" },
-    });
-
-    // Order-Status auf "done" setzen
-    order.status = "done";
-    await saveOrder(order);
-
-    console.log(`[${orderId}] ✓ Fertig!`);
-
-    return new Response(
-      JSON.stringify({ success: true, orderId }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
-    );
+    throw new Error('Prediction timeout after 10 minutes');
   } catch (error) {
-    console.error(`Generation error:`, error);
-
-    const order = await getOrder(orderId);
-    if (order) {
-      order.status = "error";
-      order.error = error.message;
-      await saveOrder(order);
-    }
-
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    console.error('Error:', error);
+    await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'error' }));
+    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
   }
-};
+}
