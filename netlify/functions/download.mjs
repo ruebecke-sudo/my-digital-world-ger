@@ -1,4 +1,5 @@
 // GET /api/download?id=…&token=… – fertiges Bild ausliefern
+// Mit &disposition=inline wird das Bild im Browser angezeigt (Vorschau).
 import { getOrder, imagesStore } from "../../lib/shared.mjs";
 
 export default async (req) => {
@@ -10,10 +11,11 @@ export default async (req) => {
   const bild = await imagesStore().get(order.id, { type: "arrayBuffer" });
   if (!bild) return new Response("Bild nicht gefunden.", { status: 404 });
 
+  const inline = url.searchParams.get("disposition") === "inline";
   return new Response(bild, {
     headers: {
       "Content-Type": "image/png",
-      "Content-Disposition": 'attachment; filename="mein-mdw-poster.png"',
+      "Content-Disposition": inline ? "inline" : 'attachment; filename="mein-mdw-poster.png"',
     },
   });
 };
