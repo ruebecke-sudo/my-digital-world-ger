@@ -11,12 +11,19 @@ const leistungenLinks = [
   { href: '/comic-stil', label: 'Comicstil' },
 ]
 
+const empfehlungenLinks = [
+  { href: '/empfehlungen', label: 'Empfehlungsseite' },
+  { href: '/empfehlung/poster', label: 'MDW-Poster-Shop', badge: 'NEU' },
+]
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [leistungenOpen, setLeistungenOpen] = useState(false)
+  const [empfehlungenOpen, setEmpfehlungenOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [location] = useLocation()
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const empfehlungenDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -29,12 +36,16 @@ export function Navbar() {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setLeistungenOpen(false)
       }
+      if (empfehlungenDropdownRef.current && !empfehlungenDropdownRef.current.contains(e.target as Node)) {
+        setEmpfehlungenOpen(false)
+      }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
   const isLeistungActive = leistungenLinks.some(l => l.href === location)
+  const isEmpfehlungActive = empfehlungenLinks.some(l => l.href === location)
 
   return (
     <nav
@@ -105,11 +116,32 @@ export function Navbar() {
               </span>
             </Link>
 
-            <Link href="/empfehlungen" data-testid="link-nav-empfehlungen">
-              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/empfehlungen' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+            {/* Empfehlungen Dropdown */}
+            <div className="relative" ref={empfehlungenDropdownRef}>
+              <button
+                onClick={() => setEmpfehlungenOpen(!empfehlungenOpen)}
+                data-testid="button-nav-empfehlungen"
+                className={`flex items-center gap-1 text-base font-medium transition-colors ${isEmpfehlungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
+              >
                 Empfehlungen
-              </span>
-            </Link>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${empfehlungenOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {empfehlungenOpen && (
+                <div className="absolute top-full left-0 mt-2 w-56 glass rounded-xl border border-cyan-500/10 shadow-xl shadow-black/30 py-2">
+                  {empfehlungenLinks.map(link => (
+                    <Link key={link.href} href={link.href} data-testid={`link-dropdown-${link.label.toLowerCase().replace(/\s/g,'-')}`}>
+                      <span
+                        onClick={() => setEmpfehlungenOpen(false)}
+                        className={`block px-4 py-2 text-base cursor-pointer transition-colors flex items-center justify-between ${location === link.href ? 'text-cyan-400 bg-cyan-500/5' : 'text-white/70 hover:text-white hover:bg-white/5'}`}
+                      >
+                        {link.label}
+                        {link.badge && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-cyan-500 text-black leading-none">{link.badge}</span>}
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer" data-testid="link-nav-avgenerator">
               <span className="inline-flex items-center gap-1.5 text-base font-medium text-orange-400 hover:text-orange-300 cursor-pointer">
@@ -158,7 +190,17 @@ export function Navbar() {
             </div>
             <Link href="/programme"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Tools & Programme</span></Link>
             <Link href="/for-free"><span onClick={() => setIsOpen(false)} className={`block py-2 text-base font-medium transition-colors cursor-pointer ${location === '/for-free' ? 'text-green-400' : 'text-green-400 hover:text-green-300'}`}>For free</span></Link>
-            <Link href="/empfehlungen"><span onClick={() => setIsOpen(false)} className={`block py-2 text-base font-medium transition-colors cursor-pointer ${location === '/empfehlungen' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>Empfehlungen</span></Link>
+            <div className="py-1">
+              <p className="text-sm text-white/55 uppercase tracking-wider mb-1">Empfehlungen</p>
+              {empfehlungenLinks.map(link => (
+                <Link key={link.href} href={link.href}>
+                  <span onClick={() => setIsOpen(false)} className={`block py-2 pl-3 text-base cursor-pointer flex items-center justify-between ${location === link.href ? 'text-cyan-400' : 'text-white/75 hover:text-white'}`}>
+                    {link.label}
+                    {link.badge && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-cyan-500 text-black leading-none">{link.badge}</span>}
+                  </span>
+                </Link>
+              ))}
+            </div>
             <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer"><span onClick={() => setIsOpen(false)} className="flex items-center gap-2 py-2 text-base font-medium text-orange-400 hover:text-orange-300 cursor-pointer">MDW-IV-Generator <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-500 text-black leading-none">NEU</span></span></a>
             <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>
             <Link href="/kontakt">
