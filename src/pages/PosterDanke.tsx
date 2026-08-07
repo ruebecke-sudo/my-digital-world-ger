@@ -43,9 +43,13 @@ export default function PosterDanke() {
     };
 
     poll(); // Sofort einmal aufrufen
-    pollingRef.current = setInterval(poll, 3000);
+    pollingRef.current = setInterval(poll, 3000) as unknown as NodeJS.Timer;
 
-    return () => clearInterval(pollingRef.current);
+    return () => {
+      if (pollingRef.current) {
+        clearInterval(pollingRef.current);
+      }
+    };
   }, [orderId, downloadToken]);
 
   return (
