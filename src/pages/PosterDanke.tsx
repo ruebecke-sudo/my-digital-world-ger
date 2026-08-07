@@ -61,12 +61,19 @@ export default function PosterDanke() {
         {status === 'fertig' && (
           <>
             <p className="text-white/60 mb-5">Dein Poster ist fertig – hier die Vorschau:</p>
-            <img
-              src={`${bildUrl}&disposition=inline`}
-              alt="Vorschau deines persönlichen Posters"
+            <div 
+              className="relative inline-block mb-6 cursor-pointer group"
               onClick={() => setPopupOpen(true)}
-              className="rounded-xl border border-white/15 shadow-2xl shadow-black/40 max-h-[70vh] w-auto mx-auto mb-6 cursor-pointer hover:opacity-90 transition-opacity"
-            />
+            >
+              <img
+                src={`${bildUrl}&disposition=inline`}
+                alt="Vorschau deines persönlichen Posters"
+                className="rounded-xl border border-white/15 shadow-2xl shadow-black/40 max-h-[70vh] w-auto mx-auto group-hover:opacity-90 transition-opacity"
+              />
+              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center bg-black/40">
+                <span className="text-white text-sm font-medium">Klicken für Vollbild</span>
+              </div>
+            </div>
             <a href={bildUrl} className="btn-primary inline-flex items-center gap-2">
               <Download className="w-4 h-4" /> Poster in voller Auflösung herunterladen
             </a>
@@ -81,26 +88,24 @@ export default function PosterDanke() {
         )}
       </div>
 
-      {/* Popup Modal für Originalgröße */}
+      {/* Popup Modal */}
       {popupOpen && (
         <div 
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={() => setPopupOpen(false)}
         >
-          <div className="relative max-w-4xl max-h-[90vh] flex items-center justify-center">
-            <button
-              onClick={() => setPopupOpen(false)}
-              className="absolute top-2 right-2 bg-white/10 hover:bg-white/20 rounded-full p-2 text-white"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <img
-              src={`${bildUrl}&disposition=inline`}
-              alt="Dein Poster in Originalgröße"
-              className="max-w-full max-h-[90vh] rounded-lg shadow-2xl"
-              onClick={e => e.stopPropagation()}
-            />
-          </div>
+          <button
+            onClick={() => setPopupOpen(false)}
+            className="absolute top-6 right-6 bg-white/10 hover:bg-white/20 rounded-full p-3 text-white transition-all z-51"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <img
+            src={`${bildUrl}&disposition=inline`}
+            alt="Dein Poster in Originalgröße"
+            className="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          />
         </div>
       )}
     </main>
