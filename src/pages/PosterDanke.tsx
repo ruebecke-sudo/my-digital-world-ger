@@ -11,7 +11,7 @@ export default function PosterDanke() {
   const [progress, setProgress] = useState(4);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
-  const pollingRef = useRef<NodeJS.Timer | null>(null);
+const pollingRef = useRef<any>(null);
 
   useEffect(() => {
     if (!orderId || !downloadToken) return;
@@ -43,7 +43,7 @@ export default function PosterDanke() {
     };
 
     poll(); // Sofort einmal aufrufen
-    pollingRef.current = setInterval(poll, 3000) as unknown as NodeJS.Timer;
+   pollingRef.current = setInterval(poll, 3000) as any;
 
     return () => {
       if (pollingRef.current) {
