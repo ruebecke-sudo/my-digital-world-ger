@@ -11,9 +11,9 @@ const leistungenLinks = [
   { href: '/comic-stil', label: 'Comicstil' },
 ]
 
-const empfehlungenLinks = [
-  { href: '/empfehlungen', label: 'Empfehlungsseite' },
-  { href: '/empfehlung/poster', label: 'MDW-Poster-Shop', badge: 'NEU' },
+
+  const empfehlungenLinks = [
+{ href: '/empfehlung/poster', label: 'MDW-Poster-Shop', badge: 'NEU' },
 ]
 
 export function Navbar() {
