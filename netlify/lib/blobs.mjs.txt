@@ -1,0 +1,4 @@
+import { Blob } from '@netlify/blobs';
+
+export const ordersStore = new Blob({ path: 'orders/' });
+export const imagesStore = new Blob({ path: 'images/' });
