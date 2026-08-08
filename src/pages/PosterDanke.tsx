@@ -11,7 +11,7 @@ export default function PosterDanke() {
   const [progress, setProgress] = useState(4);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [showPopup, setShowPopup] = useState(false);
-  const pollingRef = useRef<NodeJS.Timer | null>(null);
+ const pollingRef = useRef<NodeJS.Timer | null>(null);
 
   useEffect(() => {
     if (!orderId || !downloadToken) return;
