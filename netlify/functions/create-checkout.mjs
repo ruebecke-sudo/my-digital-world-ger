@@ -2,6 +2,7 @@
 import Stripe from "stripe";
 import crypto from "node:crypto";
 import { MOTIFS, buildPrompt, saveOrder, json, siteUrl } from "../../lib/shared.mjs";
+import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
 
 export default async (req) => {
   if (req.method === "OPTIONS") return json({});
@@ -10,10 +11,12 @@ export default async (req) => {
   try {
     const body = await req.json();
     const motif = MOTIFS[body.motifId];
+    const format = getFormat(body.formatId) || getFormat(DEFAULT_FORMAT);
     const name = (body.name || "").trim();
     const text = (body.text || "").trim();
 
     if (!motif) return json({ error: "Bitte ein Motiv auswählen." }, 400);
+    if (!format) return json({ error: "Bitte ein Format auswählen." }, 400);
     if (name.length < 1 || name.length > 40)
       return json({ error: "Bitte einen Namen eingeben (max. 40 Zeichen)." }, 400);
     if (text.length > 250)
@@ -25,10 +28,11 @@ export default async (req) => {
     await saveOrder({
       id: orderId,
       motifId: motif.id,
+      formatId: format.id,
       name,
       text,
       prompt: buildPrompt(motif, name, text),
-      status: "pending",              // pending -> paid -> done (oder error)
+      status: "pending",              // pending -> paid -> generating -> done (oder error)
       downloadToken,
       createdAt: new Date().toISOString(),
     });
@@ -41,10 +45,10 @@ export default async (req) => {
         quantity: 1,
         price_data: {
           currency: process.env.CURRENCY || "eur",
-          unit_amount: parseInt(process.env.PRICE_CENTS || "300", 10),
+          unit_amount: format.cents,
           product_data: {
-            name: process.env.PRODUCT_NAME || "Personalisiertes MDW-Poster",
-            description: `Motiv „${motif.titel}“, personalisiert für ${name}`,
+            name: `${process.env.PRODUCT_NAME || "Personalisiertes MDW-Poster"} – ${format.label}`,
+            description: `Motiv „${motif.titel}“, personalisiert für ${name} · ${format.hinweis}`,
           },
         },
       }],
