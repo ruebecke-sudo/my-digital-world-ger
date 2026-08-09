@@ -1,51 +1,31 @@
-import { ordersStore, imagesStore } from '../lib/blobs.mjs';
+// GET /.netlify/functions/download?id=…&token=… – Kundenfassung ohne Logo
+import { getOrder, imagesStore, json } from "../../lib/shared.mjs";
+import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
 
-export async function handler(event) {
-  const orderId = event.queryStringParameters?.order_id;
-  const downloadToken = event.queryStringParameters?.token;
+export default async req => {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id") || url.searchParams.get("order_id");
+  const token = url.searchParams.get("token");
 
-  if (!orderId || !downloadToken) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing parameters' }) };
+  const order = await getOrder(id);
+  if (!order || order.downloadToken !== token) {
+    return json({ error: "Bestellung nicht gefunden." }, 404);
+  }
+  if (order.status !== "done") {
+    return json({ status: order.status, error: "Das Poster ist noch nicht fertig." }, 202);
   }
 
-  try {
-    // Hole Order-Daten
-    const orderData = await ordersStore.get(orderId);
-    if (!orderData) {
-      return { statusCode: 404, body: JSON.stringify({ error: 'Order not found' }) };
-    }
+  const bild = await imagesStore().get(`${id}_download`, { type: "arrayBuffer" });
+  if (!bild) return json({ error: "Bilddatei nicht gefunden." }, 404);
 
-    const order = JSON.parse(orderData);
+  const format = getFormat(order.formatId) || getFormat(DEFAULT_FORMAT);
+  const datei = `mdw-poster-${order.motifId}-${format.id}.jpg`;
 
-    // Validiere Download-Token
-    if (order.downloadToken !== downloadToken) {
-      return { statusCode: 403, body: JSON.stringify({ error: 'Invalid token' }) };
-    }
-
-    // Prüfe Status
-    if (order.status !== 'done') {
-      return { statusCode: 202, body: JSON.stringify({ status: order.status, message: 'Image still generating' }) };
-    }
-
-    // ====== NEUE LOGIK: Hole OHNE-Logo Version ======
-    const imageBuffer = await imagesStore.get(`${orderId}_download`);
-    // ================================================
-
-    if (!imageBuffer) {
-      return { statusCode: 404, body: JSON.stringify({ error: 'Image not found' }) };
-    }
-
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'image/png',
-        'Content-Disposition': `attachment; filename="mdw-poster-${orderId}.png"`,
-      },
-      body: imageBuffer.toString('base64'),
-      isBase64Encoded: true,
-    };
-  } catch (error) {
-    console.error('Download error:', error);
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
-  }
-}
+  return new Response(bild, {
+    headers: {
+      "Content-Type": "image/jpeg",
+      "Content-Disposition": `attachment; filename="${datei}"`,
+      "Cache-Control": "private, max-age=3600",
+    },
+  });
+};
