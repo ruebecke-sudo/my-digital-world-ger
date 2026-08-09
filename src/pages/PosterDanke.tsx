@@ -1,163 +1,168 @@
-import { useEffect, useState, useRef } from 'react';
-import { useLocation } from 'wouter';
+import { useEffect, useRef, useState } from 'react'
+
+const FN = '/.netlify/functions'
 
 export default function PosterDanke() {
-  const location = useLocation();
-  const params = new URLSearchParams(window.location.search);
-  const orderId = params.get('order');
-  const downloadToken = params.get('token');
+  const params = new URLSearchParams(window.location.search)
+  const orderId = params.get('order')
+  const token = params.get('token')
 
-  const [status, setStatus] = useState('pending');
-  const [progress, setProgress] = useState(4);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [showPopup, setShowPopup] = useState(false);
-const pollingRef = useRef<any>(null);
+  const [status, setStatus] = useState('pending')
+  const [progress, setProgress] = useState(4)
+  const [vorschau, setVorschau] = useState<string | null>(null)
+  const [popup, setPopup] = useState(false)
+  const timer = useRef<any>(null)
 
   useEffect(() => {
-    if (!orderId || !downloadToken) return;
+    if (!orderId || !token) return
+
+    const stop = () => { if (timer.current) { clearInterval(timer.current); timer.current = null } }
 
     const poll = async () => {
       try {
-        const res = await fetch(
-          `/.netlify/functions/order-status?order_id=${orderId}&token=${downloadToken}`
-        );
-        const data = await res.json();
-        setStatus(data.status);
+        const res = await fetch(`${FN}/order-status?id=${orderId}&token=${token}`)
+        const data = await res.json()
+        if (!res.ok) return
 
-        // Berechne Progress basierend auf Status
+        setStatus(data.status)
+
         if (data.status === 'pending') {
-          setProgress(p => Math.min(p + Math.random() * 3, 30));
+          setProgress(p => Math.min(p + Math.random() * 3, 25))
+        } else if (data.status === 'paid') {
+          setProgress(p => Math.min(p + Math.random() * 3, 40))
         } else if (data.status === 'generating') {
-          setProgress(p => Math.min(p + Math.random() * 2, 95));
+          setProgress(p => Math.min(p + Math.random() * 2, 95))
         } else if (data.status === 'done') {
-          setProgress(100);
-          // ====== NEUE LOGIK: Preview mit Logo ======
-          setPreviewImage(
-            `/.netlify/functions/image-preview?order_id=${orderId}&token=${downloadToken}&type=preview`
-          );
-          // ==========================================
+          setProgress(100)
+          setVorschau(`${FN}/image-preview?id=${orderId}&token=${token}`)
+          stop()
+        } else if (data.status === 'error') {
+          stop()
         }
-      } catch (error) {
-        console.error('Polling error:', error);
+      } catch {
+        // Netzwerkaussetzer einfach beim naechsten Durchlauf erneut versuchen
       }
-    };
+    }
 
-    poll(); // Sofort einmal aufrufen
-   pollingRef.current = setInterval(poll, 3000) as any;
+    poll()
+    timer.current = setInterval(poll, 3000)
+    return stop
+  }, [orderId, token])
 
-    return () => {
-      if (pollingRef.current) {
-        clearInterval(pollingRef.current);
-      }
-    };
-  }, [orderId, downloadToken]);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setPopup(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-slate-800 rounded-lg p-8 shadow-2xl">
-        {/* Success Icon */}
-        <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center border-2 border-emerald-500">
-            <svg className="w-8 h-8 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Heading */}
-        <h1 className="text-2xl font-bold text-center mb-2">Zahlung erfolgreich!</h1>
-        <p className="text-slate-400 text-center mb-6">
-          Dein persönliches Poster wird gerade erstellt.
-          Das dauert ca. 30-60 Sekunden – bitte lass die Seite geöffnet.
-        </p>
-
-        {/* Progress Bar */}
-        <div className="mb-6">
-          <div className="relative w-full h-3 bg-slate-700 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          <p className="text-sm text-slate-400 mt-2 text-center">
-            {Math.round(progress)}% – die KI malt gerade dein Poster ...
+  if (!orderId || !token) {
+    return (
+      <main className="pt-28 pb-20 min-h-screen">
+        <div className="max-w-md mx-auto px-4 text-center">
+          <h1 className="text-2xl font-bold text-white mb-3">Bestellung nicht gefunden</h1>
+          <p className="text-white/60">
+            Der Link ist unvollständig. Bitte rufe die Seite über den Link aus der Bestätigung auf.
           </p>
         </div>
+      </main>
+    )
+  }
 
-        {/* Image Preview */}
-        {previewImage && (
-          <div className="mb-6">
-            <div
-              className="relative bg-slate-700 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
-              onClick={() => setShowPopup(true)}
-            >
-              <img
-                src={previewImage}
-                alt="Poster Preview"
-                className="w-full h-auto"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/20 transition-colors">
-                <span className="text-white text-sm font-semibold opacity-0 hover:opacity-100">
-                  Klicken zum Vergrößern
-                </span>
-              </div>
+  return (
+    <main className="pt-28 pb-20 min-h-screen">
+      <div className="max-w-xl mx-auto px-4 sm:px-6">
+        <div className="glass rounded-2xl border border-cyan-500/10 p-6 sm:p-8">
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/15 border-2 border-emerald-500/60 flex items-center justify-center">
+              <svg className="w-8 h-8 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
             </div>
           </div>
-        )}
 
-        {/* Download Button (nur bei status = done) */}
-        {status === 'done' && (
-          <a
-            href={`/.netlify/functions/download?order_id=${orderId}&token=${downloadToken}`}
-            download={`mdw-poster-${orderId}.png`}
-            className="block w-full bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-all text-center"
-          >
-            📥 Jetzt herunterladen
-          </a>
-        )}
+          <h1 className="font-display text-2xl font-bold text-white text-center mb-2">
+            Zahlung erfolgreich
+          </h1>
+          <p className="text-white/60 text-center mb-6">
+            Dein Poster wird jetzt erstellt und in Druckqualität hochgerechnet. Das dauert ein bis
+            zwei Minuten – bitte lass die Seite offen.
+          </p>
 
-        {/* Loading State */}
-        {status !== 'done' && (
-          <div className="text-center text-slate-400 text-sm">
-            Generierung läuft... Gleich geht's los!
-          </div>
-        )}
+          {status !== 'error' && (
+            <div className="mb-6">
+              <div className="relative w-full h-3 rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <p className="text-sm text-white/50 mt-2 text-center">
+                {status === 'done'
+                  ? 'Fertig – dein Poster wartet auf dich.'
+                  : `${Math.round(progress)} % – die KI malt gerade dein Poster …`}
+              </p>
+            </div>
+          )}
 
-        {/* Error State */}
-        {status === 'error' && (
-          <div className="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-lg text-sm">
-            ⚠️ Fehler bei der Generierung. Bitte kontaktiere den Support.
-          </div>
-        )}
+          {vorschau && (
+            <div
+              className="mb-6 rounded-xl overflow-hidden border border-white/10 cursor-pointer hover:opacity-90 transition-opacity"
+              onClick={() => setPopup(true)}
+              title="Klicken zum Vergrößern"
+            >
+              <img src={vorschau} alt="Vorschau deines Posters" className="w-full h-auto" />
+            </div>
+          )}
+
+          {status === 'done' && (
+            <>
+              <a
+                href={`${FN}/download?id=${orderId}&token=${token}`}
+                className="btn-primary w-full inline-flex items-center justify-center gap-2"
+              >
+                Poster herunterladen
+              </a>
+              <p className="mt-3 text-white/40 text-xs text-center">
+                Die Vorschau zeigt unser Logo – deine Download-Datei ist ohne Logo und in voller
+                Druckauflösung.
+              </p>
+            </>
+          )}
+
+          {status === 'error' && (
+            <div className="rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-red-300 text-sm">
+              Bei der Erstellung ist etwas schiefgegangen. Deine Zahlung ist erfasst – schreib uns
+              kurz an info@my-digital-world.de mit dieser Bestellnummer, dann kümmern wir uns
+              sofort darum:
+              <span className="block mt-2 font-mono text-xs text-red-200 break-all">{orderId}</span>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Popup Modal */}
-      {showPopup && previewImage && (
+      {popup && vorschau && (
         <div
-          className="fixed inset-0 bg-black/90 flex items-center justify-center p-4 z-50"
-          onClick={() => setShowPopup(false)}
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setPopup(false)}
         >
-          <div className="relative max-w-4xl w-full max-h-[90vh]">
-            {/* Close Button */}
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white rounded-full p-2 transition-colors z-10"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            {/* Image */}
-            <img
-              src={previewImage}
-              alt="Poster Full Preview"
-              className="w-full h-auto rounded-lg"
-              onClick={e => e.stopPropagation()}
-            />
-          </div>
+          <button
+            type="button"
+            aria-label="Schließen"
+            onClick={() => setPopup(false)}
+            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/25 text-white"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <img
+            src={vorschau}
+            alt="Vorschau deines Posters"
+            className="max-h-[85vh] max-w-full w-auto rounded-xl shadow-2xl"
+            onClick={e => e.stopPropagation()}
+          />
         </div>
       )}
-    </div>
-  );
+    </main>
+  )
 }
