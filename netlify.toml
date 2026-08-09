@@ -5,3 +5,6 @@
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["sharp"]
+  # Die Schriftdateien werden zur Laufzeit von lib/textlayer.mjs gelesen und
+  # muessen deshalb mit den Functions ausgeliefert werden.
+  included_files = ["assets/fonts/*.ttf"]
