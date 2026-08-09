@@ -1,113 +1,131 @@
-import fetch from 'node-fetch';
-import { Readable } from 'stream';
-import sharp from 'sharp';
-import { ordersStore, imagesStore } from '../lib/blobs.mjs';
-import { addBranding } from '../lib/shared.mjs';
+// POST /.netlify/functions/generate-background
+// Background-Function (bis 15 Minuten Laufzeit). Wird von webhook.mjs nach
+// erfolgreicher Zahlung mit { orderId } angestossen.
+//
+// Ablauf: SD3 generiert das Motiv -> Real-ESRGAN rechnet hoch, falls das
+// Zielformat groesser ist -> sharp bringt es exakt auf Zielmass -> zwei
+// Fassungen in Blobs: "_preview" mit MDW-Logo, "_download" ohne.
 
-const REPLICATE_API_TOKEN = process.env.REPLICATE_API_TOKEN;
-const SD3_MODEL_VERSION = 'a6c0daea3c4a01b5ef380f6a9f62c12d02d0f1e3f8e3b5c8d9e0f1a2b3c4d5e6';
+import { getOrder, saveOrder, imagesStore, addBranding } from "../../lib/shared.mjs";
+import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
 
-export async function handler(event) {
-  const orderId = event.queryStringParameters?.order_id;
+const API = "https://api.replicate.com/v1";
+const authHeader = () => ({ Authorization: `Bearer ${process.env.REPLICATE_API_TOKEN}` });
 
-  if (!orderId) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing order_id' }) };
-  }
-
-  try {
-    // Hole Order-Daten
-    const orderData = await ordersStore.get(orderId);
-    if (!orderData) {
-      return { statusCode: 404, body: JSON.stringify({ error: 'Order not found' }) };
-    }
-
-    const order = JSON.parse(orderData);
-
-    // Prüfe ob bereits vorhanden
-    const existingImage = await imagesStore.get(`${orderId}_download`).catch(() => null);
-    if (existingImage) {
-      await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'done' }));
-      return { statusCode: 200, body: JSON.stringify({ status: 'done' }) };
-    }
-
-    // Update Status → "generating"
-    await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'generating' }));
-
-    // Starte Prediction bei Replicate
-    const predictionRes = await fetch('https://api.replicate.com/v1/predictions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Token ${REPLICATE_API_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        version: SD3_MODEL_VERSION,
-        input: {
-          prompt: order.prompt,
-          width: 1024,
-          height: 1536,
-          num_outputs: 1,
-          guidance_scale: 7,
-        },
-      }),
-    });
-
-    if (!predictionRes.ok) {
-      throw new Error(`Replicate API error: ${predictionRes.statusText}`);
-    }
-
-    const prediction = await predictionRes.json();
-    const predictionId = prediction.id;
-
-    // Polling: Warte auf Completion (max 10 min, alle 5 sek)
-    let completed = false;
-    let attempts = 0;
-    const maxAttempts = 120;
-
-    while (!completed && attempts < maxAttempts) {
-      attempts++;
-
-      const statusRes = await fetch(`https://api.replicate.com/v1/predictions/${predictionId}`, {
-        headers: { 'Authorization': `Token ${REPLICATE_API_TOKEN}` },
-      });
-
-      const status = await statusRes.json();
-
-      if (status.status === 'succeeded') {
-        completed = true;
-        const imageUrl = status.output[0];
-
-        // Download Bild von Replicate
-        const imgRes = await fetch(imageUrl);
-        const imgBuffer = await imgRes.buffer();
-
-        // ====== NEUE LOGIK: Zwei Versionen ======
-
-        // Version 1: MIT Logo (für Preview)
-        const imageWithBranding = await addBranding(imgBuffer);
-        await imagesStore.put(`${orderId}_preview`, imageWithBranding);
-
-        // Version 2: OHNE Logo (für Download)
-        await imagesStore.put(`${orderId}_download`, imgBuffer);
-
-        // ========================================
-
-        // Update Status → "done"
-        await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'done' }));
-
-        return { statusCode: 200, body: JSON.stringify({ status: 'done' }) };
-      } else if (status.status === 'failed') {
-        throw new Error(`Prediction failed: ${status.error}`);
-      }
-
-      // Warte 5 Sekunden vor nächstem Poll
-      await new Promise(resolve => setTimeout(resolve, 5000));
-    }
-
-    throw new Error('Prediction timeout after 10 minutes');
-  } catch (error) {
-    console.error('Error:', error);
-    await ordersStore.put(orderId, JSON.stringify({ ...order, status: 'error' }));
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
-  }
+// Ueber den Model-Endpoint aufrufen - so brauchen wir keinen Versions-Hash.
+async function startPrediction(model, input) {
+  const res = await fetch(`${API}/models/${model}/predictions`, {
+    method: "POST",
+    headers: { ...authHeader(), "Content-Type": "application/json" },
+    body: JSON.stringify({ input }),
+  });
+  if (!res.ok) throw new Error(`Replicate ${model} -> ${res.status}: ${await res.text()}`);
+  return res.json();
 }
+
+async function warteAufErgebnis(prediction, maxSekunden = 540) {
+  let p = prediction;
+  const ende = Date.now() + maxSekunden * 1000;
+  while (Date.now() < ende) {
+    if (p.status === "succeeded") return p.output;
+    if (p.status === "failed" || p.status === "canceled") {
+      throw new Error(`Prediction ${p.status}: ${p.error || "kein Grund angegeben"}`);
+    }
+    await new Promise(r => setTimeout(r, 4000));
+    const res = await fetch(`${API}/predictions/${p.id}`, { headers: authHeader() });
+    if (!res.ok) throw new Error(`Statusabfrage fehlgeschlagen: ${res.status}`);
+    p = await res.json();
+  }
+  throw new Error("Zeitueberschreitung bei der Bildgenerierung.");
+}
+
+const ersteUrl = out => (Array.isArray(out) ? out[0] : out);
+
+async function ladeBuffer(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Bild nicht abrufbar: ${res.status}`);
+  return Buffer.from(await res.arrayBuffer());
+}
+
+// Netlify Blobs erwartet string | ArrayBuffer | Blob - Buffer sauber umwandeln.
+const alsArrayBuffer = buf =>
+  buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
+
+export default async req => {
+  if (req.headers.get("x-internal-key") !== process.env.INTERNAL_SECRET) {
+    return new Response("Nicht erlaubt.", { status: 401 });
+  }
+
+  let orderId = null;
+  try {
+    ({ orderId } = await req.json());
+    const order = await getOrder(orderId);
+    if (!order) return new Response("Bestellung nicht gefunden.", { status: 404 });
+    if (order.status === "done") return new Response("Bereits fertig.", { status: 200 });
+
+    const format = getFormat(order.formatId) || getFormat(DEFAULT_FORMAT);
+
+    order.status = "generating";
+    await saveOrder(order);
+
+    // 1) Motiv generieren
+    const sd = await startPrediction("stability-ai/stable-diffusion-3", {
+      prompt: order.prompt,
+      aspect_ratio: format.ar,
+      output_format: "png",
+      output_quality: 100,
+    });
+    const motivUrl = ersteUrl(await warteAufErgebnis(sd));
+    let bild = await ladeBuffer(motivUrl);
+
+    // 2) Hochrechnen, wenn das Zielformat mehr Pixel braucht
+    const sharp = (await import("sharp")).default;
+    const meta = await sharp(bild).metadata();
+    const faktor = Math.max(format.w / meta.width, format.h / meta.height);
+    if (faktor > 1.05) {
+      const up = await startPrediction("nightmareai/real-esrgan", {
+        image: motivUrl,
+        scale: Math.min(4, Math.ceil(faktor)),
+        face_enhance: false,
+      });
+      bild = await ladeBuffer(ersteUrl(await warteAufErgebnis(up)));
+    }
+
+    // 3) Exakt auf Zielmass. Zuschnitt mittig: es fallen die Seiten weg,
+    //    Headline oben und Titelplatte unten bleiben vollstaendig.
+    const druckfertig = await sharp(bild)
+      .resize(format.w, format.h, { fit: "cover", position: "centre", kernel: "lanczos3" })
+      .jpeg({ quality: format.jpeg, mozjpeg: true, chromaSubsampling: "4:4:4" })
+      .toBuffer();
+
+    // 4) Vorschau fuers Web: mit Logo, kleiner gerechnet
+    const vorschau = await addBranding(
+      await sharp(druckfertig)
+        .resize({ width: Math.min(1400, format.w), withoutEnlargement: true })
+        .toBuffer()
+    );
+
+    await imagesStore().set(`${orderId}_preview`, alsArrayBuffer(vorschau));
+    await imagesStore().set(`${orderId}_download`, alsArrayBuffer(druckfertig));
+
+    order.status = "done";
+    order.breite = format.w;
+    order.hoehe = format.h;
+    order.dateigroesse = druckfertig.length;
+    order.fertigAt = new Date().toISOString();
+    await saveOrder(order);
+
+    return new Response("OK", { status: 200 });
+  } catch (err) {
+    console.error("Generierung fehlgeschlagen:", err);
+    if (orderId) {
+      const order = await getOrder(orderId);
+      if (order) {
+        order.status = "error";
+        order.fehler = String(err?.message || err);
+        await saveOrder(order);
+      }
+    }
+    return new Response("Fehler bei der Generierung.", { status: 500 });
+  }
+};
