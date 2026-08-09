@@ -6,7 +6,9 @@
 // Zielformat groesser ist -> sharp bringt es exakt auf Zielmass -> zwei
 // Fassungen in Blobs: "_preview" mit MDW-Logo, "_download" ohne.
 
-import { getOrder, saveOrder, imagesStore, addBranding } from "../../lib/shared.mjs";
+import {
+  getOrder, saveOrder, imagesStore, addBranding, textAufbringen, MOTIFS,
+} from "../../lib/shared.mjs";
 import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
 
 const API = "https://api.replicate.com/v1";
@@ -64,6 +66,8 @@ export default async req => {
     if (order.status === "done") return new Response("Bereits fertig.", { status: 200 });
 
     const format = getFormat(order.formatId) || getFormat(DEFAULT_FORMAT);
+    const motif = MOTIFS[order.motifId];
+    if (!motif) throw new Error("Motiv unbekannt: " + order.motifId);
 
     order.status = "generating";
     await saveOrder(order);
@@ -93,8 +97,17 @@ export default async req => {
 
     // 3) Exakt auf Zielmass. Zuschnitt mittig: es fallen die Seiten weg,
     //    Headline oben und Titelplatte unten bleiben vollstaendig.
-    const druckfertig = await sharp(bild)
+    // 3) Exakt auf Zielmass. Zuschnitt mittig: es fallen die Seiten weg.
+    const grundlage = await sharp(bild)
       .resize(format.w, format.h, { fit: "cover", position: "centre", kernel: "lanczos3" })
+      .png()
+      .toBuffer();
+
+    // 4) Typografie als Vektorebene aufstempeln - Name und Kundentext
+    //    erscheinen dadurch garantiert korrekt und fehlerfrei.
+    const mitText = await textAufbringen(grundlage, motif, order.name, order.text);
+
+    const druckfertig = await sharp(mitText)
       .jpeg({ quality: format.jpeg, mozjpeg: true, chromaSubsampling: "4:4:4" })
       .toBuffer();
 
