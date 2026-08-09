@@ -155,6 +155,17 @@
       "defaultText": "Ich verteile Lächeln, wo andere schlechte Stimmung verbreiten. Lachen ist schließlich ansteckend.",
       "bild": "/motive/m20.webp",
       "kurz": "GUTE-LAUNE-BOTSCHAFTER"
+    },
+    {
+      "id": "m21",
+      "titel": "Das Hochzeitspaar des Jahres",
+      "bezeichnung": "Hochzeitspaar des Jahres",
+      "szene": "Verliebtes Comic-Brautpaar in enger Umarmung unter einem Blütenbogen, die Braut im Spitzenkleid mit langem Schleier blickt den Bräutigam im dunklen Anzug mit Rosen-Ansteckung verliebt an, ringsherum warme Lichterketten, fallende Rosenblätter und schwebende rote Herzen.",
+      "defaultText": "Gemeinsam gehen wir Hand in Hand durch jedes Abenteuer des Lebens. Unsere Liebe wird jeden Tag ein kleines Stück größer.",
+      "bild": "/motive/m21.webp",
+      "kurz": "HOCHZEITSPAAR",
+      "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, ein verliebtes Comic-Brautpaar als Hauptmotiv mit ausdrucksstarken, warmherzigen Gesichtern, romantische kinoreife Beleuchtung mit goldenem Gegenlicht und Lichterketten, festlich geschmückter Hintergrund aus Blütenbögen und Rosen, warme Gold- und Rosétöne, schwebende rote Herzen und rosa Konfetti, viele liebevolle Hochzeitsdetails in der Szene, professionelle Werbegrafik, Hochformat 9:16, gestochen scharf, Premium-Qualität.",
+      "textSchema": "Typografie exakt wie ein hochwertiges Hochzeitsposter aufgebaut: Oben links riesig in goldener, glitzernder Schreibschrift „Hallo,“ – darunter kleiner in weißer Schrift „wir sind das“ – darunter in riesigen, goldenen, glitzernden Großbuchstaben „{kurz}“ – direkt darunter auf einem roten, geschwungenen Satinband in fetten weißen Großbuchstaben „DES JAHRES.“ Darunter der folgende Text als Liste aus 2–3 kurzen Zeilen, jede Zeile mit einem kleinen goldenen Herz-Icon davor, in warmweißer Schrift, durch zarte goldene Zierlinien getrennt: „{text}“. Rechts unten eine große goldene Pokal-Trophäe mit einem Herz auf dem Deckel, auf einem Sockel mit gravierter Messing-Plakette „{kurz} DES JAHRES“, davor ein Kranz aus rosa und weißen Rosen; auf dem Sockel zusätzlich klein eingraviert die Namen „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt frei von Text und wichtigen Elementen."
     }
   ]
 }
