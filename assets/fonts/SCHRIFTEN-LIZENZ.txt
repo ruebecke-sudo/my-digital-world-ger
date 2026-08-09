@@ -5,15 +5,26 @@ Diese Schriften werden serverseitig verwendet, um die Poster-Typografie
 nach der Bildgenerierung aufzustempeln. Sie werden in Vektorpfade
 umgewandelt (opentype.js), es findet keine Systemschrift-Suche statt.
 
-Anton-Regular.ttf          Ueberschrift, grosse Versalien
-Pacifico-Regular.ttf       Schreibschrift fuer "Hallo,"
+Im Einsatz - wie in den freigegebenen Mustern:
+
+Lato-Black.ttf             Ueberschrift, grosse Versalien
+Lora-Regular.ttf           Serifenschrift fuer den Gruss und die Hochzeitskoepfe
 Poppins-Medium.ttf         Lauftext
 Poppins-Bold.ttf           Farbbalken, Copyright
-PlayfairDisplay.ttf        Serifenschrift fuer die Hochzeitsmotive
 
-Alle fuenf stehen unter der SIL Open Font License 1.1.
-Damit ist die Weitergabe im Rahmen dieses Projekts zulaessig,
-einschliesslich kommerzieller Nutzung der erzeugten Poster.
+Ausweichschriften, falls eine der oberen Dateien fehlt:
+
+Anton-Regular.ttf          Ausweich fuer die Ueberschrift
+PlayfairDisplay.ttf        Ausweich fuer die Serifenschrift
+Pacifico-Regular.ttf       Ausweich fuer die Serifenschrift
+
+lib/textlayer.mjs nennt zu jeder Rolle mehrere Dateien und nimmt die erste,
+die vorhanden ist. Eine Schrift wechselt man also, indem man die neue Datei
+hier ablegt und in textlayer.mjs an die erste Stelle der Rolle setzt.
+
+Alle stehen unter der SIL Open Font License 1.1. Damit ist die Weitergabe im
+Rahmen dieses Projekts zulaessig, einschliesslich kommerzieller Nutzung der
+erzeugten Poster.
 
 Quelle: https://github.com/google/fonts
 Lizenztext: https://openfontlicense.org
