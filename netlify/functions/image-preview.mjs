@@ -1,59 +1,26 @@
-import { ordersStore, imagesStore } from '../lib/blobs.mjs';
+// GET /.netlify/functions/image-preview?id=…&token=… – Webvorschau MIT MDW-Logo
+import { getOrder, imagesStore, json } from "../../lib/shared.mjs";
 
-export async function handler(event) {
-  const orderId = event.queryStringParameters?.order_id;
-  const downloadToken = event.queryStringParameters?.token;
-  const type = event.queryStringParameters?.type || 'preview'; // 'preview' (mit Logo) oder 'download' (ohne)
+export default async req => {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id") || url.searchParams.get("order_id");
+  const token = url.searchParams.get("token");
 
-  if (!orderId || !downloadToken) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing parameters' }) };
+  const order = await getOrder(id);
+  if (!order || order.downloadToken !== token) {
+    return json({ error: "Bestellung nicht gefunden." }, 404);
+  }
+  if (order.status !== "done") {
+    return json({ status: order.status }, 202);
   }
 
-  try {
-    // Hole Order-Daten
-    const orderData = await ordersStore.get(orderId);
-    if (!orderData) {
-      return { statusCode: 404, body: JSON.stringify({ error: 'Order not found' }) };
-    }
+  const bild = await imagesStore().get(`${id}_preview`, { type: "arrayBuffer" });
+  if (!bild) return json({ error: "Vorschau nicht gefunden." }, 404);
 
-    const order = JSON.parse(orderData);
-
-    // Validiere Download-Token
-    if (order.downloadToken !== downloadToken) {
-      return { statusCode: 403, body: JSON.stringify({ error: 'Invalid token' }) };
-    }
-
-    // Prüfe Status
-    if (order.status !== 'done') {
-      return { statusCode: 202, body: JSON.stringify({ status: order.status }) };
-    }
-
-    // ====== NEUE LOGIK: Je nach type ======
-    let imageBuffer;
-    if (type === 'preview') {
-      // Mit Logo (für Website-Anzeige)
-      imageBuffer = await imagesStore.get(`${orderId}_preview`);
-    } else {
-      // Ohne Logo (für Download)
-      imageBuffer = await imagesStore.get(`${orderId}_download`);
-    }
-    // ======================================
-
-    if (!imageBuffer) {
-      return { statusCode: 404, body: JSON.stringify({ error: 'Image not found' }) };
-    }
-
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=3600', // 1 Stunde cachen
-      },
-      body: imageBuffer.toString('base64'),
-      isBase64Encoded: true,
-    };
-  } catch (error) {
-    console.error('Preview error:', error);
-    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
-  }
-}
+  return new Response(bild, {
+    headers: {
+      "Content-Type": "image/png",
+      "Cache-Control": "private, max-age=3600",
+    },
+  });
+};
