@@ -2,11 +2,16 @@ import { useEffect, useState } from 'react'
 import { Sparkles, ShoppingCart, ZoomIn, X } from 'lucide-react'
 
 type Motiv = { id: string; titel: string; bild?: string | null }
+type Format = { id: string; label: string; hinweis: string; cents: number }
 const FN = '/.netlify/functions'
+
+const preis = (cents: number) => (cents / 100).toFixed(2).replace('.', ',') + ' €'
 
 export default function PosterShop() {
   const [motive, setMotive] = useState<Motiv[]>([])
+  const [formate, setFormate] = useState<Format[]>([])
   const [auswahl, setAuswahl] = useState<string | null>(null)
+  const [formatId, setFormatId] = useState<string | null>(null)
   const [zoom, setZoom] = useState<Motiv | null>(null)
   const [name, setName] = useState('')
   const [text, setText] = useState('')
@@ -21,23 +26,32 @@ export default function PosterShop() {
   }, [])
 
   useEffect(() => {
+    fetch(`${FN}/formats`)
+      .then(r => r.json())
+      .then(d => { setFormate(d.formate || []); setFormatId(d.standard || null) })
+      .catch(() => setFehler('Die Formate konnten nicht geladen werden. Bitte später erneut versuchen.'))
+  }, [])
+
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setZoom(null) }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [])
 
   const bildPfad = (m: Motiv) => m.bild || `/motive/${m.id}.jpg`
+  const gewaehltesFormat = formate.find(f => f.id === formatId) || null
 
   const kaufen = async () => {
     setFehler('')
     if (!auswahl) { setFehler('Bitte zuerst ein Motiv auswählen.'); return }
+    if (!formatId) { setFehler('Bitte ein Format auswählen.'); return }
     if (!name.trim()) { setFehler('Bitte einen Namen eingeben – er erscheint im Bild.'); return }
     setLaedt(true)
     try {
       const res = await fetch(`${FN}/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ motifId: auswahl, name: name.trim(), text: text.trim() }),
+        body: JSON.stringify({ motifId: auswahl, formatId, name: name.trim(), text: text.trim() }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Unbekannter Fehler')
@@ -59,8 +73,8 @@ export default function PosterShop() {
             Dein persönliches <span className="text-cyan-400">„…des Jahres“</span>-Poster
           </h1>
           <p className="text-white/60 max-w-2xl mx-auto">
-            Motiv auswählen, Name und Wunschtext eingeben – nach der Bezahlung wird dein
-            Poster individuell per KI erstellt und steht sofort zum Download bereit.
+            Motiv auswählen, Format wählen, Name und Wunschtext eingeben – nach der Bezahlung wird
+            dein Poster individuell per KI erstellt und steht sofort zum Download bereit.
           </p>
           <p className="text-white/40 text-xs mt-3">Tipp: Auf die Lupe tippen zeigt das Motiv groß.</p>
         </div>
@@ -96,6 +110,31 @@ export default function PosterShop() {
         </div>
 
         <div className="max-w-xl mx-auto glass rounded-2xl border border-cyan-500/10 p-6 sm:p-8">
+          <label className="block text-white font-medium mb-1">Format</label>
+          <p className="text-white/50 text-xs mb-3">
+            Druckformate mit 300 dpi – per KI hochgerechnet, also auch groß gedruckt scharf.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
+            {formate.map(f => (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => setFormatId(f.id)}
+                className={`rounded-xl border p-3 text-left transition-all ${
+                  formatId === f.id
+                    ? 'border-cyan-400 bg-cyan-500/10'
+                    : 'border-white/10 bg-white/5 hover:bg-white/10'
+                }`}
+              >
+                <span className={`block text-sm font-medium ${formatId === f.id ? 'text-cyan-400' : 'text-white/85'}`}>
+                  {f.label}
+                </span>
+                <span className="block text-white/40 text-[11px] mt-0.5">{f.hinweis}</span>
+                <span className="block text-white/70 text-xs mt-1">{preis(f.cents)}</span>
+              </button>
+            ))}
+          </div>
+
           <label className="block text-white font-medium mb-2">Name <span className="text-white/50 font-normal">(erscheint im Bild)</span></label>
           <input
             value={name}
@@ -117,11 +156,15 @@ export default function PosterShop() {
           />
           <button onClick={kaufen} disabled={laedt} className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-60">
             <ShoppingCart className="w-4 h-4" />
-            {laedt ? 'Einen Moment …' : 'Jetzt kaufen'}
+            {laedt
+              ? 'Einen Moment …'
+              : gewaehltesFormat
+                ? `Jetzt kaufen – ${preis(gewaehltesFormat.cents)}`
+                : 'Jetzt kaufen'}
           </button>
           {fehler && <p className="mt-4 text-red-400 text-sm">{fehler}</p>}
           <p className="mt-4 text-white/40 text-xs text-center">
-            Sichere Bezahlung über Stripe · Dein Poster wird nach der Zahlung individuell erstellt (ca. 1 Minute)
+            Sichere Bezahlung über Stripe · Dein Poster wird nach der Zahlung individuell erstellt (ca. 1–2 Minuten)
           </p>
         </div>
       </div>
