@@ -166,6 +166,28 @@
       "kurz": "HOCHZEITSPAAR",
       "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, ein verliebtes Comic-Brautpaar als Hauptmotiv mit ausdrucksstarken, warmherzigen Gesichtern, romantische kinoreife Beleuchtung mit goldenem Gegenlicht und Lichterketten, festlich geschmückter Hintergrund aus Blütenbögen und Rosen, warme Gold- und Rosétöne, schwebende rote Herzen und rosa Konfetti, viele liebevolle Hochzeitsdetails in der Szene, professionelle Werbegrafik, Hochformat 9:16, gestochen scharf, Premium-Qualität.",
       "textSchema": "Typografie exakt wie ein hochwertiges Hochzeitsposter aufgebaut: Oben links riesig in goldener, glitzernder Schreibschrift „Hallo,“ – darunter kleiner in weißer Schrift „wir sind das“ – darunter in riesigen, goldenen, glitzernden Großbuchstaben „{kurz}“ – direkt darunter auf einem roten, geschwungenen Satinband in fetten weißen Großbuchstaben „DES JAHRES.“ Darunter der folgende Text als Liste aus 2–3 kurzen Zeilen, jede Zeile mit einem kleinen goldenen Herz-Icon davor, in warmweißer Schrift, durch zarte goldene Zierlinien getrennt: „{text}“. Rechts unten eine große goldene Pokal-Trophäe mit einem Herz auf dem Deckel, auf einem Sockel mit gravierter Messing-Plakette „{kurz} DES JAHRES“, davor ein Kranz aus rosa und weißen Rosen; auf dem Sockel zusätzlich klein eingraviert die Namen „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt frei von Text und wichtigen Elementen."
+    },
+    {
+      "id": "m22",
+      "titel": "Die Braut des Jahres",
+      "bezeichnung": "Braut des Jahres",
+      "szene": "Wunderschöne lächelnde Comic-Braut im Mittelpunkt, edles Hochzeitskleid mit feinen Spitzen, funkelnder Schleier mit Diadem, elegante Perlenkette, traumhafter Brautstrauß aus rosa und weißen Rosen, luxuriöse Hochzeitslocation mit weißen Blumen im Hintergrund, romantischer Sonnenuntergang, goldene Lichtstrahlen und schwebende Blütenblätter.",
+      "defaultText": "Heute beginnt das schönste Kapitel meines Lebens. Mit Liebe, Glück und ganz viel Herz gehe ich voller Freude in unsere gemeinsame Zukunft.",
+      "bild": "/motive/m22.webp",
+      "kurz": "BRAUT",
+      "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, märchenhaft, romantisch und emotional, elegante Farbwelt in Weiß, Gold und Rosé, kinoreife Beleuchtung mit goldenem Gegenlicht, farbiges Konfetti, professionelle Werbegrafik, Social-Media-Poster, Hochformat 9:16, gestochen scharf, exklusiver Premium-Look.",
+      "textSchema": "Typografie hochwertig und elegant, komplett auf der linken Bildhälfte, die Figur rechts: Oben ein kleines goldenes Zierornament mit Herz, darunter riesig in goldener Serifenschrift mit Glanz „{kurz}“, direkt darunter etwas kleiner in weißer Serifenschrift „des Jahres“, darunter erneut ein goldenes Zierornament mit Herz. Darunter linksbündig in warmweißer Schrift der Text, Zeile für Zeile umbrochen: „Hallo, ich bin die {bezeichnung}. {text}“ – die Wörter Liebe, Glück und Herz sowie „{bezeichnung}“ in Gold hervorgehoben. Links unten eine große goldene Pokal-Trophäe mit einem Herz auf dem Deckel, auf einem Sockel mit gravierter Messing-Plakette „{kurz} des Jahres“, ringsherum weiße und rosa Rosen; auf dem Sockel zusätzlich klein eingraviert der Name „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt vollständig frei von Text, Logos und wichtigen Elementen."
+    },
+    {
+      "id": "m23",
+      "titel": "Der Bräutigam des Jahres",
+      "bezeichnung": "Bräutigam des Jahres",
+      "szene": "Charismatischer lächelnder Comic-Bräutigam im Mittelpunkt, eleganter Maßanzug in Dunkelblau mit Fliege, stilvolle Armbanduhr, Boutonnière aus weißen Rosen am Revers, luxuriöse Hochzeitslocation mit Lichterketten und Säulen im Hintergrund, romantischer Sonnenuntergang, goldene Lichtstrahlen, schwebende Blütenblätter und kleine goldene Herzen.",
+      "defaultText": "Mit einem Lächeln sage ich heute „Ja“. Gemeinsam machen wir aus jedem Tag ein kleines Stück Glück.",
+      "bild": "/motive/m23.webp",
+      "kurz": "BRÄUTIGAM",
+      "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, märchenhaft, emotional und exklusiv, elegante Farbwelt in Dunkelblau, Weiß und Gold, kinoreife Beleuchtung mit goldenem Gegenlicht und funkelnden Lichtern, farbiges Konfetti, professionelle Werbegrafik, Social-Media-Poster, Hochformat 9:16, gestochen scharf, luxuriöser Premium-Look.",
+      "textSchema": "Typografie hochwertig und elegant, komplett auf der linken Bildhälfte, die Figur rechts: Oben ein kleines goldenes Zierornament mit Herz, darunter riesig in goldener Serifenschrift mit Glanz „{kurz}“, direkt darunter etwas kleiner in weißer Serifenschrift „des Jahres“, darunter erneut ein goldenes Zierornament mit Herz. Darunter linksbündig in warmweißer Schrift der Text, Zeile für Zeile umbrochen: „Hallo, ich bin der {bezeichnung}. {text}“ – das Wort Glück sowie „{bezeichnung}“ in Gold hervorgehoben. Links unten eine große goldene Pokal-Trophäe mit einem Herz auf dem Deckel, auf einem Sockel mit gravierter Messing-Plakette „{kurz} des Jahres“, ringsherum weiße Rosen; auf dem Sockel zusätzlich klein eingraviert der Name „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt vollständig frei von Text, Logos und wichtigen Elementen."
     }
   ]
 }
