@@ -76,35 +76,57 @@ export default function PosterShop() {
             Motiv auswählen, Format wählen, Name und Wunschtext eingeben – nach der Bezahlung wird
             dein Poster individuell per KI erstellt und steht sofort zum Download bereit.
           </p>
-          <p className="text-white/40 text-xs mt-3">Tipp: Auf die Lupe tippen zeigt das Motiv groß.</p>
+          <p className="text-white/40 text-xs mt-3">
+            Tipp: Auf ein Bild tippen zeigt das Motiv groß.
+          </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
           {motive.map(m => (
             <div
               key={m.id}
-              onClick={() => setAuswahl(m.id)}
-              className={`relative rounded-xl overflow-hidden border-2 text-left cursor-pointer transition-all bg-white/5 hover:bg-white/10 ${
+              className={`rounded-xl overflow-hidden border-2 transition-all bg-white/5 ${
                 auswahl === m.id ? 'border-cyan-400 shadow-lg shadow-cyan-500/20' : 'border-white/10'
               }`}
             >
-              <img
-                src={bildPfad(m)}
-                alt={m.titel}
-                className="w-full aspect-[3/4] object-cover"
-                onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
-              />
+              {/* Ganzes Bild oeffnet die Vergroesserung – grosses, eindeutiges Klickziel */}
               <button
                 type="button"
-                aria-label="Motiv vergrößern"
-                onClick={e => { e.stopPropagation(); setZoom(m) }}
-                className="absolute top-2 right-2 p-2 rounded-full bg-black/60 hover:bg-cyan-500 text-white transition-colors"
+                onClick={() => setZoom(m)}
+                aria-label={`${m.titel} groß ansehen`}
+                className="group relative block w-full cursor-zoom-in"
               >
-                <ZoomIn className="w-4 h-4" />
+                <img
+                  src={bildPfad(m)}
+                  alt={m.titel}
+                  className="w-full aspect-[3/4] object-cover"
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
+                <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/35 transition-colors">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ZoomIn className="w-3.5 h-3.5" /> Groß ansehen
+                  </span>
+                </span>
+                <span className="absolute top-2 right-2 p-2 rounded-full bg-black/60 text-white pointer-events-none">
+                  <ZoomIn className="w-4 h-4" />
+                </span>
               </button>
-              <div className={`px-3 py-2 text-sm font-medium ${auswahl === m.id ? 'text-cyan-400' : 'text-white/80'}`}>
+
+              <div className={`px-3 pt-2 text-sm font-medium ${auswahl === m.id ? 'text-cyan-400' : 'text-white/80'}`}>
                 {m.titel}
               </div>
+
+              <button
+                type="button"
+                onClick={() => setAuswahl(m.id)}
+                className={`mx-3 my-3 block rounded-lg py-2 px-2 text-xs font-semibold transition-colors w-[calc(100%-1.5rem)] ${
+                  auswahl === m.id
+                    ? 'bg-cyan-500 text-black'
+                    : 'bg-white/10 text-white/80 hover:bg-white/20'
+                }`}
+              >
+                {auswahl === m.id ? 'Ausgewählt' : 'Dieses Motiv wählen'}
+              </button>
             </div>
           ))}
         </div>
