@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Sparkles, ShoppingCart } from 'lucide-react'
+import { Sparkles, ShoppingCart, ZoomIn, X } from 'lucide-react'
 
 type Motiv = { id: string; titel: string; bild?: string | null }
 const FN = '/.netlify/functions'
@@ -7,6 +7,7 @@ const FN = '/.netlify/functions'
 export default function PosterShop() {
   const [motive, setMotive] = useState<Motiv[]>([])
   const [auswahl, setAuswahl] = useState<string | null>(null)
+  const [zoom, setZoom] = useState<Motiv | null>(null)
   const [name, setName] = useState('')
   const [text, setText] = useState('')
   const [fehler, setFehler] = useState('')
@@ -18,6 +19,14 @@ export default function PosterShop() {
       .then(setMotive)
       .catch(() => setFehler('Die Motive konnten nicht geladen werden. Bitte später erneut versuchen.'))
   }, [])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setZoom(null) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
+
+  const bildPfad = (m: Motiv) => m.bild || `/motive/${m.id}.jpg`
 
   const kaufen = async () => {
     setFehler('')
@@ -53,32 +62,39 @@ export default function PosterShop() {
             Motiv auswählen, Name und Wunschtext eingeben – nach der Bezahlung wird dein
             Poster individuell per KI erstellt und steht sofort zum Download bereit.
           </p>
+          <p className="text-white/40 text-xs mt-3">Tipp: Auf die Lupe tippen zeigt das Motiv groß.</p>
         </div>
 
-        {/* Motiv-Galerie */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
           {motive.map(m => (
-            <button
+            <div
               key={m.id}
               onClick={() => setAuswahl(m.id)}
-              className={`rounded-xl overflow-hidden border-2 text-left transition-all bg-white/5 hover:bg-white/10 ${
+              className={`relative rounded-xl overflow-hidden border-2 text-left cursor-pointer transition-all bg-white/5 hover:bg-white/10 ${
                 auswahl === m.id ? 'border-cyan-400 shadow-lg shadow-cyan-500/20' : 'border-white/10'
               }`}
             >
               <img
-                src={m.bild || `/motive/${m.id}.jpg`}
+                src={bildPfad(m)}
                 alt={m.titel}
                 className="w-full aspect-[3/4] object-cover"
                 onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
               />
+              <button
+                type="button"
+                aria-label="Motiv vergrößern"
+                onClick={e => { e.stopPropagation(); setZoom(m) }}
+                className="absolute top-2 right-2 p-2 rounded-full bg-black/60 hover:bg-cyan-500 text-white transition-colors"
+              >
+                <ZoomIn className="w-4 h-4" />
+              </button>
               <div className={`px-3 py-2 text-sm font-medium ${auswahl === m.id ? 'text-cyan-400' : 'text-white/80'}`}>
                 {m.titel}
               </div>
-            </button>
+            </div>
           ))}
         </div>
 
-        {/* Personalisierung */}
         <div className="max-w-xl mx-auto glass rounded-2xl border border-cyan-500/10 p-6 sm:p-8">
           <label className="block text-white font-medium mb-2">Name <span className="text-white/50 font-normal">(erscheint im Bild)</span></label>
           <input
@@ -109,6 +125,30 @@ export default function PosterShop() {
           </p>
         </div>
       </div>
+
+      {zoom && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setZoom(null)}
+        >
+          <button
+            type="button"
+            aria-label="Schließen"
+            onClick={() => setZoom(null)}
+            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/25 text-white"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <div className="flex flex-col items-center gap-3" onClick={e => e.stopPropagation()}>
+            <img
+              src={bildPfad(zoom)}
+              alt={zoom.titel}
+              className="max-h-[82vh] max-w-full w-auto rounded-xl shadow-2xl"
+            />
+            <p className="text-white/80 text-sm">{zoom.titel}</p>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
