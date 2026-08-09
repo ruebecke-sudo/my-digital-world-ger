@@ -11,6 +11,8 @@ export default function PosterDanke() {
   const [progress, setProgress] = useState(4)
   const [vorschau, setVorschau] = useState<string | null>(null)
   const [popup, setPopup] = useState(false)
+  const [laedt, setLaedt] = useState(false)
+  const [dlFehler, setDlFehler] = useState('')
   const timer = useRef<any>(null)
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function PosterDanke() {
           stop()
         }
       } catch {
-        // Netzwerkaussetzer einfach beim naechsten Durchlauf erneut versuchen
+        // Netzwerkaussetzer beim naechsten Durchlauf erneut versuchen
       }
     }
 
@@ -54,6 +56,37 @@ export default function PosterDanke() {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [])
+
+  // Datei per fetch holen und als Blob speichern. Ein einfacher <a>-Link wird in
+  // der Single-Page-App vom Router abgefangen und loest keine Anfrage aus.
+  const herunterladen = async () => {
+    setDlFehler('')
+    setLaedt(true)
+    try {
+      const res = await fetch(`${FN}/download?id=${orderId}&token=${token}`)
+      if (!res.ok) {
+        let meldung = 'Der Download hat nicht geklappt. Bitte kurz warten und erneut versuchen.'
+        try {
+          const j = await res.json()
+          if (j && j.error) meldung = j.error
+        } catch { /* keine JSON-Antwort */ }
+        throw new Error(meldung)
+      }
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `mdw-poster-${orderId}.jpg`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      setTimeout(() => URL.revokeObjectURL(url), 10000)
+    } catch (e) {
+      setDlFehler((e as Error).message)
+    } finally {
+      setLaedt(false)
+    }
+  }
 
   if (!orderId || !token) {
     return (
@@ -116,15 +149,30 @@ export default function PosterDanke() {
 
           {status === 'done' && (
             <>
-              <a
-                href={`${FN}/download?id=${orderId}&token=${token}`}
-                className="btn-primary w-full inline-flex items-center justify-center gap-2"
+              <button
+                type="button"
+                onClick={herunterladen}
+                disabled={laedt}
+                className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-60"
               >
-                Poster herunterladen
-              </a>
+                {laedt ? 'Datei wird geholt …' : 'Poster herunterladen'}
+              </button>
+
+              {dlFehler && (
+                <p className="mt-3 text-red-400 text-sm text-center">{dlFehler}</p>
+              )}
+
               <p className="mt-3 text-white/40 text-xs text-center">
                 Die Vorschau zeigt unser Logo – deine Download-Datei ist ohne Logo und in voller
-                Druckauflösung.
+                Druckauflösung.{' '}
+                <a
+                  href={`${FN}/download?id=${orderId}&token=${token}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white/70"
+                >
+                  Falls der Button nicht reagiert, hier direkt öffnen.
+                </a>
               </p>
             </>
           )}
