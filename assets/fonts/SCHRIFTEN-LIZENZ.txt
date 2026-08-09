@@ -1,0 +1,19 @@
+SCHRIFTEN FUER DIE TEXTEBENE
+============================
+
+Diese Schriften werden serverseitig verwendet, um die Poster-Typografie
+nach der Bildgenerierung aufzustempeln. Sie werden in Vektorpfade
+umgewandelt (opentype.js), es findet keine Systemschrift-Suche statt.
+
+Anton-Regular.ttf          Ueberschrift, grosse Versalien
+Pacifico-Regular.ttf       Schreibschrift fuer "Hallo,"
+Poppins-Medium.ttf         Lauftext
+Poppins-Bold.ttf           Farbbalken, Copyright
+PlayfairDisplay.ttf        Serifenschrift fuer die Hochzeitsmotive
+
+Alle fuenf stehen unter der SIL Open Font License 1.1.
+Damit ist die Weitergabe im Rahmen dieses Projekts zulaessig,
+einschliesslich kommerzieller Nutzung der erzeugten Poster.
+
+Quelle: https://github.com/google/fonts
+Lizenztext: https://openfontlicense.org
