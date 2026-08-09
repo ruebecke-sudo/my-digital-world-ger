@@ -165,7 +165,13 @@
       "bild": "/motive/m21.webp",
       "kurz": "HOCHZEITSPAAR",
       "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, ein verliebtes Comic-Brautpaar als Hauptmotiv mit ausdrucksstarken, warmherzigen Gesichtern, romantische kinoreife Beleuchtung mit goldenem Gegenlicht und Lichterketten, festlich geschmückter Hintergrund aus Blütenbögen und Rosen, warme Gold- und Rosétöne, schwebende rote Herzen und rosa Konfetti, viele liebevolle Hochzeitsdetails in der Szene, professionelle Werbegrafik, Hochformat 9:16, gestochen scharf, Premium-Qualität.",
-      "textSchema": "Typografie exakt wie ein hochwertiges Hochzeitsposter aufgebaut: Oben links riesig in goldener, glitzernder Schreibschrift „Hallo,“ – darunter kleiner in weißer Schrift „wir sind das“ – darunter in riesigen, goldenen, glitzernden Großbuchstaben „{kurz}“ – direkt darunter auf einem roten, geschwungenen Satinband in fetten weißen Großbuchstaben „DES JAHRES.“ Darunter der folgende Text als Liste aus 2–3 kurzen Zeilen, jede Zeile mit einem kleinen goldenen Herz-Icon davor, in warmweißer Schrift, durch zarte goldene Zierlinien getrennt: „{text}“. Rechts unten eine große goldene Pokal-Trophäe mit einem Herz auf dem Deckel, auf einem Sockel mit gravierter Messing-Plakette „{kurz} DES JAHRES“, davor ein Kranz aus rosa und weißen Rosen; auf dem Sockel zusätzlich klein eingraviert die Namen „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt frei von Text und wichtigen Elementen."
+      "layout": "edel",
+      "anrede": "wir sind das",
+      "akzente": [
+        "Liebe",
+        "Herz",
+        "Hand"
+      ]
     },
     {
       "id": "m22",
@@ -176,7 +182,14 @@
       "bild": "/motive/m22.webp",
       "kurz": "BRAUT",
       "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, märchenhaft, romantisch und emotional, elegante Farbwelt in Weiß, Gold und Rosé, kinoreife Beleuchtung mit goldenem Gegenlicht, farbiges Konfetti, professionelle Werbegrafik, Social-Media-Poster, Hochformat 9:16, gestochen scharf, exklusiver Premium-Look.",
-      "textSchema": "Typografie hochwertig und elegant, komplett auf der linken Bildhälfte, die Figur rechts: Oben ein kleines goldenes Zierornament mit Herz, darunter riesig in goldener Serifenschrift mit Glanz „{kurz}“, direkt darunter etwas kleiner in weißer Serifenschrift „des Jahres“, darunter erneut ein goldenes Zierornament mit Herz. Darunter linksbündig in warmweißer Schrift der Text, Zeile für Zeile umbrochen: „Hallo, ich bin die {bezeichnung}. {text}“ – die Wörter Liebe, Glück und Herz sowie „{bezeichnung}“ in Gold hervorgehoben. Links unten eine große goldene Pokal-Trophäe mit einem Herz auf dem Deckel, auf einem Sockel mit gravierter Messing-Plakette „{kurz} des Jahres“, ringsherum weiße und rosa Rosen; auf dem Sockel zusätzlich klein eingraviert der Name „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt vollständig frei von Text, Logos und wichtigen Elementen."
+      "layout": "edel",
+      "anrede": "ich bin die",
+      "akzente": [
+        "Liebe",
+        "Glueck",
+        "Glück",
+        "Herz"
+      ]
     },
     {
       "id": "m23",
@@ -187,7 +200,13 @@
       "bild": "/motive/m23.webp",
       "kurz": "BRÄUTIGAM",
       "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, märchenhaft, emotional und exklusiv, elegante Farbwelt in Dunkelblau, Weiß und Gold, kinoreife Beleuchtung mit goldenem Gegenlicht und funkelnden Lichtern, farbiges Konfetti, professionelle Werbegrafik, Social-Media-Poster, Hochformat 9:16, gestochen scharf, luxuriöser Premium-Look.",
-      "textSchema": "Typografie hochwertig und elegant, komplett auf der linken Bildhälfte, die Figur rechts: Oben ein kleines goldenes Zierornament mit Herz, darunter riesig in goldener Serifenschrift mit Glanz „{kurz}“, direkt darunter etwas kleiner in weißer Serifenschrift „des Jahres“, darunter erneut ein goldenes Zierornament mit Herz. Darunter linksbündig in warmweißer Schrift der Text, Zeile für Zeile umbrochen: „Hallo, ich bin der {bezeichnung}. {text}“ – das Wort Glück sowie „{bezeichnung}“ in Gold hervorgehoben. Links unten eine große goldene Pokal-Trophäe mit einem Herz auf dem Deckel, auf einem Sockel mit gravierter Messing-Plakette „{kurz} des Jahres“, ringsherum weiße Rosen; auf dem Sockel zusätzlich klein eingraviert der Name „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt vollständig frei von Text, Logos und wichtigen Elementen."
+      "layout": "edel",
+      "anrede": "ich bin der",
+      "akzente": [
+        "Glueck",
+        "Glück",
+        "Ja"
+      ]
     }
   ]
 }
