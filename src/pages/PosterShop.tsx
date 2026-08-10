@@ -279,29 +279,33 @@ export default function PosterShop() {
             </div>
           )}
 
-          <label className="block text-white font-medium mb-1">Format</label>
-          <p className="text-white/50 text-xs mb-3">
-            Druckformate mit 300 dpi – per KI hochgerechnet, also auch groß gedruckt scharf.
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-6">
-            {formate.map(f => (
-              <button
-                key={f.id}
-                type="button"
-                onClick={() => setFormatId(f.id)}
-                className={`rounded-xl border p-3 text-left transition-all ${
-                  formatId === f.id
-                    ? 'border-cyan-400 bg-cyan-500/10'
-                    : 'border-white/10 bg-white/5 hover:bg-white/10'
-                }`}
-              >
-                <span className={`block text-sm font-medium ${formatId === f.id ? 'text-cyan-400' : 'text-white/85'}`}>
-                  {f.label}
-                </span>
-                <span className="block text-white/40 text-[11px] mt-0.5">{f.hinweis}</span>
-                <span className="block text-white/70 text-xs mt-1">{preis(f.cents)}</span>
-              </button>
-            ))}
+          {/* Die Formatauswahl bekommt eine eigene, leicht abgesetzte Flaeche -
+              so sieht man auf einen Blick, dass hier eine Entscheidung ansteht. */}
+          <div className="mb-6 rounded-2xl border border-cyan-500/20 bg-cyan-500/[0.07] p-4 sm:p-5">
+            <label className="block text-white font-medium mb-1">Format</label>
+            <p className="text-white/50 text-xs mb-3">
+              Druckformate mit 300 dpi – per KI hochgerechnet, also auch groß gedruckt scharf.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {formate.map(f => (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => setFormatId(f.id)}
+                  className={`rounded-xl border p-3 text-left transition-all ${
+                    formatId === f.id
+                      ? 'border-cyan-400 bg-cyan-500/10'
+                      : 'border-white/10 bg-white/5 hover:bg-white/10'
+                  }`}
+                >
+                  <span className={`block text-sm font-medium ${formatId === f.id ? 'text-cyan-400' : 'text-white/85'}`}>
+                    {f.label}
+                  </span>
+                  <span className="block text-white/40 text-[11px] mt-0.5">{f.hinweis}</span>
+                  <span className="block text-white/70 text-xs mt-1">{preis(f.cents)}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <label className="block text-white font-medium mb-2">
