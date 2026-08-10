@@ -1,11 +1,40 @@
 import { useEffect, useState } from 'react'
-import { Sparkles, ShoppingCart, ZoomIn, X } from 'lucide-react'
+import { Sparkles, ShoppingCart, ZoomIn, X, ImagePlus, Wand2 } from 'lucide-react'
 
-type Motiv = { id: string; titel: string; bild?: string | null }
+type Motiv = {
+  id: string
+  titel: string
+  bild?: string | null
+  eigenesFoto?: string | null
+}
 type Format = { id: string; label: string; hinweis: string; cents: number }
 const FN = '/.netlify/functions'
 
 const preis = (cents: number) => (cents / 100).toFixed(2).replace('.', ',') + ' €'
+
+// Das Foto wird schon im Browser verkleinert. Das haelt die Wartezeit kurz und
+// bleibt sicher unter dem Groessenlimit der Function.
+const verkleinern = (datei: File): Promise<string> =>
+  new Promise((fertig, scheitern) => {
+    const leser = new FileReader()
+    leser.onerror = () => scheitern(new Error('Die Datei konnte nicht gelesen werden.'))
+    leser.onload = () => {
+      const bild = new Image()
+      bild.onerror = () => scheitern(new Error('Das ist kein gültiges Bild.'))
+      bild.onload = () => {
+        const faktor = Math.min(1, 1600 / Math.max(bild.width, bild.height))
+        const flaeche = document.createElement('canvas')
+        flaeche.width = Math.max(1, Math.round(bild.width * faktor))
+        flaeche.height = Math.max(1, Math.round(bild.height * faktor))
+        const stift = flaeche.getContext('2d')
+        if (!stift) { scheitern(new Error('Das Bild konnte nicht verarbeitet werden.')); return }
+        stift.drawImage(bild, 0, 0, flaeche.width, flaeche.height)
+        fertig(flaeche.toDataURL('image/jpeg', 0.9))
+      }
+      bild.src = String(leser.result)
+    }
+    leser.readAsDataURL(datei)
+  })
 
 export default function PosterShop() {
   const [motive, setMotive] = useState<Motiv[]>([])
@@ -17,6 +46,11 @@ export default function PosterShop() {
   const [text, setText] = useState('')
   const [fehler, setFehler] = useState('')
   const [laedt, setLaedt] = useState(false)
+  const [bezeichnung, setBezeichnung] = useState('')
+  const [foto, setFoto] = useState('')
+  const [fotoSchluessel, setFotoSchluessel] = useState('')
+  const [fotoLaedt, setFotoLaedt] = useState(false)
+  const [querformat, setQuerformat] = useState(false)
 
   useEffect(() => {
     fetch(`${FN}/motifs`)
@@ -40,18 +74,54 @@ export default function PosterShop() {
 
   const bildPfad = (m: Motiv) => m.bild || `/motive/${m.id}.jpg`
   const gewaehltesFormat = formate.find(f => f.id === formatId) || null
+  const gewaehltesMotiv = motive.find(m => m.id === auswahl) || null
+  const eigenesFoto = gewaehltesMotiv?.eigenesFoto || null
+
+  const fotoWaehlen = async (datei?: File | null) => {
+    if (!datei) return
+    setFehler('')
+    setFotoLaedt(true)
+    try {
+      const daten = await verkleinern(datei)
+      const res = await fetch(`${FN}/foto-upload`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bild: daten }),
+      })
+      const d = await res.json()
+      if (!res.ok) throw new Error(d.error || 'Das Foto konnte nicht hochgeladen werden.')
+      setFoto(daten)
+      setFotoSchluessel(d.schluessel)
+      setQuerformat(!d.hochformat)
+    } catch (e) {
+      setFehler((e as Error).message)
+    } finally {
+      setFotoLaedt(false)
+    }
+  }
 
   const kaufen = async () => {
     setFehler('')
     if (!auswahl) { setFehler('Bitte zuerst ein Motiv auswählen.'); return }
     if (!formatId) { setFehler('Bitte ein Format auswählen.'); return }
-    if (!name.trim()) { setFehler('Bitte einen Namen eingeben – er erscheint im Bild.'); return }
+    if (eigenesFoto && !fotoSchluessel) { setFehler('Bitte zuerst dein Foto hochladen.'); return }
+    if (!eigenesFoto && !name.trim()) {
+      setFehler('Bitte einen Namen eingeben – er erscheint im Bild.')
+      return
+    }
     setLaedt(true)
     try {
       const res = await fetch(`${FN}/create-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ motifId: auswahl, formatId, name: name.trim(), text: text.trim() }),
+        body: JSON.stringify({
+          motifId: auswahl,
+          formatId,
+          name: name.trim(),
+          text: text.trim(),
+          bezeichnung: bezeichnung.trim(),
+          fotoSchluessel,
+        }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Unbekannter Fehler')
@@ -73,7 +143,8 @@ export default function PosterShop() {
             Dein persönliches <span className="text-cyan-400">„…des Jahres“</span>-Poster
           </h1>
           <p className="text-white/60 max-w-2xl mx-auto">
-            Motiv auswählen, Format wählen, Name und Wunschtext eingeben – nach der Bezahlung steht dein
+            Motiv auswählen oder eigenes Foto hochladen, Format wählen, Name und Wunschtext
+            eingeben – nach der Bezahlung steht dein
             persönliches Poster sofort zum Download bereit.
           </p>
           <p className="text-white/40 text-xs mt-3">
@@ -89,6 +160,26 @@ export default function PosterShop() {
                 auswahl === m.id ? 'border-cyan-400 shadow-lg shadow-cyan-500/20' : 'border-white/10'
               }`}
             >
+              {m.eigenesFoto ? (
+                /* Eigenes Foto: statt eines Vorschaubildes eine Einladung zum Hochladen */
+                <button
+                  type="button"
+                  onClick={() => setAuswahl(m.id)}
+                  className="flex w-full aspect-[9/16] flex-col items-center justify-center gap-3 border-b border-white/10 bg-gradient-to-b from-cyan-500/10 to-transparent px-4 text-center"
+                >
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-500/15 text-cyan-300">
+                    {m.eigenesFoto === 'pixar' ? <Wand2 className="w-7 h-7" /> : <ImagePlus className="w-7 h-7" />}
+                  </span>
+                  <span className="text-white/80 text-sm font-medium leading-snug">
+                    {m.eigenesFoto === 'pixar'
+                      ? 'Dein Foto wird zur Comicfigur'
+                      : 'Dein Foto bleibt, wie es ist'}
+                  </span>
+                  <span className="text-white/40 text-[11px] leading-snug">
+                    Foto im Hochformat hochladen, Text dazu – fertig.
+                  </span>
+                </button>
+              ) : (
               {/* Ganzes Bild oeffnet die Vergroesserung – grosses, eindeutiges Klickziel */}
               <button
                 type="button"
@@ -112,6 +203,8 @@ export default function PosterShop() {
                 </span>
               </button>
 
+              )}
+
               <div className={`px-3 pt-2 text-sm font-medium ${auswahl === m.id ? 'text-cyan-400' : 'text-white/80'}`}>
                 {m.titel}
               </div>
@@ -132,6 +225,59 @@ export default function PosterShop() {
         </div>
 
         <div className="max-w-xl mx-auto glass rounded-2xl border border-cyan-500/10 p-6 sm:p-8">
+          {eigenesFoto && (
+            <div className="mb-6">
+              <label className="block text-white font-medium mb-1">Dein Foto</label>
+              <p className="text-white/50 text-xs mb-3">
+                Bitte ein Bild im <strong className="text-white/70">Hochformat</strong> – am besten
+                9:16 wie ein Handyfoto. Querformat wird automatisch beschnitten, dabei geht seitlich
+                etwas verloren. Nur Fotos hochladen, an denen du die Rechte hast.
+              </p>
+
+              <div className="flex items-center gap-4">
+                {foto && (
+                  <img
+                    src={foto}
+                    alt="Dein hochgeladenes Foto"
+                    className="h-28 w-auto rounded-lg border border-white/15 object-cover"
+                  />
+                )}
+                <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white/80 hover:bg-white/10">
+                  <ImagePlus className="w-4 h-4" />
+                  {fotoLaedt ? 'Wird geladen …' : foto ? 'Anderes Foto wählen' : 'Foto auswählen'}
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    className="hidden"
+                    onChange={e => fotoWaehlen(e.target.files?.[0])}
+                  />
+                </label>
+              </div>
+
+              {foto && querformat && (
+                <p className="mt-3 text-amber-300/90 text-xs">
+                  Dein Foto ist im Querformat. Wir schneiden es mittig auf Hochformat zu – ein
+                  Hochformat-Foto sieht deutlich besser aus.
+                </p>
+              )}
+
+              <label className="mt-6 block text-white font-medium mb-2">
+                Bezeichnung <span className="text-white/50 font-normal">(optional – wird zur Überschrift)</span>
+              </label>
+              <input
+                value={bezeichnung}
+                onChange={e => setBezeichnung(e.target.value)}
+                maxLength={40}
+                placeholder="z. B. Grillmeister"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-cyan-400/50"
+              />
+              <p className="text-white/40 text-xs mt-2">
+                Daraus wird „Hallo, ich bin der Grillmeister – DES JAHRES.“ Lässt du alle Felder
+                leer, bekommst du dein Foto ganz ohne Schrift.
+              </p>
+            </div>
+          )}
+
           <label className="block text-white font-medium mb-1">Format</label>
           <p className="text-white/50 text-xs mb-3">
             Druckformate mit 300 dpi – per KI hochgerechnet, also auch groß gedruckt scharf.
@@ -157,7 +303,11 @@ export default function PosterShop() {
             ))}
           </div>
 
-          <label className="block text-white font-medium mb-2">Name <span className="text-white/50 font-normal">(erscheint im Bild)</span></label>
+          <label className="block text-white font-medium mb-2">
+            Name <span className="text-white/50 font-normal">
+              {eigenesFoto ? '(optional – erscheint im Bild)' : '(erscheint im Bild)'}
+            </span>
+          </label>
           <input
             value={name}
             onChange={e => setName(e.target.value)}
@@ -166,7 +316,11 @@ export default function PosterShop() {
             className="w-full mb-5 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-cyan-400/50"
           />
           <label className="block text-white font-medium mb-2">
-            Dein persönlicher Text <span className="text-white/50 font-normal">(optional – sonst nehmen wir den Spruch des Motivs)</span>
+            Dein persönlicher Text <span className="text-white/50 font-normal">
+              {eigenesFoto
+                ? '(optional – ohne Eingabe bleibt das Foto ohne Schrift)'
+                : '(optional – sonst nehmen wir den Spruch des Motivs)'}
+            </span>
           </label>
           <textarea
             value={text}
@@ -176,7 +330,7 @@ export default function PosterShop() {
             placeholder="z. B. max. 10 Worte"
             className="w-full mb-6 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-cyan-400/50"
           />
-          <button onClick={kaufen} disabled={laedt} className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-60">
+          <button onClick={kaufen} disabled={laedt || fotoLaedt} className="btn-primary w-full inline-flex items-center justify-center gap-2 disabled:opacity-60">
             <ShoppingCart className="w-4 h-4" />
             {laedt
               ? 'Einen Moment …'
@@ -186,7 +340,9 @@ export default function PosterShop() {
           </button>
           {fehler && <p className="mt-4 text-red-400 text-sm">{fehler}</p>}
           <p className="mt-4 text-white/40 text-xs text-center">
-            Sichere Bezahlung über Stripe · Dein Poster wird nach der Zahlung mit deinem Text erstellt und steht kurz darauf bereit
+            {eigenesFoto === 'pixar'
+              ? 'Sichere Bezahlung über Stripe · Die Verwandlung deines Fotos dauert ein bis zwei Minuten'
+              : 'Sichere Bezahlung über Stripe · Dein Poster wird nach der Zahlung mit deinem Text erstellt und steht kurz darauf bereit'}
           </p>
         </div>
       </div>
