@@ -173,7 +173,7 @@ export default function PosterShop() {
                     className="hidden"
                     onChange={e => { setAuswahl(m.id); fotoWaehlen(e.target.files?.[0]) }}
                   />
-                  {foto ? (
+                  {foto && auswahl === m.id ? (
                     <>
                       <img src={foto} alt="Dein Foto" className="absolute inset-0 h-full w-full object-cover" />
                       <span className="absolute inset-x-0 bottom-0 bg-black/70 py-2 text-xs text-white/90">
