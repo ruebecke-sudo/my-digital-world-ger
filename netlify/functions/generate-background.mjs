@@ -72,18 +72,31 @@ export default async req => {
     order.status = "generating";
     await saveOrder(order);
 
-    // 1) Motiv generieren
-    const sd = await startPrediction("black-forest-labs/flux-1.1-pro", {
-      prompt: order.prompt,
-      aspect_ratio: format.ar,
-      output_format: "png",
-      output_quality: 100,
-    });
-    const motivUrl = ersteUrl(await warteAufErgebnis(sd));
-    let bild = await ladeBuffer(motivUrl);
-
-    // 2) Hochrechnen, wenn das Zielformat mehr Pixel braucht
+    // 1) Bildgrundlage besorgen.
+    //    Hat das Motiv ein festes Bild hinterlegt (basisBild), wird nichts
+    //    generiert: der Kunde bekommt genau das Bild, das er in der Auswahl
+    //    gesehen hat. Kein KI-Aufruf, keine Wartezeit, kein Zufall. Nur wenn
+    //    kein festes Bild vorliegt, malt FLUX 1.1 pro die Szene - ohne Text.
     const sharp = (await import("sharp")).default;
+    const basis = motif.basisBild;
+    let motivUrl;
+    let bild;
+
+    if (basis) {
+      motivUrl = new URL(basis, process.env.URL || "https://my-digital-world.de").href;
+      bild = await ladeBuffer(motivUrl);
+    } else {
+      const gen = await startPrediction("black-forest-labs/flux-1.1-pro", {
+        prompt: order.prompt,
+        aspect_ratio: format.ar,
+        output_format: "png",
+        output_quality: 100,
+      });
+      motivUrl = ersteUrl(await warteAufErgebnis(gen));
+      bild = await ladeBuffer(motivUrl);
+    }
+
+    // 2) Hochrechnen, wenn das Zielformat mehr Pixel braucht.
     const meta = await sharp(bild).metadata();
     const faktor = Math.max(format.w / meta.width, format.h / meta.height);
     if (faktor > 1.05) {
