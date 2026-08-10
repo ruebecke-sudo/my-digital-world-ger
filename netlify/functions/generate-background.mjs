@@ -24,6 +24,7 @@ import {
   getOrder, saveOrder, imagesStore, addBranding, textAufbringen, MOTIFS, siteUrl,
 } from "../../lib/shared.mjs";
 import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
+import { posterMailSenden } from "../../lib/mail.mjs";
 
 const API = "https://api.replicate.com/v1";
 const authHeader = () => ({ Authorization: `Bearer ${process.env.REPLICATE_API_TOKEN}` });
@@ -255,6 +256,25 @@ export default async req => {
     order.dateigroesse = druckfertig.length;
     order.fertigAt = new Date().toISOString();
     await saveOrder(order);
+
+    // Das Original des Kunden wird jetzt nicht mehr gebraucht. Weg damit -
+    // ein Portraetfoto laenger aufzubewahren als noetig waere schlechter Stil.
+    if (order.fotoSchluessel) {
+      try {
+        const { uploadsStore } = await import("../../lib/shared.mjs");
+        await uploadsStore().delete(order.fotoSchluessel);
+      } catch (err) {
+        console.warn("Kundenfoto blieb liegen:", err?.message || err);
+      }
+    }
+
+    // Mail mit dem dauerhaften Link. Schlaegt sie fehl, bleibt die Bestellung
+    // trotzdem fertig - der Kunde hat seine Seite ja noch offen.
+    try {
+      console.log("Postermail:", await posterMailSenden(order, format, siteUrl()));
+    } catch (err) {
+      console.error("Postermail fehlgeschlagen:", err?.message || err);
+    }
 
     return new Response("OK", { status: 200 });
   } catch (err) {
