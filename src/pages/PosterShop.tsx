@@ -272,8 +272,9 @@ export default function PosterShop() {
                 className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-cyan-400/50"
               />
               <p className="text-white/40 text-xs mt-2">
-                Daraus wird „Hallo, ich bin der Grillmeister – DES JAHRES.“ Lässt du alle Felder
-                leer, bekommst du dein Foto ganz ohne Schrift.
+                Nur das Wort selbst, ohne „des Jahres“ – das setzen wir darunter. Aus
+                „Grillmeister“ wird also „Hallo, ich bin der Grillmeister – DES JAHRES.“
+                Lässt du alle Felder leer, bekommst du dein Foto ganz ohne Schrift.
               </p>
             </div>
           )}
