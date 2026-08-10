@@ -246,6 +246,10 @@ export default function PosterShop() {
         <div id="bestellformular" className="max-w-xl mx-auto glass rounded-2xl border border-cyan-500/10 p-6 sm:p-8">
           {eigenesFoto && (
             <div className="mb-6">
+              <p className="mb-4 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white/70 text-xs">
+                Alles, was du in die Felder einträgst – Bezeichnung, Name und Text –, erscheint
+                auf dem Poster. Lässt du alle drei leer, bekommst du dein Bild ohne jede Schrift.
+              </p>
               {foto ? (
                 <p className="text-white/50 text-xs mb-4">
                   Dein Foto ist hochgeladen – oben in der Kachel zu sehen. Ein Tipp darauf tauscht es aus.
