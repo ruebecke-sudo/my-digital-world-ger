@@ -149,14 +149,24 @@ export default async req => {
       : { w: format.w, h: format.h };
 
     // 3) Hochrechnen, wenn das Zielmass mehr Pixel braucht.
+    //
+    // Real-ESRGAN muss das Bild dafuer selbst von unserer Seite laden. Klappt
+    // das nicht - etwa weil das Modell mit webp nichts anfangen kann oder der
+    // Dienst gerade streikt -, rechnet sharp im naechsten Schritt selbst hoch.
+    // Ein etwas weicheres Poster ist allemal besser als eine Bestellung, die
+    // mit einer Fehlermeldung endet, obwohl der Kunde bezahlt hat.
     const faktor = Math.max(ziel.w / meta.width, ziel.h / meta.height);
     if (faktor > 1.05) {
-      const up = await startPrediction("nightmareai/real-esrgan", {
-        image: motivUrl,
-        scale: Math.min(4, Math.ceil(faktor)),
-        face_enhance: false,
-      });
-      bild = await ladeBuffer(ersteUrl(await warteAufErgebnis(up)));
+      try {
+        const up = await startPrediction("nightmareai/real-esrgan", {
+          image: motivUrl,
+          scale: Math.min(4, Math.ceil(faktor)),
+          face_enhance: false,
+        });
+        bild = await ladeBuffer(ersteUrl(await warteAufErgebnis(up)));
+      } catch (err) {
+        console.warn("Hochrechnen uebersprungen:", err?.message || err);
+      }
     }
 
     // 4) Exakt auf Zielmass.
