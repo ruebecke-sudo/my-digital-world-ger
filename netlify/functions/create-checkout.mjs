@@ -58,7 +58,8 @@ export default async (req) => {
     const fuer = name ? `, personalisiert für ${name}` : "";
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-    const session = await stripe.checkout.sessions.create({
+
+    const sitzung = {
       mode: "payment",
       client_reference_id: orderId,
       line_items: [{
@@ -74,7 +75,22 @@ export default async (req) => {
       }],
       success_url: `${siteUrl()}/empfehlung/poster/danke?order=${orderId}&token=${downloadToken}`,
       cancel_url: `${siteUrl()}/empfehlung/poster?abgebrochen=1`,
-    });
+    };
+
+    // Zahlarten fest benennen. Ueberlaesst man Stripe die Auswahl, blendet
+    // Checkout zusaetzlich "Link" ein - und wer dort schon einmal bezahlt hat,
+    // wird nach einem Bestaetigungscode gefragt, obwohl er das nie wollte.
+    // Sollte eine der Methoden fuer Betrag oder Waehrung nicht in Frage kommen,
+    // faellt der Aufruf auf die automatische Auswahl zurueck, damit niemand vor
+    // einer kaputten Kasse steht.
+    const zahlarten = ["card", "paypal", "klarna", "revolut_pay", "amazon_pay"];
+    let session;
+    try {
+      session = await stripe.checkout.sessions.create({ ...sitzung, payment_method_types: zahlarten });
+    } catch (err) {
+      console.warn("Feste Zahlarten abgelehnt, nehme die automatische Auswahl:", err?.message || err);
+      session = await stripe.checkout.sessions.create(sitzung);
+    }
 
     return json({ url: session.url });
   } catch (err) {
