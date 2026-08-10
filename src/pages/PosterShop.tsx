@@ -161,43 +161,24 @@ export default function PosterShop() {
               }`}
             >
               {m.eigenesFoto ? (
-                /* Eigenes Foto: die Dateiauswahl sitzt im Bildrahmen selbst -
-                   dort sucht man sie, nicht unten im Formular. */
-                <label
+                /* Eigenes Foto: statt eines Vorschaubildes eine Einladung zum Hochladen */
+                <button
+                  type="button"
                   onClick={() => setAuswahl(m.id)}
-                  className="group relative flex w-full aspect-[9/16] cursor-pointer flex-col items-center justify-center gap-3 overflow-hidden border-b border-white/10 bg-gradient-to-b from-cyan-500/10 to-transparent px-4 text-center"
+                  className="flex w-full aspect-[9/16] flex-col items-center justify-center gap-3 border-b border-white/10 bg-gradient-to-b from-cyan-500/10 to-transparent px-4 text-center"
                 >
-                  <input
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    className="hidden"
-                    onChange={e => { setAuswahl(m.id); fotoWaehlen(e.target.files?.[0]) }}
-                  />
-                  {foto ? (
-                    <>
-                      <img src={foto} alt="Dein Foto" className="absolute inset-0 h-full w-full object-cover" />
-                      <span className="absolute inset-x-0 bottom-0 bg-black/70 py-2 text-xs text-white/90">
-                        {fotoLaedt ? 'Wird geladen …' : 'Anderes Foto wählen'}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      <span className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-500/15 text-cyan-300 group-hover:bg-cyan-500/25 transition-colors">
-                        {m.eigenesFoto === 'pixar' ? <Wand2 className="w-7 h-7" /> : <ImagePlus className="w-7 h-7" />}
-                      </span>
-                      <span className="text-white/80 text-sm font-medium leading-snug">
-                        {fotoLaedt
-                          ? 'Wird geladen …'
-                          : m.eigenesFoto === 'pixar'
-                            ? 'Foto wählen – wird zur Comicfigur'
-                            : 'Foto wählen – bleibt, wie es ist'}
-                      </span>
-                      <span className="text-white/40 text-[11px] leading-snug">
-                        Bitte im Hochformat
-                      </span>
-                    </>
-                  )}
-                </label>
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-cyan-500/15 text-cyan-300">
+                    {m.eigenesFoto === 'pixar' ? <Wand2 className="w-7 h-7" /> : <ImagePlus className="w-7 h-7" />}
+                  </span>
+                  <span className="text-white/80 text-sm font-medium leading-snug">
+                    {m.eigenesFoto === 'pixar'
+                      ? 'Dein Foto wird zur Comicfigur'
+                      : 'Dein Foto bleibt, wie es ist'}
+                  </span>
+                  <span className="text-white/40 text-[11px] leading-snug">
+                    Foto im Hochformat hochladen, Text dazu – fertig.
+                  </span>
+                </button>
               ) : (
                 /* Ganzes Bild oeffnet die Vergroesserung - grosses, eindeutiges Klickziel */
                 <button
@@ -243,28 +224,44 @@ export default function PosterShop() {
           ))}
         </div>
 
-        <div className="max-w-xl mx-auto glass rounded-2xl border border-cyan-500/10 p-6 sm:p-8">
+        <div id="bestellformular" className="max-w-xl mx-auto glass rounded-2xl border border-cyan-500/10 p-6 sm:p-8">
           {eigenesFoto && (
             <div className="mb-6">
-              {foto ? (
-                <p className="text-white/50 text-xs mb-4">
-                  Dein Foto ist hochgeladen – oben in der Kachel zu sehen. Ein Tipp darauf tauscht es aus.
-                </p>
-              ) : (
-                <p className="text-amber-300/90 text-xs mb-4">
-                  Bitte oben in der Kachel dein Foto auswählen – am besten im Hochformat, etwa 9:16
-                  wie ein Handyfoto. Nur Fotos hochladen, an denen du die Rechte hast.
-                </p>
-              )}
+              <label className="block text-white font-medium mb-1">Dein Foto</label>
+              <p className="text-white/50 text-xs mb-3">
+                Bitte ein Bild im <strong className="text-white/70">Hochformat</strong> – am besten
+                9:16 wie ein Handyfoto. Querformat wird automatisch beschnitten, dabei geht seitlich
+                etwas verloren. Nur Fotos hochladen, an denen du die Rechte hast.
+              </p>
+
+              <div className="flex items-center gap-4">
+                {foto && (
+                  <img
+                    src={foto}
+                    alt="Dein hochgeladenes Foto"
+                    className="h-28 w-auto rounded-lg border border-white/15 object-cover"
+                  />
+                )}
+                <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white/80 hover:bg-white/10">
+                  <ImagePlus className="w-4 h-4" />
+                  {fotoLaedt ? 'Wird geladen …' : foto ? 'Anderes Foto wählen' : 'Foto auswählen'}
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    className="hidden"
+                    onChange={e => fotoWaehlen(e.target.files?.[0])}
+                  />
+                </label>
+              </div>
 
               {foto && querformat && (
-                <p className="mb-4 text-amber-300/90 text-xs">
+                <p className="mt-3 text-amber-300/90 text-xs">
                   Dein Foto ist im Querformat. Wir schneiden es mittig auf Hochformat zu – ein
                   Hochformat-Foto sieht deutlich besser aus.
                 </p>
               )}
 
-              <label className="block text-white font-medium mb-2">
+              <label className="mt-6 block text-white font-medium mb-2">
                 Bezeichnung <span className="text-white/50 font-normal">(optional – wird zur Überschrift)</span>
               </label>
               <input
@@ -281,7 +278,6 @@ export default function PosterShop() {
               </p>
             </div>
           )}
-
 
           <label className="block text-white font-medium mb-1">Format</label>
           <p className="text-white/50 text-xs mb-3">
@@ -369,9 +365,26 @@ export default function PosterShop() {
             <img
               src={bildPfad(zoom)}
               alt={zoom.titel}
-              className="max-h-[82vh] max-w-full w-auto rounded-xl shadow-2xl"
+              className="max-h-[72vh] max-w-full w-auto rounded-xl shadow-2xl"
             />
             <p className="text-white/80 text-sm">{zoom.titel}</p>
+            {/* Direkt aus der Vergroesserung heraus bestellen - niemand soll
+                erst zurueckblaettern muessen, um das Motiv zu waehlen. */}
+            <button
+              type="button"
+              onClick={() => {
+                setAuswahl(zoom.id)
+                setZoom(null)
+                setTimeout(
+                  () => document.getElementById('bestellformular')?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+                  60,
+                )
+              }}
+              className="btn-primary inline-flex items-center justify-center gap-2 px-6"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              Dieses Motiv wählen
+            </button>
           </div>
         </div>
       )}
