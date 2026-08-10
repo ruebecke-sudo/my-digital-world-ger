@@ -2,26 +2,43 @@
 // Background-Function (bis 15 Minuten Laufzeit). Wird von webhook.mjs nach
 // erfolgreicher Zahlung mit { orderId } angestossen.
 //
-// Zwei Wege:
+// Drei Wege:
 //
 // A) Motiv mit festem Bild (basisBild) - der Normalfall. Das Poster ist fertig
 //    gemalt und liegt im Projekt. Es wird geladen, auf Zielgroesse gebracht,
 //    Name und Spruch kommen auf die Milchglasflaeche. Keine KI, keine
 //    Wartezeit, kein Zufall: der Kunde bekommt genau das Bild aus der Auswahl.
 //
-// B) Motiv ohne festes Bild - FLUX 1.1 pro malt die Szene ohne Text, dann wird
-//    die komplette Typografie darueber gelegt (alter Weg).
+// B) Eigenes Foto des Kunden (eigenesFoto). Bei "pixar" verwandelt FLUX Kontext
+//    das Foto in eine 3D-Comicfigur und behaelt dabei die Aehnlichkeit; bei
+//    "pur" bleibt das Foto, wie es ist. Darauf kommt nur, was der Kunde selbst
+//    eingegeben hat.
 //
-// In beiden Faellen entstehen zwei Fassungen in Blobs: "_preview" fuers Web,
+// C) Motiv ohne Bild - FLUX 1.1 pro malt die Szene ohne Text, dann wird die
+//    komplette Typografie darueber gelegt (aeltester Weg).
+//
+// In allen Faellen entstehen zwei Fassungen in Blobs: "_preview" fuers Web,
 // "_download" in voller Groesse.
 
 import {
-  getOrder, saveOrder, imagesStore, addBranding, textAufbringen, MOTIFS,
+  getOrder, saveOrder, imagesStore, addBranding, textAufbringen, MOTIFS, siteUrl,
 } from "../../lib/shared.mjs";
 import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
 
 const API = "https://api.replicate.com/v1";
 const authHeader = () => ({ Authorization: `Bearer ${process.env.REPLICATE_API_TOKEN}` });
+
+// Auftrag an FLUX Kontext. Wichtig ist der Hinweis, Gesicht und Kleidung zu
+// erhalten - sonst entsteht zwar eine huebsche Comicfigur, aber niemand
+// erkennt mehr, wer da abgebildet ist.
+const PIXAR_AUFTRAG =
+  "Turn this photo into an ultra high quality 3D animated movie character in " +
+  "Pixar and DreamWorks style. Keep the person clearly recognizable: same face " +
+  "shape, same hairstyle, same hair colour, same clothing, same pose and the " +
+  "same expression. Slightly stylised proportions with large expressive eyes, " +
+  "soft skin shading, warm cinematic lighting, vibrant saturated colours, " +
+  "detailed but calm background in the same setting as the photo. " +
+  "Absolutely no text, no letters, no watermarks, no logos.";
 
 // Ueber den Model-Endpoint aufrufen - so brauchen wir keinen Versions-Hash.
 async function startPrediction(model, input) {
@@ -123,6 +140,7 @@ export default async req => {
 
     const sharp = (await import("sharp")).default;
     const basis = motif.basisBild;
+    const eigenes = motif.eigenesFoto;
     let motivUrl;
     let bild;
 
@@ -130,6 +148,22 @@ export default async req => {
     if (basis) {
       motivUrl = new URL(basis, process.env.URL || "https://my-digital-world.de").href;
       bild = await ladeBuffer(motivUrl);
+    } else if (eigenes) {
+      if (!order.fotoSchluessel) throw new Error("Zur Bestellung fehlt das Foto.");
+      motivUrl = `${siteUrl()}/.netlify/functions/foto?schluessel=${order.fotoSchluessel}`;
+      bild = await ladeBuffer(motivUrl);
+
+      if (eigenes === "pixar") {
+        const verwandelt = await startPrediction("black-forest-labs/flux-kontext-pro", {
+          prompt: PIXAR_AUFTRAG,
+          input_image: motivUrl,
+          aspect_ratio: "match_input_image",
+          output_format: "png",
+          safety_tolerance: 2,
+        });
+        motivUrl = ersteUrl(await warteAufErgebnis(verwandelt));
+        bild = await ladeBuffer(motivUrl);
+      }
     } else {
       const gen = await startPrediction("black-forest-labs/flux-1.1-pro", {
         prompt: order.prompt,
@@ -175,12 +209,23 @@ export default async req => {
         .resize(ziel.w, ziel.h, { fit: "fill", kernel: "lanczos3" })
         .png().toBuffer()
       : await sharp(bild)
-        .resize(format.w, format.h, { fit: "cover", position: "centre", kernel: "lanczos3" })
+        .resize(format.w, format.h, {
+          fit: "cover",
+          position: eigenes ? sharp.strategy.attention : "centre",
+          kernel: "lanczos3",
+        })
         .png().toBuffer();
 
     // 5) Beschriften. Bei festem Bild nur Name und Spruch auf der
     //    Milchglasflaeche - Ueberschrift und Trophaee sind schon im Bild.
-    const beschriftet = await textAufbringen(poster, motif, order.name, order.text);
+    const motivFuerText = eigenes
+      ? {
+        ...motif,
+        bezeichnung: (order.bezeichnung || "").trim(),
+        kurz: (order.bezeichnung || "").trim().toUpperCase(),
+      }
+      : motif;
+    const beschriftet = await textAufbringen(poster, motivFuerText, order.name, order.text);
 
     // 6) Auf das volle Format bringen (nur beim festen Bild noetig).
     const grundlage = basis
