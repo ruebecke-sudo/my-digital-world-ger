@@ -218,12 +218,15 @@ export default async req => {
 
     // 5) Beschriften. Bei festem Bild nur Name und Spruch auf der
     //    Milchglasflaeche - Ueberschrift und Trophaee sind schon im Bild.
+    // "Grillmeister des Jahres" wuerde sich mit dem Balken "DES JAHRES."
+    // darunter doppeln. Die Endung deshalb abschneiden - egal, wie der Kunde
+    // sie geschrieben hat.
+    const bezeichnungRein = (order.bezeichnung || "")
+      .trim()
+      .replace(/\s*[-–—]?\s*des\s+jahres\.?$/i, "")
+      .trim();
     const motivFuerText = eigenes
-      ? {
-        ...motif,
-        bezeichnung: (order.bezeichnung || "").trim(),
-        kurz: (order.bezeichnung || "").trim().toUpperCase(),
-      }
+      ? { ...motif, bezeichnung: bezeichnungRein, kurz: bezeichnungRein.toUpperCase() }
       : motif;
     const beschriftet = await textAufbringen(poster, motivFuerText, order.name, order.text);
 
