@@ -71,6 +71,24 @@ export default async req => {
   const p = new URL(req.url).searchParams;
   if (p.get("probe") !== PROBE_SCHLUESSEL) return json({ error: "Nicht erlaubt." }, 401);
 
+  // Nur zum Abnehmen des Mailversands: schickt die Mail zu einer bestehenden
+  // Bestellung noch einmal. Verschwindet mit dieser Datei.
+  const mailFuer = p.get("mail");
+  if (mailFuer) {
+    try {
+      const { getOrder } = await import("../../lib/shared.mjs");
+      const { getFormat, DEFAULT_FORMAT } = await import("../../lib/formats.mjs");
+      const { posterMailSenden } = await import("../../lib/mail.mjs");
+      const order = await getOrder(mailFuer);
+      if (!order) return json({ error: "Bestellung nicht gefunden." }, 404);
+      const format = getFormat(order.formatId) || getFormat(DEFAULT_FORMAT);
+      const ergebnis = await posterMailSenden(order, format, siteUrl());
+      return json({ ergebnis, an: order.customerEmail || "(keine Adresse)" });
+    } catch (err) {
+      return json({ fehler: String(err?.message || err) }, 500);
+    }
+  }
+
   try {
     const sharp = (await import("sharp")).default;
     let bild;
