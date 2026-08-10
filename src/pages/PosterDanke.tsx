@@ -174,6 +174,11 @@ export default function PosterDanke() {
                   Falls der Button nicht reagiert, hier direkt öffnen.
                 </a>
               </p>
+
+              <p className="mt-2 text-white/40 text-xs text-center">
+                Wir haben dir diesen Link auch per Mail geschickt – damit kommst du jederzeit
+                wieder an dein Poster. Wir halten es zwölf Monate für dich bereit.
+              </p>
             </>
           )}
 
