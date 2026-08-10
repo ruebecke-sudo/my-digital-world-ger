@@ -180,28 +180,28 @@ export default function PosterShop() {
                   </span>
                 </button>
               ) : (
-              {/* Ganzes Bild oeffnet die Vergroesserung – grosses, eindeutiges Klickziel */}
-              <button
-                type="button"
-                onClick={() => setZoom(m)}
-                aria-label={`${m.titel} groß ansehen`}
-                className="group relative block w-full cursor-zoom-in"
-              >
-                <img
-                  src={bildPfad(m)}
-                  alt={m.titel}
-                  className="w-full aspect-[9/16] object-cover"
-                  onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
-                />
-                <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/35 transition-colors">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ZoomIn className="w-3.5 h-3.5" /> Groß ansehen
+                /* Ganzes Bild oeffnet die Vergroesserung - grosses, eindeutiges Klickziel */
+                <button
+                  type="button"
+                  onClick={() => setZoom(m)}
+                  aria-label={`${m.titel} groß ansehen`}
+                  className="group relative block w-full cursor-zoom-in"
+                >
+                  <img
+                    src={bildPfad(m)}
+                    alt={m.titel}
+                    className="w-full aspect-[9/16] object-cover"
+                    onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  />
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/35 transition-colors">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/75 text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ZoomIn className="w-3.5 h-3.5" /> Groß ansehen
+                    </span>
                   </span>
-                </span>
-                <span className="absolute top-2 right-2 p-2 rounded-full bg-black/60 text-white pointer-events-none">
-                  <ZoomIn className="w-4 h-4" />
-                </span>
-              </button>
+                  <span className="absolute top-2 right-2 p-2 rounded-full bg-black/60 text-white pointer-events-none">
+                    <ZoomIn className="w-4 h-4" />
+                  </span>
+                </button>
 
               )}
 
