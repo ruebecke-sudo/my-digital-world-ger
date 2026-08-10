@@ -4,13 +4,31 @@
   "textSchema": "Typografie exakt wie ein hochwertiges Werbeposter aufgebaut: Oben links riesig in weißer, handgemalter Pinselschrift „Hallo,“ – darunter kleiner in weißer Schrift „ich bin {name},“ – darunter in riesigen, roten, grungigen Pinsel-Großbuchstaben „{kurz}“ – direkt darunter auf einem blauen Farbbalken in fetten weißen Großbuchstaben „DES JAHRES.“ Darunter der folgende Text als Liste aus 2–3 kurzen Zeilen, jede Zeile mit einem kleinen roten Comic-Icon davor, die wichtigsten Wörter rot hervorgehoben, durch rote Pinselstriche getrennt: „{text}“. Um die Figur herum 3 bis 5 kleine Sprechblasen oder Schilder mit sehr kurzen, witzigen, zum Thema passenden Ausrufen. Im Bild eine große goldene Sieger-Trophäe auf einem Sockel mit gravierter Messing-Plakette „{kurz} DES JAHRES“ und fünf goldenen Sternen darunter; auf dem Sockel zusätzlich klein eingraviert der Name „{name}“. Alle Texte in fehlerfreiem Deutsch, exakt wie angegeben, sauber lesbar. Der untere Bildrand (ca. 6 % der Höhe) bleibt frei von Text und wichtigen Elementen.",
   "motive": [
     {
+      "id": "m01",
+      "titel": "Der Besserwisser des Jahres",
+      "bezeichnung": "Besserwisser des Jahres",
+      "szene": "Comicfigur mit erhobenem Zeigefinger und wissendem Grinsen, umgeben von Büchern, Diagrammen und einem übergroßen Gehirn-Pokal.",
+      "defaultText": "Ich weiß grundsätzlich alles besser. Selbst wenn ich keine Ahnung habe. Hauptsache ich habe das letzte Wort.",
+      "bild": "/motive/m01.webp",
+      "kurz": "BESSERWISSER"
+    },
+    {
       "id": "m02",
-      "titel": "Der Miesmacher des Jahres",
-      "bezeichnung": "Miesmacher",
+      "titel": "Der Nörgler des Jahres",
+      "bezeichnung": "Nörgler des Jahres",
       "szene": "Comicfigur mit verschränkten Armen und kritisch hochgezogener Augenbraue, um sie herum kleine Meckerwolken und ein Bewertungs-Klemmbrett.",
       "defaultText": "Egal was passiert – irgendetwas finde ich immer zum Meckern. Das macht meinen Tag perfekt.",
       "bild": "/motive/m02.webp",
       "kurz": "NÖRGLER"
+    },
+    {
+      "id": "m03",
+      "titel": "Der Ausreden-Profi des Jahres",
+      "bezeichnung": "Ausreden-Profi des Jahres",
+      "szene": "Comicfigur mit unschuldigem Achselzucken, hinter ihr ein Karteikasten voller Zettel mit Ausreden.",
+      "defaultText": "Für jedes Problem kenne ich mindestens zehn Ausreden. Lösungen überlasse ich lieber den anderen.",
+      "bild": "/motive/m03.webp",
+      "kurz": "AUSREDEN-PROFI"
     },
     {
       "id": "m04",
@@ -20,6 +38,15 @@
       "defaultText": "Bereits sonntags bekomme ich schlechte Laune. Montag ist für mich ein persönlicher Angriff.",
       "bild": "/motive/m04.webp",
       "kurz": "MONTAGS-HASSER"
+    },
+    {
+      "id": "m05",
+      "titel": "Der Kaffeesüchtige des Jahres",
+      "bezeichnung": "Kaffeesüchtige des Jahres",
+      "szene": "Comicfigur mit riesigen wachen Augen umklammert eine übergroße dampfende Kaffeetasse, um sie herum Berge von Espressotassen und Kaffeebohnen.",
+      "defaultText": "Bitte sprich mich erst nach meiner dritten Tasse an. Vorher bin ich offiziell außer Betrieb.",
+      "bild": "/motive/m05.webp",
+      "kurz": "KAFFEESÜCHTIGE"
     },
     {
       "id": "m06",
