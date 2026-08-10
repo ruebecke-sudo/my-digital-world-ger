@@ -73,7 +73,7 @@ export default async req => {
     await saveOrder(order);
 
     // 1) Motiv generieren
-    const sd = await startPrediction("stability-ai/stable-diffusion-3", {
+    const sd = await startPrediction("black-forest-labs/flux-1.1-pro", {
       prompt: order.prompt,
       aspect_ratio: format.ar,
       output_format: "png",
