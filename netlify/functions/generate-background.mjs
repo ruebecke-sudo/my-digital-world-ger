@@ -2,9 +2,18 @@
 // Background-Function (bis 15 Minuten Laufzeit). Wird von webhook.mjs nach
 // erfolgreicher Zahlung mit { orderId } angestossen.
 //
-// Ablauf: SD3 generiert das Motiv -> Real-ESRGAN rechnet hoch, falls das
-// Zielformat groesser ist -> sharp bringt es exakt auf Zielmass -> zwei
-// Fassungen in Blobs: "_preview" mit MDW-Logo, "_download" ohne.
+// Zwei Wege:
+//
+// A) Motiv mit festem Bild (basisBild) - der Normalfall. Das Poster ist fertig
+//    gemalt und liegt im Projekt. Es wird geladen, auf Zielgroesse gebracht,
+//    Name und Spruch kommen auf die Milchglasflaeche. Keine KI, keine
+//    Wartezeit, kein Zufall: der Kunde bekommt genau das Bild aus der Auswahl.
+//
+// B) Motiv ohne festes Bild - FLUX 1.1 pro malt die Szene ohne Text, dann wird
+//    die komplette Typografie darueber gelegt (alter Weg).
+//
+// In beiden Faellen entstehen zwei Fassungen in Blobs: "_preview" fuers Web,
+// "_download" in voller Groesse.
 
 import {
   getOrder, saveOrder, imagesStore, addBranding, textAufbringen, MOTIFS,
@@ -53,6 +62,46 @@ async function ladeBuffer(url) {
 const alsArrayBuffer = buf =>
   buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
 
+// Groesstmoegliche Flaeche im Zielformat, die das Seitenverhaeltnis des
+// Posters behaelt.
+//
+// Die festen Poster sind im Hochformat 9:16 gemalt. Ein DIN-Format ist
+// deutlich breiter. Wuerde man wie bisher formatfuellend zuschneiden, fiele
+// oben die Ueberschrift und unten die Trophaee weg - also genau das, was das
+// Poster ausmacht. Deshalb bleibt das Poster vollstaendig und bekommt
+// seitlich einen Rand.
+function innenMass(breite, hoehe, format) {
+  const faktor = Math.min(format.w / breite, format.h / hoehe);
+  return {
+    w: Math.max(1, Math.round(breite * faktor)),
+    h: Math.max(1, Math.round(hoehe * faktor)),
+  };
+}
+
+// Fuellt den Rand mit dem eigenen Bild: stark weichgezeichnet, abgedunkelt,
+// formatfuellend. Das wirkt wie ein Passepartout aus derselben Szene und
+// deutlich hochwertiger als ein schwarzer Balken.
+async function aufFormatSetzen(sharp, poster, quelle, format) {
+  const meta = await sharp(poster).metadata();
+  if (meta.width === format.w && meta.height === format.h) return poster;
+
+  const hintergrund = await sharp(quelle)
+    .resize(format.w, format.h, { fit: "cover", position: "centre" })
+    .blur(Math.max(20, format.w * 0.02))
+    .modulate({ brightness: 0.55, saturation: 0.85 })
+    .png()
+    .toBuffer();
+
+  return await sharp(hintergrund)
+    .composite([{
+      input: poster,
+      left: Math.round((format.w - meta.width) / 2),
+      top: Math.round((format.h - meta.height) / 2),
+    }])
+    .png()
+    .toBuffer();
+}
+
 export default async req => {
   if (req.headers.get("x-internal-key") !== process.env.INTERNAL_SECRET) {
     return new Response("Nicht erlaubt.", { status: 401 });
@@ -72,16 +121,12 @@ export default async req => {
     order.status = "generating";
     await saveOrder(order);
 
-    // 1) Bildgrundlage besorgen.
-    //    Hat das Motiv ein festes Bild hinterlegt (basisBild), wird nichts
-    //    generiert: der Kunde bekommt genau das Bild, das er in der Auswahl
-    //    gesehen hat. Kein KI-Aufruf, keine Wartezeit, kein Zufall. Nur wenn
-    //    kein festes Bild vorliegt, malt FLUX 1.1 pro die Szene - ohne Text.
     const sharp = (await import("sharp")).default;
     const basis = motif.basisBild;
     let motivUrl;
     let bild;
 
+    // 1) Bildgrundlage besorgen.
     if (basis) {
       motivUrl = new URL(basis, process.env.URL || "https://my-digital-world.de").href;
       bild = await ladeBuffer(motivUrl);
@@ -96,9 +141,15 @@ export default async req => {
       bild = await ladeBuffer(motivUrl);
     }
 
-    // 2) Hochrechnen, wenn das Zielformat mehr Pixel braucht.
+    // 2) Zielmass bestimmen. Festes Bild: vollstaendig sichtbar mit Rand.
+    //    Generiertes Bild: wie bisher formatfuellend.
     const meta = await sharp(bild).metadata();
-    const faktor = Math.max(format.w / meta.width, format.h / meta.height);
+    const ziel = basis
+      ? innenMass(meta.width, meta.height, format)
+      : { w: format.w, h: format.h };
+
+    // 3) Hochrechnen, wenn das Zielmass mehr Pixel braucht.
+    const faktor = Math.max(ziel.w / meta.width, ziel.h / meta.height);
     if (faktor > 1.05) {
       const up = await startPrediction("nightmareai/real-esrgan", {
         image: motivUrl,
@@ -108,28 +159,34 @@ export default async req => {
       bild = await ladeBuffer(ersteUrl(await warteAufErgebnis(up)));
     }
 
-    // 3) Exakt auf Zielmass. Zuschnitt mittig: es fallen die Seiten weg,
-    //    Headline oben und Titelplatte unten bleiben vollstaendig.
-    // 3) Exakt auf Zielmass. Zuschnitt mittig: es fallen die Seiten weg.
-    const grundlage = await sharp(bild)
-      .resize(format.w, format.h, { fit: "cover", position: "centre", kernel: "lanczos3" })
-      .png()
-      .toBuffer();
+    // 4) Exakt auf Zielmass.
+    const poster = basis
+      ? await sharp(bild)
+        .resize(ziel.w, ziel.h, { fit: "fill", kernel: "lanczos3" })
+        .png().toBuffer()
+      : await sharp(bild)
+        .resize(format.w, format.h, { fit: "cover", position: "centre", kernel: "lanczos3" })
+        .png().toBuffer();
 
-    // 4) Typografie als Vektorebene aufstempeln - Name und Kundentext
-    //    erscheinen dadurch garantiert korrekt und fehlerfrei.
-    const mitText = await textAufbringen(grundlage, motif, order.name, order.text);
+    // 5) Beschriften. Bei festem Bild nur Name und Spruch auf der
+    //    Milchglasflaeche - Ueberschrift und Trophaee sind schon im Bild.
+    const beschriftet = await textAufbringen(poster, motif, order.name, order.text);
 
-    const druckfertig = await sharp(mitText)
+    // 6) Auf das volle Format bringen (nur beim festen Bild noetig).
+    const grundlage = basis
+      ? await aufFormatSetzen(sharp, beschriftet, bild, format)
+      : beschriftet;
+
+    const druckfertig = await sharp(grundlage)
       .jpeg({ quality: format.jpeg, mozjpeg: true, chromaSubsampling: "4:4:4" })
       .toBuffer();
 
-    // 4) Vorschau fuers Web: mit Logo, kleiner gerechnet
-    const vorschau = await addBranding(
-      await sharp(druckfertig)
-        .resize({ width: Math.min(1400, format.w), withoutEnlargement: true })
-        .toBuffer()
-    );
+    // 7) Vorschau fuers Web, kleiner gerechnet. Die festen Poster tragen Logo
+    //    und Copyright bereits im Bild - dort waere ein zweites Logo doppelt.
+    const kleiner = await sharp(druckfertig)
+      .resize({ width: Math.min(1400, format.w), withoutEnlargement: true })
+      .toBuffer();
+    const vorschau = basis ? kleiner : await addBranding(kleiner);
 
     await imagesStore().set(`${orderId}_preview`, alsArrayBuffer(vorschau));
     await imagesStore().set(`${orderId}_download`, alsArrayBuffer(druckfertig));
