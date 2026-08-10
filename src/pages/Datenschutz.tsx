@@ -80,6 +80,37 @@ export default function Datenschutz() {
           <div className="h-px bg-white/5" />
 
           <section>
+            <h2 className="font-display font-semibold text-white text-lg mb-4">Poster-Shop: Fotos, Texte und Bestellungen</h2>
+            <p>
+              Wenn du im Poster-Shop ein Poster bestellst, verarbeiten wir die Angaben, die du im
+              Formular machst: deinen Namen, deinen Wunschtext, gegebenenfalls eine Bezeichnung und
+              – wenn du ein eigenes Motiv wählst – das Foto, das du hochlädst. Dazu kommen die
+              Bestelldaten und die E-Mail-Adresse, die du bei der Bezahlung angibst. Rechtsgrundlage
+              ist die Erfüllung des Vertrags nach Art. 6 Abs. 1 lit. b DSGVO.
+            </p>
+            <p className="mt-2">
+              An der Erstellung sind Dienstleister beteiligt, die wir als Auftragsverarbeiter
+              einsetzen: Netlify (Hosting und Speicherung), Stripe (Zahlungsabwicklung), Replicate
+              (Bildverarbeitung) und Resend (Versand der Bestellmail). Bei der Bildverarbeitung und
+              beim Mailversand werden Daten auch in den USA verarbeitet.
+            </p>
+            <p className="mt-2">
+              Dein hochgeladenes Foto löschen wir, sobald dein Poster fertig ist – wir brauchen es
+              danach nicht mehr. Lädst du ein Foto hoch, ohne zu bestellen, wird es spätestens nach
+              48 Stunden gelöscht. Das fertige Poster und die zugehörigen Bestelldaten halten wir
+              zwölf Monate für dich bereit, damit du über den Link aus deiner Mail wieder
+              herankommst; danach werden sie automatisch gelöscht.
+            </p>
+            <p className="mt-2">
+              Bitte lade nur Fotos hoch, an denen du die Rechte hast und auf denen abgebildete
+              Personen mit der Verwendung einverstanden sind. Möchtest du dein Poster oder dein Foto
+              vorzeitig gelöscht haben, genügt eine kurze Nachricht an uns.
+            </p>
+          </section>
+
+          <div className="h-px bg-white/5" />
+
+          <section>
             <h2 className="font-display font-semibold text-white text-lg mb-4">Wie lange wir deine Daten speichern</h2>
             <p>
               Wenn du einen Kommentar schreibst, wird dieser Kommentar und seine Metadaten auf unbestimmte Zeit gespeichert. Auf diese Art können wir Folgekommentare automatisch erkennen und freigeben, anstatt sie in einer Moderations-Warteschlange zu halten.
