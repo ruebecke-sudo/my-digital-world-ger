@@ -234,6 +234,24 @@
         "Glück",
         "Ja"
       ]
+    },
+    {
+      "id": "u01",
+      "titel": "Dein Foto im Pixar-Stil",
+      "bezeichnung": "",
+      "szene": "Eigenes Foto des Kunden, von FLUX Kontext in eine 3D-Comicfigur verwandelt.",
+      "defaultText": "",
+      "kurz": "",
+      "eigenesFoto": "pixar"
+    },
+    {
+      "id": "u02",
+      "titel": "Dein Foto unverändert",
+      "bezeichnung": "",
+      "szene": "Eigenes Foto des Kunden, unverändert, nur mit seinem Text versehen.",
+      "defaultText": "",
+      "kurz": "",
+      "eigenesFoto": "pur"
     }
   ]
 }
