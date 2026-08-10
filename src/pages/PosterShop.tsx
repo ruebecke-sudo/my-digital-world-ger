@@ -73,8 +73,8 @@ export default function PosterShop() {
             Dein persönliches <span className="text-cyan-400">„…des Jahres“</span>-Poster
           </h1>
           <p className="text-white/60 max-w-2xl mx-auto">
-            Motiv auswählen, Format wählen, Name und Wunschtext eingeben – nach der Bezahlung wird
-            dein Poster individuell per KI erstellt und steht sofort zum Download bereit.
+            Motiv auswählen, Format wählen, Name und Wunschtext eingeben – nach der Bezahlung steht dein
+            persönliches Poster sofort zum Download bereit.
           </p>
           <p className="text-white/40 text-xs mt-3">
             Tipp: Auf ein Bild tippen zeigt das Motiv groß.
@@ -99,7 +99,7 @@ export default function PosterShop() {
                 <img
                   src={bildPfad(m)}
                   alt={m.titel}
-                  className="w-full aspect-[3/4] object-cover"
+                  className="w-full aspect-[9/16] object-cover"
                   onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
                 />
                 <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/35 transition-colors">
@@ -186,7 +186,7 @@ export default function PosterShop() {
           </button>
           {fehler && <p className="mt-4 text-red-400 text-sm">{fehler}</p>}
           <p className="mt-4 text-white/40 text-xs text-center">
-            Sichere Bezahlung über Stripe · Dein Poster wird nach der Zahlung individuell erstellt (ca. 1–2 Minuten)
+            Sichere Bezahlung über Stripe · Dein Poster wird nach der Zahlung mit deinem Text erstellt und steht kurz darauf bereit
           </p>
         </div>
       </div>
