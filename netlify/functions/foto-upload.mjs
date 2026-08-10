@@ -45,8 +45,13 @@ export default async req => {
     const masse = await sharp(bearbeitet).metadata();
 
     const schluessel = crypto.randomUUID();
-    await uploadsStore().set(schluessel, bearbeitet.buffer.slice(
-      bearbeitet.byteOffset, bearbeitet.byteOffset + bearbeitet.byteLength));
+    // Zeitstempel mitgeben: der taegliche Hausputz loescht damit Fotos, aus
+    // denen nie eine Bestellung wurde.
+    await uploadsStore().set(
+      schluessel,
+      bearbeitet.buffer.slice(bearbeitet.byteOffset, bearbeitet.byteOffset + bearbeitet.byteLength),
+      { metadata: { erstellt: new Date().toISOString() } },
+    );
 
     return json({
       schluessel,
