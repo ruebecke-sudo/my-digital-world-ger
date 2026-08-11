@@ -8,11 +8,3 @@
   # Die Schriftdateien werden zur Laufzeit von lib/textlayer.mjs gelesen und
   # muessen deshalb mit den Functions ausgeliefert werden.
   included_files = ["assets/fonts/*.ttf"]
-
-# Netlifys Geheimnis-Suche schlug hier an, weil eine als geheim markierte
-# Umgebungsvariable als Wert den Namen einer anderen enthaelt - der Text taucht
-# dadurch in webhook.mjs auf, obwohl dort nur process.env steht. Bis der Wert
-# in den Projekteinstellungen berichtigt ist, wird diese Datei von der Suche
-# ausgenommen; sie enthaelt selbst kein Geheimnis.
-[build.environment]
-  SECRETS_SCAN_OMIT_PATHS = "netlify/functions/webhook.mjs"
