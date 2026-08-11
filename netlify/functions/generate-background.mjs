@@ -25,21 +25,10 @@ import {
 } from "../../lib/shared.mjs";
 import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
 import { posterMailSenden } from "../../lib/mail.mjs";
+import { STILE } from "../../lib/stile.mjs";
 
 const API = "https://api.replicate.com/v1";
 const authHeader = () => ({ Authorization: `Bearer ${process.env.REPLICATE_API_TOKEN}` });
-
-// Auftrag an FLUX Kontext. Wichtig ist der Hinweis, Gesicht und Kleidung zu
-// erhalten - sonst entsteht zwar eine huebsche Comicfigur, aber niemand
-// erkennt mehr, wer da abgebildet ist.
-const PIXAR_AUFTRAG =
-  "Turn this photo into an ultra high quality 3D animated movie character in " +
-  "Pixar and DreamWorks style. Keep the person clearly recognizable: same face " +
-  "shape, same hairstyle, same hair colour, same clothing, same pose and the " +
-  "same expression. Slightly stylised proportions with large expressive eyes, " +
-  "soft skin shading, warm cinematic lighting, vibrant saturated colours, " +
-  "detailed but calm background in the same setting as the photo. " +
-  "Absolutely no text, no letters, no watermarks, no logos.";
 
 // Ueber den Model-Endpoint aufrufen - so brauchen wir keinen Versions-Hash.
 async function startPrediction(model, input) {
@@ -156,7 +145,7 @@ export default async req => {
 
       if (eigenes === "pixar") {
         const verwandelt = await startPrediction("black-forest-labs/flux-kontext-pro", {
-          prompt: PIXAR_AUFTRAG,
+          prompt: (STILE[order.stil] || STILE.animation3d).auftrag,
           input_image: motivUrl,
           aspect_ratio: "match_input_image",
           output_format: "png",
