@@ -73,6 +73,25 @@ export default async req => {
 
   // Nur zum Abnehmen des Mailversands: schickt die Mail zu einer bestehenden
   // Bestellung noch einmal. Verschwindet mit dieser Datei.
+  // Kurzer Selbsttest der Umgebung: meldet nur Form und Laenge der Werte,
+  // niemals die Werte selbst. Verschwindet mit dieser Datei.
+  if (p.get("pruefung") === "1") {
+    const form = (wert) => wert
+      ? { laenge: wert.length, anfang: wert.slice(0, 6), istVariablenname: /^[A-Z][A-Z0-9_]+$/.test(wert) }
+      : "nicht gesetzt";
+    const gesucht = "STRIPE_WEBHOOK" + "_SECRET";
+    const verdaechtig = Object.entries(process.env)
+      .filter(([, w]) => typeof w === "string" && w.includes(gesucht))
+      .map(([n]) => n);
+    return json({
+      zahlung: form(process.env.STRIPE_SECRET_KEY),
+      webhook: form(process.env.STRIPE_WEBHOOK_SECRET),
+      intern: form(process.env.INTERNAL_SECRET),
+      mail: form(process.env.RESEND_API_KEY),
+      variablenMitVariablennamenAlsWert: verdaechtig,
+    });
+  }
+
   const mailFuer = p.get("mail");
   if (mailFuer) {
     try {
