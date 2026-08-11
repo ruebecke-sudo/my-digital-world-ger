@@ -236,6 +236,40 @@
       ]
     },
     {
+      "id": "m24",
+      "titel": "Das Hochzeitspaar des Jahres",
+      "bezeichnung": "Hochzeitspaar des Jahres",
+      "szene": "Verliebtes Comic-Hochzeitspaar aus zwei Männern in enger Umarmung unter Lichterketten, beide im dunklen Anzug mit Fliege und Rosen-Ansteckung, ringsherum Blütenbogen, fallende Blütenblätter und schwebende Herzen.",
+      "defaultText": "Wir haben uns gesucht und gefunden. Ab heute gehen wir jeden Weg zu zweit.",
+      "bild": "/motive/m24.webp",
+      "kurz": "HOCHZEITSPAAR",
+      "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, ein verliebtes Comic-Brautpaar als Hauptmotiv mit ausdrucksstarken, warmherzigen Gesichtern, romantische kinoreife Beleuchtung mit goldenem Gegenlicht und Lichterketten, festlich geschmückter Hintergrund aus Blütenbögen und Rosen, warme Gold- und Rosétöne, schwebende rote Herzen und rosa Konfetti, viele liebevolle Hochzeitsdetails in der Szene, professionelle Werbegrafik, Hochformat 9:16, gestochen scharf, Premium-Qualität.",
+      "layout": "edel",
+      "anrede": "wir sind das",
+      "akzente": [
+        "Liebe",
+        "Herz",
+        "Hand"
+      ]
+    },
+    {
+      "id": "m25",
+      "titel": "Das Hochzeitspaar des Jahres",
+      "bezeichnung": "Hochzeitspaar des Jahres",
+      "szene": "Verliebtes Comic-Hochzeitspaar aus zwei Frauen Wange an Wange unter Lichterketten, beide im edlen Hochzeitskleid mit feiner Spitze, ringsherum Blumen, fallende Blütenblätter und schwebende Herzen.",
+      "defaultText": "Heute beginnt das schönste Kapitel unseres Lebens. Mit Liebe, Glück und ganz viel Herz gehen wir gemeinsam hinein.",
+      "bild": "/motive/m25.webp",
+      "kurz": "HOCHZEITSPAAR",
+      "stylePrompt": "Ultra-hochwertiges 3D-Comic-Poster im Pixar-/DreamWorks-Stil, ein verliebtes Comic-Brautpaar als Hauptmotiv mit ausdrucksstarken, warmherzigen Gesichtern, romantische kinoreife Beleuchtung mit goldenem Gegenlicht und Lichterketten, festlich geschmückter Hintergrund aus Blütenbögen und Rosen, warme Gold- und Rosétöne, schwebende rote Herzen und rosa Konfetti, viele liebevolle Hochzeitsdetails in der Szene, professionelle Werbegrafik, Hochformat 9:16, gestochen scharf, Premium-Qualität.",
+      "layout": "edel",
+      "anrede": "wir sind das",
+      "akzente": [
+        "Liebe",
+        "Herz",
+        "Hand"
+      ]
+    },
+    {
       "id": "u01",
       "titel": "Dein Foto im Pixar-Stil",
       "bezeichnung": "",
