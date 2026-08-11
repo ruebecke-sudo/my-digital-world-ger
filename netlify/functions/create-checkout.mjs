@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import crypto from "node:crypto";
 import { MOTIFS, buildPrompt, saveOrder, json, siteUrl } from "../../lib/shared.mjs";
 import { getFormat, DEFAULT_FORMAT } from "../../lib/formats.mjs";
+import { STILE } from "../../lib/stile.mjs";
 
 export default async (req) => {
   if (req.method === "OPTIONS") return json({});
@@ -16,6 +17,7 @@ export default async (req) => {
     const text = (body.text || "").trim();
     const bezeichnung = (body.bezeichnung || "").trim();
     const fotoSchluessel = (body.fotoSchluessel || "").trim();
+    const stil = (body.stil || "").trim();
 
     if (!motif) return json({ error: "Bitte ein Motiv auswählen." }, 400);
     if (!format) return json({ error: "Bitte ein Format auswählen." }, 400);
@@ -25,6 +27,10 @@ export default async (req) => {
     if (motif.eigenesFoto) {
       if (!/^[0-9a-f-]{36}$/i.test(fotoSchluessel)) {
         return json({ error: "Bitte zuerst ein Foto hochladen." }, 400);
+      }
+      // Bei der Verwandlung muss ein bekannter Stil dabei sein.
+      if (motif.eigenesFoto === "pixar" && stil && !STILE[stil]) {
+        return json({ error: "Diesen Stil kennen wir nicht." }, 400);
       }
       if (bezeichnung.length > 40) {
         return json({ error: "Die Bezeichnung ist zu lang (max. 40 Zeichen)." }, 400);
@@ -49,6 +55,7 @@ export default async (req) => {
       text,
       bezeichnung,
       fotoSchluessel: motif.eigenesFoto ? fotoSchluessel : "",
+      stil: motif.eigenesFoto === "pixar" ? (STILE[stil] ? stil : "") : "",
       prompt: motif.eigenesFoto ? "" : buildPrompt(motif, name, text),
       status: "pending", // pending -> paid -> generating -> done (oder error)
       downloadToken,
