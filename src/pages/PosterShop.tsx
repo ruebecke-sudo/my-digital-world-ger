@@ -6,6 +6,7 @@ type Motiv = {
   titel: string
   bild?: string | null
   eigenesFoto?: string | null
+  stile?: { id: string; titel: string; gruppe: string }[] | null
 }
 type Format = { id: string; label: string; hinweis: string; cents: number }
 const FN = '/.netlify/functions'
@@ -51,6 +52,7 @@ export default function PosterShop() {
   const [fotoSchluessel, setFotoSchluessel] = useState('')
   const [fotoLaedt, setFotoLaedt] = useState(false)
   const [querformat, setQuerformat] = useState(false)
+  const [stil, setStil] = useState('')
 
   useEffect(() => {
     fetch(`${FN}/motifs`)
@@ -76,6 +78,7 @@ export default function PosterShop() {
   const gewaehltesFormat = formate.find(f => f.id === formatId) || null
   const gewaehltesMotiv = motive.find(m => m.id === auswahl) || null
   const eigenesFoto = gewaehltesMotiv?.eigenesFoto || null
+  const stile = gewaehltesMotiv?.stile || null
 
   const fotoWaehlen = async (datei?: File | null) => {
     if (!datei) return
@@ -120,6 +123,7 @@ export default function PosterShop() {
           name: name.trim(),
           text: text.trim(),
           bezeichnung: bezeichnung.trim(),
+          stil,
           fotoSchluessel,
         }),
       })
@@ -266,6 +270,33 @@ export default function PosterShop() {
                   Dein Foto ist im Querformat. Wir schneiden es mittig auf Hochformat zu – ein
                   Hochformat-Foto sieht deutlich besser aus.
                 </p>
+              )}
+
+              {stile && (
+                <>
+                  <label className="block text-white font-medium mb-2">
+                    Stil <span className="text-white/50 font-normal">(so wird dein Foto verwandelt)</span>
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
+                    {stile.map(s => (
+                      <button
+                        key={s.id}
+                        type="button"
+                        onClick={() => setStil(s.id)}
+                        className={`rounded-xl border px-3 py-2 text-left text-sm transition-all ${
+                          stil === s.id
+                            ? 'border-cyan-400 bg-cyan-500/10 text-cyan-400'
+                            : 'border-white/10 bg-white/5 text-white/80 hover:bg-white/10'
+                        }`}
+                      >
+                        {s.titel}
+                        <span className="block text-white/40 text-[11px]">
+                          {s.gruppe === 'verwandlung' ? 'Kostüm & Szene' : 'nur Machart'}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </>
               )}
 
               <label className="block text-white font-medium mb-2">
