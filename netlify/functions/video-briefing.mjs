@@ -5,7 +5,7 @@
 import { getPaket, getKategorie } from "../../lib/videopakete.mjs";
 import { label, frageText } from "../../lib/kurzabfrage.mjs";
 import { json, ladeMitToken, saveVideoOrder, siteUrl } from "../../lib/videoshared.mjs";
-import { mailSenden, betreiberAdresse, huelle, zeile, tabelle, knopf, esc } from "../../lib/mail.mjs";
+import { mailSenden, betreiberAdresse, huelle, zeile, tabelle, knopf, esc } from "../../lib/videomailer.mjs";
 
 export default async (req) => {
   if (req.method === "OPTIONS") return json({});
