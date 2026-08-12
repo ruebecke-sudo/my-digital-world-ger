@@ -270,6 +270,46 @@
       ]
     },
     {
+      "id": "m26",
+      "titel": "Die beste Mama des Jahres",
+      "bezeichnung": "beste Mama des Jahres",
+      "szene": "Warmherzige Comicfigur einer Mutter im gemuetlichen Wohnzimmer, sie haelt stolz einen goldenen Herz-Pokal, ringsherum Blumen, Familienfotos und Tassen mit lieben Spruechen.",
+      "defaultText": "Meine Liebe kennt keine Grenzen und mein Herz hat immer Platz für meine Familie.",
+      "bild": "/motive/m26.webp",
+      "kurz": "BESTE MAMA",
+      "anrede": "ich bin die"
+    },
+    {
+      "id": "m27",
+      "titel": "Der beste Papa des Jahres",
+      "bezeichnung": "bester Papa des Jahres",
+      "szene": "Lachende Comicfigur eines Vaters mit zwei Kindern an den Schultern, er haelt einen goldenen Herz-Pokal, auf dem Tisch Werkzeug, Bilderrahmen und Tassen mit lieben Spruechen.",
+      "defaultText": "Ich schenke Zeit, Liebe und die schönsten Erinnerungen.",
+      "bild": "/motive/m27.webp",
+      "kurz": "BESTER PAPA",
+      "anrede": "ich bin der"
+    },
+    {
+      "id": "m28",
+      "titel": "Die beste Oma des Jahres",
+      "bezeichnung": "beste Oma des Jahres",
+      "szene": "Herzliche Comicfigur einer Grossmutter im Sessel mit Brille und Strickjacke, sie haelt einen goldenen Herz-Pokal, daneben Teetasse, Gebaeck, Blumen und Erinnerungsbuecher.",
+      "defaultText": "Bei mir gibt es immer ein offenes Ohr und die besten Geschichten.",
+      "bild": "/motive/m28.webp",
+      "kurz": "BESTE OMA",
+      "anrede": "ich bin die"
+    },
+    {
+      "id": "m29",
+      "titel": "Der beste Opa des Jahres",
+      "bezeichnung": "bester Opa des Jahres",
+      "szene": "Freundliche Comicfigur eines Grossvaters im Garten mit Brille und Strickjacke, er haelt einen goldenen Herz-Pokal, daneben Notizbuch, Bilderrahmen und Tasse mit lieben Spruechen.",
+      "defaultText": "Für euch habe ich immer Zeit, einen guten Rat und eine Geschichte parat.",
+      "bild": "/motive/m29.webp",
+      "kurz": "BESTER OPA",
+      "anrede": "ich bin der"
+    },
+    {
       "id": "u01",
       "titel": "Dein Foto im Pixar-Stil",
       "bezeichnung": "",
