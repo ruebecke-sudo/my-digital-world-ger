@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import type { MouseEvent as MausKlick } from 'react'
 import {
   ArrowRight, CheckCircle, Play, Pause, Sparkles, Clock, Smartphone,
   MessageCircle, Wand2, PenLine, Download, Mail, ShieldCheck, ChevronDown,
+  Volume2, VolumeX,
 } from 'lucide-react'
 
 const FN = '/.netlify/functions'
@@ -110,11 +112,16 @@ const FRAGEN = [
   },
 ]
 
-// Ein Video zeigt sich stumm und in Schleife, sobald es im Blick ist. Das ist
-// im Status genau die Situation, in der es spaeter auch laeuft.
+// Ein Video zeigt sich stumm und in Schleife, sobald es im Blick ist - genau die
+// Situation, in der es spaeter auch im Status laeuft.
+//
+// Der Ton muss stumm starten: Jeder Browser blockiert automatisches Abspielen
+// mit Ton, und zwar hart - das Video liefe dann gar nicht erst an. Ton gibt es
+// deshalb erst auf Klick, und immer nur bei einem Video gleichzeitig.
 function VideoKachel({ datei, aktiv }: { datei: string; aktiv: boolean }) {
   const ref = useRef<HTMLVideoElement>(null)
   const [laeuft, setLaeuft] = useState(false)
+  const [stumm, setStumm] = useState(true)
 
   useEffect(() => {
     const el = ref.current
@@ -122,7 +129,7 @@ function VideoKachel({ datei, aktiv }: { datei: string; aktiv: boolean }) {
     const beobachter = new IntersectionObserver(
       ([eintrag]) => {
         if (eintrag.isIntersecting) el.play().catch(() => {})
-        else el.pause()
+        else { el.pause(); if (!el.muted) { el.muted = true; setStumm(true) } }
       },
       { threshold: 0.4 }
     )
@@ -137,6 +144,34 @@ function VideoKachel({ datei, aktiv }: { datei: string; aktiv: boolean }) {
     else el.pause()
   }
 
+  const tonUmschalten = (e: MausKlick) => {
+    e.stopPropagation()
+    const el = ref.current
+    if (!el) return
+    if (el.muted) {
+      // Erst alle anderen stummschalten, sonst reden zwei Videos gleichzeitig.
+      document.querySelectorAll<HTMLVideoElement>('video[data-kurzvideo]').forEach(v => {
+        if (v !== el) v.muted = true
+      })
+      window.dispatchEvent(new CustomEvent('kurzvideo-ton', { detail: datei }))
+      el.muted = false
+      setStumm(false)
+      el.play().catch(() => {})
+    } else {
+      el.muted = true
+      setStumm(true)
+    }
+  }
+
+  // Schaltet ein anderes Video den Ton ein, muss dieses Symbol mitziehen.
+  useEffect(() => {
+    const beiFremdton = (e: Event) => {
+      if ((e as CustomEvent).detail !== datei) setStumm(true)
+    }
+    window.addEventListener('kurzvideo-ton', beiFremdton)
+    return () => window.removeEventListener('kurzvideo-ton', beiFremdton)
+  }, [datei])
+
   return (
     <div
       className={`relative rounded-2xl overflow-hidden border transition-all ${
@@ -145,6 +180,7 @@ function VideoKachel({ datei, aktiv }: { datei: string; aktiv: boolean }) {
     >
       <video
         ref={ref}
+        data-kurzvideo
         src={`/kurzvideos/${datei}.mp4`}
         poster={`/kurzvideos/${datei}.jpg`}
         muted
@@ -156,13 +192,32 @@ function VideoKachel({ datei, aktiv }: { datei: string; aktiv: boolean }) {
         onClick={umschalten}
         className="w-full aspect-[9/16] object-cover bg-black cursor-pointer"
       />
-      <button
-        onClick={umschalten}
-        aria-label={laeuft ? 'Pause' : 'Abspielen'}
-        className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/60 backdrop-blur border border-white/20 flex items-center justify-center text-white hover:bg-black/80 transition-colors"
-      >
-        {laeuft ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
-      </button>
+
+      {stumm && (
+        <button
+          onClick={tonUmschalten}
+          className="absolute top-3 left-3 px-3 py-1.5 rounded-full bg-black/65 backdrop-blur border border-white/20 flex items-center gap-1.5 text-white text-sm hover:bg-black/85 transition-colors"
+        >
+          <VolumeX className="w-3.5 h-3.5" /> Ton an
+        </button>
+      )}
+
+      <div className="absolute bottom-3 right-3 flex items-center gap-2">
+        <button
+          onClick={tonUmschalten}
+          aria-label={stumm ? 'Ton einschalten' : 'Stummschalten'}
+          className="w-9 h-9 rounded-full bg-black/60 backdrop-blur border border-white/20 flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+        >
+          {stumm ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        </button>
+        <button
+          onClick={umschalten}
+          aria-label={laeuft ? 'Pause' : 'Abspielen'}
+          className="w-9 h-9 rounded-full bg-black/60 backdrop-blur border border-white/20 flex items-center justify-center text-white hover:bg-black/80 transition-colors"
+        >
+          {laeuft ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+        </button>
+      </div>
     </div>
   )
 }
@@ -253,7 +308,7 @@ export default function Kurzvideos() {
             <div className="max-w-[280px] mx-auto w-full">
               <VideoKachel datei="hero" aktiv />
               <p className="text-white/40 text-sm text-center mt-3">
-                So sieht ein fertiges Video im Status aus
+                So sieht ein fertiges Video im Status aus - mit Ton
               </p>
             </div>
           </div>
@@ -298,8 +353,8 @@ export default function Kurzvideos() {
             Vier Arten von Videos
           </h2>
           <p className="text-white/60 text-base mb-8 max-w-2xl">
-            Tipp auf ein Video, um es anzusehen. Such dir die Richtung aus, die zu deinem
-            Vorhaben passt - alles Weitere klärt sich im Briefing.
+            Tipp auf „Ton an", um zu hören, wie es klingt. Such dir die Richtung aus, die
+            zu deinem Vorhaben passt - alles Weitere klärt sich in vier kurzen Fragen.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
