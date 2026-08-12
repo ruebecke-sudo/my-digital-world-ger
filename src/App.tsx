@@ -21,6 +21,8 @@ import Empfehlungen from './pages/Empfehlungen'
 import ComicStil from './pages/ComicStil'
 import PosterShop from './pages/PosterShop'
 import PosterDanke from './pages/PosterDanke'
+import Kurzvideos from './pages/Kurzvideos'
+import KurzvideoDanke from './pages/KurzvideoDanke'
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function App() {
           <Route path="/empfehlung/poster" component={PosterShop} />
           <Route path="/empfehlung/poster/danke" component={PosterDanke} />
           <Route path="/comic-stil" component={ComicStil} />
+          <Route path="/kurzvideos" component={Kurzvideos} />
+          <Route path="/kurzvideos/danke" component={KurzvideoDanke} />
         </Switch>
         <Footer />
       </div>

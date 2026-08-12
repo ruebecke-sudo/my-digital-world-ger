@@ -27,6 +27,11 @@ export default async (req) => {
       order.paidAt = new Date().toISOString();
       await saveOrder(order);
 
+      // Videobestellungen aus dem Kurzvideo-Angebot liegen im selben Store,
+      // tragen aber art: "video". Fuer sie gibt es nichts zu generieren - das
+      // Video entsteht von Hand bzw. der Kunde bekommt sein Prompt-Paket.
+      if (order.art === "video") return json({ received: true });
+
       // Background-Function anstoßen (antwortet sofort mit 202,
       // läuft dann bis zu 15 Minuten – genug für die Bildgenerierung)
       await fetch(`${siteUrl()}/.netlify/functions/generate-background`, {
