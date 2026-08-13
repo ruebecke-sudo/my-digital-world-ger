@@ -14,7 +14,8 @@ type Paket = {
   cents: number
   kurz: string
   lieferung: string
-  briefing: boolean
+  abfrage: boolean
+  automatisch: boolean
 }
 
 const preis = (cents: number) => (cents / 100).toFixed(2).replace('.', ',') + ' €'
@@ -25,19 +26,21 @@ const preis = (cents: number) => (cents / 100).toFixed(2).replace('.', ',') + ' 
 const PAKETE_FALLBACK: Paket[] = [
   {
     id: 'komplett',
-    label: 'Video erstellen lassen',
+    label: 'Wir machen es für dich',
     cents: 4500,
-    kurz: 'Du sagst, worum es geht - wir liefern das fertige Video.',
+    kurz: 'Du beantwortest vier Fragen - den Rest übernehmen wir von Hand.',
     lieferung: 'Fertiges Video per E-Mail, in der Regel innerhalb von 2-3 Werktagen.',
-    briefing: true,
+    abfrage: true,
+    automatisch: false,
   },
   {
     id: 'selbst',
-    label: 'Selbst erstellen',
+    label: 'Selbst zusammenstellen',
     cents: 2500,
-    kurz: 'Das komplette Prompt-Paket - du klickst es in Google Gemini selbst zusammen.',
-    lieferung: 'Sofort nach der Zahlung freigeschaltet.',
-    briefing: false,
+    kurz: 'Vier Fragen beantworten - dein Video entsteht sofort automatisch.',
+    lieferung: 'Fertiges Video in wenigen Minuten, direkt auf der Seite und per E-Mail.',
+    abfrage: true,
+    automatisch: true,
   },
 ]
 
@@ -77,11 +80,11 @@ const KATEGORIEN = [
 ]
 
 const BAUSTEINE = [
-  { icon: PenLine, titel: 'Konzept & Text', text: 'Aus deiner Botschaft wird ein Satz, der in zehn Sekunden passt. Der Teil, an dem die meisten Videos scheitern.' },
-  { icon: Wand2, titel: 'KI-Videoproduktion', text: 'Erzeugt mit Google Gemini und Veo. Mehrere Durchläufe, geliefert wird die beste Fassung.' },
+  { icon: PenLine, titel: 'Aus vier Antworten eine Szene', text: 'Deine Angaben werden in eine Bildbeschreibung übersetzt, die das Modell versteht. Der Teil, an dem selbstgebaute Videos meistens scheitern.' },
+  { icon: Wand2, titel: 'Erzeugt mit Google Veo', text: 'Dasselbe Modell in beiden Paketen. Der Unterschied liegt darin, wer es bedient - die Automatik oder ein Mensch.' },
   { icon: Smartphone, titel: 'Hochkant 9:16', text: 'Direkt im Statusformat erzeugt, nicht nachträglich zugeschnitten. Nichts Wichtiges fällt am Rand weg.' },
-  { icon: MessageCircle, titel: 'Text im Bild', text: 'Kurze Einblendungen für alle, die ohne Ton schauen - und das sind die meisten.' },
-  { icon: Clock, titel: '8 bis 15 Sekunden', text: 'Die Länge, die im Status wirklich zu Ende gesehen wird. Ein Gedanke pro Video, nicht zwei.' },
+  { icon: MessageCircle, titel: 'Mit eigenem Ton', text: 'Stimme und Geräusche entstehen mit dem Bild zusammen. Schrift kommt bewusst erst in WhatsApp dazu - gemalte Buchstaben werden fehlerhaft.' },
+  { icon: Clock, titel: 'Acht Sekunden', text: 'Die Länge, die im Status wirklich zu Ende gesehen wird. Ein Gedanke pro Video, nicht zwei.' },
   { icon: Download, titel: 'Fertige MP4-Datei', text: 'Direkt hochladbar - in den WhatsApp-Status und genauso in Reels, Shorts oder Stories.' },
 ]
 
@@ -92,15 +95,15 @@ const FRAGEN = [
   },
   {
     frage: 'Was passiert nach der Bezahlung?',
-    antwort: 'Beim Komplettpaket stellen wir dir vier kurze Fragen - Ziel, deine Botschaft in einem Satz, Ton und Branche. Drei davon tippst du nur an. Eine Zusammenfassung geht danach an dich und an uns, dann entsteht das Video. Beim Selbst-erstellen-Paket steht das komplette Prompt-Paket sofort auf der nächsten Seite bereit.',
+    antwort: 'In beiden Paketen kommen dieselben vier Fragen - Ziel, deine Botschaft in einem Satz, Ton und Branche. Drei davon tippst du nur an. Beim Selbstzusammenstellen entsteht dein Video danach sofort automatisch und liegt nach ein bis drei Minuten zum Herunterladen bereit. Beim betreuten Paket gehen deine Angaben an uns, und wir machen das Video von Hand.',
   },
   {
     frage: 'Kann ich Änderungen wünschen?',
-    antwort: 'Beim Komplettpaket ist eine Korrekturschleife enthalten. Antworte einfach auf die Liefermail und beschreibe, was anders sein soll.',
+    antwort: 'Beim betreuten Paket ist eine Korrekturschleife enthalten - antworte einfach auf die Liefermail. Beim automatischen Paket bekommst du genau einen Durchlauf; dafür kostet es 20 € weniger. Wenn das Ergebnis daneben liegt, schreib uns trotzdem: Wir lassen niemanden mit einem unbrauchbaren Video sitzen.',
   },
   {
-    frage: 'Brauche ich für das Selbst-erstellen-Paket ein bezahltes Gemini-Konto?',
-    antwort: 'Für die Videoerzeugung mit Veo brauchst du ein Google-Konto mit Zugang zur Videofunktion. Google gibt dort ein Kontingent vor, das sich von Zeit zu Zeit ändert - der aktuelle Stand steht direkt bei Gemini. Die Prompts selbst funktionieren unabhängig davon.',
+    frage: 'Brauche ich für das günstige Paket ein eigenes Gemini-Konto?',
+    antwort: 'Nein. Die Erzeugung läuft über unseren Zugang, du brauchst gar nichts einzurichten - nur die vier Fragen zu beantworten. Als Beigabe bekommst du danach unser Prompt-Paket, falls du später doch selbst weitermachen willst.',
   },
   {
     frage: 'Darf ich das Video geschäftlich nutzen?',
@@ -286,21 +289,22 @@ export default function Kurzvideos() {
                 zu Ende ansieht.
               </p>
               <p className="text-white/70 text-base leading-relaxed mb-8">
-                Genau das entsteht hier: hochkant, wenige Sekunden lang, mit künstlicher
-                Intelligenz produziert. Fertig geliefert für{' '}
-                {preis(pakete.find(p => p.id === 'komplett')?.cents ?? 4500)} - oder als
-                komplettes Prompt-Paket zum Selbermachen für{' '}
+                Genau das entsteht hier: hochkant, acht Sekunden, mit Ton, erzeugt mit
+                Google Veo. Du beantwortest vier kurze Fragen - den Rest übernehmen
+                entweder wir von Hand für{' '}
+                {preis(pakete.find(p => p.id === 'komplett')?.cents ?? 4500)} oder die
+                Automatik in wenigen Minuten für{' '}
                 {preis(pakete.find(p => p.id === 'selbst')?.cents ?? 2500)}.
               </p>
               <div className="flex flex-wrap gap-3">
                 <button onClick={() => zurBestellung('komplett')} className="btn-primary flex items-center gap-2">
-                  Video erstellen lassen <ArrowRight className="w-4 h-4" />
+                  Für mich machen lassen <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => zurBestellung('selbst')}
                   className="px-5 py-2.5 rounded-xl border border-white/15 text-white/80 hover:text-white hover:border-white/30 transition-colors flex items-center gap-2"
                 >
-                  Selbst erstellen
+                  Selbst zusammenstellen
                 </button>
               </div>
             </div>
@@ -416,8 +420,9 @@ export default function Kurzvideos() {
             Zwei Wege zum Video
           </h2>
           <p className="text-white/60 text-base mb-8 max-w-2xl">
-            Derselbe Weg, dieselben Werkzeuge - der Unterschied ist nur, wie viel du selbst
-            in die Hand nimmst.
+            Beide liefern dir ein fertiges Video, beide beginnen mit denselben vier Fragen.
+            Der Unterschied ist nur, wer es baut: ein Mensch mit mehreren Anläufen - oder die
+            Automatik, sofort und günstiger.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-10">
@@ -433,9 +438,9 @@ export default function Kurzvideos() {
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm mb-3">
-                    Beliebt
+                    Ohne Technik
                   </span>
-                  <h3 className="font-display font-bold text-white text-xl">Video erstellen lassen</h3>
+                  <h3 className="font-display font-bold text-white text-xl">Wir machen es für dich</h3>
                 </div>
                 <div className="text-right">
                   <div className="font-display font-extrabold text-white text-3xl">
@@ -446,8 +451,8 @@ export default function Kurzvideos() {
               </div>
               <ul className="space-y-2">
                 {[
-                  'Vier kurze Fragen statt Formular - in einer Minute erledigt',
-                  'Konzept, Text und Produktion übernehmen wir',
+                  'Vier kurze Fragen - mehr musst du nicht tun',
+                  'Ein Mensch baut das Video, keine Automatik',
                   'Mehrere Durchläufe, geliefert wird der beste',
                   'Eine Korrekturschleife inklusive',
                   'Fertige MP4 per E-Mail in 2-3 Werktagen',
@@ -459,7 +464,7 @@ export default function Kurzvideos() {
               </ul>
             </button>
 
-            {/* Selbst erstellen */}
+            {/* Selbst zusammenstellen */}
             <button
               onClick={() => setPaketId('selbst')}
               className={`text-left glass rounded-2xl border p-7 transition-all ${
@@ -471,9 +476,9 @@ export default function Kurzvideos() {
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <span className="inline-block px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm mb-3">
-                    Sofort verfügbar
+                    In Minuten fertig
                   </span>
-                  <h3 className="font-display font-bold text-white text-xl">Selbst erstellen</h3>
+                  <h3 className="font-display font-bold text-white text-xl">Selbst zusammenstellen</h3>
                 </div>
                 <div className="text-right">
                   <div className="font-display font-extrabold text-white text-3xl">
@@ -484,11 +489,11 @@ export default function Kurzvideos() {
               </div>
               <ul className="space-y-2">
                 {[
-                  'Vier fertige Prompts - einer je Videoart',
-                  'Schritt-für-Schritt-Anleitung für Google Gemini',
-                  'Direktlink zu Gemini, kein Suchen nötig',
-                  'Sieben Regeln, an denen Statusvideos sonst scheitern',
-                  'Sofort nach der Zahlung freigeschaltet',
+                  'Dieselben vier Fragen, dasselbe Videomodell',
+                  'Dein Video entsteht sofort automatisch',
+                  'Nach ein bis drei Minuten zum Herunterladen da',
+                  'Ein Durchlauf, keine Korrekturschleife',
+                  'Prompt-Paket zum Selbermachen geschenkt dazu',
                 ].map(t => (
                   <li key={t} className="flex items-start gap-2 text-white/70 text-base">
                     <CheckCircle className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-1" /> {t}
@@ -504,7 +509,7 @@ export default function Kurzvideos() {
               {paket?.label} für {preis(paket?.cents ?? 0)} bestellen
             </h3>
 
-            {paket?.briefing && (
+            {paket?.abfrage && (
               <div className="mb-5">
                 <label className="block text-white/70 text-base mb-2">Welche Art von Video?</label>
                 <div className="flex flex-wrap gap-2">
@@ -541,18 +546,14 @@ export default function Kurzvideos() {
                 className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-emerald-400/40"
               />
               <p className="text-white/40 text-sm mt-2">
-                {paket?.briefing
-                  ? 'Hierhin geht das fertige Video.'
-                  : 'Nur für die Bestellbestätigung - das Paket steht sofort auf der nächsten Seite.'}
+                Hierhin geht dein fertiges Video.
               </p>
             </div>
 
-            {paket?.briefing && (
-              <p className="text-white/50 text-base mb-5">
-                Mehr braucht es hier nicht. Direkt nach der Zahlung stellen wir dir vier
-                kurze Fragen - drei zum Antippen, eine zum Schreiben. Das dauert keine Minute.
-              </p>
-            )}
+            <p className="text-white/50 text-base mb-5">
+              Mehr braucht es hier nicht. Direkt nach der Zahlung kommen vier kurze
+              Fragen - drei zum Antippen, eine zum Schreiben. Das dauert keine Minute.
+            </p>
 
             {fehler && (
               <div className="mb-4 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/25 text-red-300 text-base">
@@ -589,12 +590,12 @@ export default function Kurzvideos() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="glass rounded-2xl border border-emerald-500/15 p-7">
               <h3 className="font-display font-bold text-white text-lg mb-5">
-                Erstellen lassen · {preis(pakete.find(p => p.id === 'komplett')?.cents ?? 4500)}
+                Wir machen es · {preis(pakete.find(p => p.id === 'komplett')?.cents ?? 4500)}
               </h3>
               <ol className="space-y-4">
                 {[
                   'Paket wählen, E-Mail eintragen, über Stripe bezahlen.',
-                  'Vier kurze Fragen - Ziel, Botschaft, Ton, Branche. Die Zusammenfassung bekommst du sofort per Mail.',
+                  'Dieselben vier Fragen - die Zusammenfassung bekommst du sofort per Mail.',
                   'Wir produzieren mehrere Fassungen und schicken die beste per E-Mail.',
                   'Änderungswunsch? Einmal antworten genügt - die Korrekturschleife ist enthalten.',
                 ].map((t, i) => (
@@ -610,14 +611,14 @@ export default function Kurzvideos() {
 
             <div className="glass rounded-2xl border border-cyan-500/15 p-7">
               <h3 className="font-display font-bold text-white text-lg mb-5">
-                Selbst erstellen · {preis(pakete.find(p => p.id === 'selbst')?.cents ?? 2500)}
+                Selbst zusammenstellen · {preis(pakete.find(p => p.id === 'selbst')?.cents ?? 2500)}
               </h3>
               <ol className="space-y-4">
                 {[
                   'Paket wählen, E-Mail eintragen, über Stripe bezahlen.',
-                  'Das Prompt-Paket erscheint sofort auf der nächsten Seite - mit Kopierknopf für jeden Prompt.',
-                  'Ein Klick öffnet Google Gemini. Prompt einfügen, Platzhalter ersetzen, erzeugen lassen.',
-                  'Video herunterladen und in den Status stellen. Der Link bleibt gespeichert, du kannst jederzeit zurück.',
+                  'Vier kurze Fragen - Ziel, Botschaft, Ton, Branche.',
+                  'Dein Video entsteht sofort. Du siehst den Fortschritt auf der Seite, es dauert ein bis drei Minuten.',
+                  'Ansehen, herunterladen, in den Status stellen. Der Link bleibt gültig, du kommst jederzeit zurück.',
                 ].map((t, i) => (
                   <li key={t} className="flex gap-4">
                     <span className="w-7 h-7 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 text-sm flex items-center justify-center flex-shrink-0">

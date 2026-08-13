@@ -1,7 +1,12 @@
 // POST /api/video-briefing - die Kurzabfrage nach der Zahlung
 //
-// Vier Punkte: Ziel, Botschaft, Ton, Branche. Danach geht je eine Mail an den
-// Betreiber und an den Kunden - beide sehen dasselbe, nur anders eingekleidet.
+// Vier Punkte: Ziel, Botschaft, Ton, Branche. Beide Pakete durchlaufen sie.
+//
+// Danach trennen sich die Wege:
+//   automatisches Paket - die Background-Function erzeugt das Video sofort.
+//   betreutes Paket     - die Antworten gehen per Mail an den Betreiber, der
+//                         das Video von Hand macht.
+// In beiden Faellen bekommt der Kunde eine Zusammenfassung.
 import { getPaket, getKategorie } from "../../lib/videopakete.mjs";
 import { label, frageText } from "../../lib/kurzabfrage.mjs";
 import { json, ladeMitToken, saveVideoOrder, siteUrl } from "../../lib/videoshared.mjs";
@@ -17,13 +22,19 @@ export default async (req) => {
     if (!order) return json({ error: "Bestellung nicht gefunden." }, 404);
 
     const paket = getPaket(order.paketId);
-    if (!paket || !paket.briefing)
+    if (!paket || !paket.abfrage)
       return json({ error: "Für dieses Paket gibt es keine Abfrage." }, 400);
 
     // Vor der Zahlung nimmt der Server nichts an. Sonst koennte jemand mit einem
-    // abgebrochenen Kauf Arbeit ausloesen.
+    // abgebrochenen Kauf Arbeit ausloesen - beim automatischen Paket waere das
+    // bares Geld.
     if (order.status === "pending")
       return json({ error: "Die Zahlung ist noch nicht bestätigt. Bitte einen Moment warten." }, 409);
+
+    // Nur einmal. Sonst liesse sich durch mehrfaches Absenden beliebig oft ein
+    // Video auf Kosten des Betreibers erzeugen.
+    if (order.briefing)
+      return json({ error: "Deine Angaben liegen uns schon vor." }, 409);
 
     const botschaft = String(body.botschaft || "").trim().slice(0, 400);
     const zusatz = String(body.zusatz || "").trim().slice(0, 500);
@@ -48,12 +59,26 @@ export default async (req) => {
       kategorieLabel: kategorie ? kategorie.label : "",
       abgegebenAm: new Date().toISOString(),
     };
-    order.status = "briefing";
+    order.status = paket.automatisch ? "wartet" : "briefing";
     await saveVideoOrder(order);
 
-    // --- Mails ---------------------------------------------------
-    // Der Versand darf die Antwort nicht aufhalten und erst recht nicht
-    // scheitern lassen: Das Briefing ist gespeichert, alles Weitere ist Komfort.
+    // --- Automatisches Paket: Erzeugung anstossen ----------------
+    // Die Background-Function antwortet sofort mit 202 und laeuft dann bis zu
+    // 15 Minuten weiter. Der Kunde sieht auf der Seite so lange den Fortschritt.
+    if (paket.automatisch) {
+      await fetch(`${siteUrl()}/.netlify/functions/video-erzeugen-background`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-internal-key": process.env.INTERNAL_SECRET,
+        },
+        body: JSON.stringify({ orderId: order.id }),
+      }).catch(err => console.error("Anstoss fehlgeschlagen:", err?.message || err));
+
+      return json({ ok: true, automatisch: true });
+    }
+
+    // --- Betreutes Paket: Mails an beide -------------------------
     const zeilen = tabelle(
       zeile(frageText("ziel"), ziel) +
       zeile(frageText("botschaft"), botschaft) +
@@ -81,7 +106,7 @@ export default async (req) => {
     const anKunde = mailSenden({
       an: order.email,
       antwortAn: betreiberAdresse(),
-      betreff: "Dein Videobriefing ist angekommen",
+      betreff: "Deine Angaben sind angekommen",
       html: huelle({
         titel: "Danke – wir haben alles",
         vorspann:
@@ -92,15 +117,14 @@ export default async (req) => {
             Dein Video ist in der Regel innerhalb von 2–3 Werktagen fertig und kommt an
             diese Adresse. Eine Korrekturschleife ist enthalten.
           </p>`,
-        fussnote: "my-digital-world &middot; info@my-digital-world.de &middot; WhatsApp 0159 06146147",
       }),
     });
 
     const [b, k] = await Promise.all([anBetreiber, anKunde]);
 
-    return json({ ok: true, mailAnKunde: k.ok, mailAnUns: b.ok });
+    return json({ ok: true, automatisch: false, mailAnKunde: k.ok, mailAnUns: b.ok });
   } catch (err) {
     console.error("Briefing-Fehler:", err.message);
-    return json({ error: "Das Briefing konnte nicht gespeichert werden." }, 500);
+    return json({ error: "Deine Angaben konnten nicht gespeichert werden." }, 500);
   }
 };
