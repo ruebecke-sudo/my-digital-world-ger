@@ -528,7 +528,8 @@ export default function Kurzvideos() {
                   ))}
                 </div>
                 <p className="text-white/40 text-sm mt-2">
-                  Lässt sich im Briefing nach der Zahlung noch ändern.
+                  Bestimmt die Bildwelt deines Videos. Diese Wahl steht nach der Zahlung
+                  fest - die vier Fragen danach drehen sich um den Inhalt.
                 </p>
               </div>
             )}
