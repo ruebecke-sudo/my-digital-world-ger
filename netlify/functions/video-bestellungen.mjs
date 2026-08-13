@@ -45,8 +45,8 @@ export default async (req) => {
     ].filter(([, w]) => w).map(([k, w]) =>
       `<div><b>${esc(k)}:</b> ${esc(w)}</div>`).join("") : "<i>noch kein Briefing</i>";
 
-    return `<article>
-      <h2>${esc(paket ? paket.label : o.paketId)} · ${esc(paket ? preis(paket.cents) : "")}</h2>
+    return `<article${o.test ? ' class="test"' : ""}>
+      <h2>${esc(paket ? paket.label : o.paketId)} · ${esc(paket ? preis(paket.cents) : "")}${o.test ? " <span class=\"marke\">TEST</span>" : ""}</h2>
       <div class="meta">${esc(o.email)} · ${esc(datum(o.paidAt || o.createdAt))} · Status: ${esc(o.status)}</div>
       ${o.notiz ? `<div class="notiz"><b>Notiz beim Kauf:</b> ${esc(o.notiz)}</div>` : ""}
       <div class="briefing">${felder}</div>
@@ -64,6 +64,8 @@ export default async (req) => {
   .notiz{margin-bottom:10px;color:#cbd5e1}
   .briefing div{margin-bottom:4px}
   b{color:#93a3bd;font-weight:600}
+  article.test{border-color:#3a3320;background:#141108}
+  .marke{font-size:11px;background:#854f0b;color:#fde7c0;padding:2px 7px;border-radius:99px;vertical-align:middle}
 </style>
 <h1>Videobestellungen (${bestellungen.length})</h1>
 ${zeilen || "<p>Noch nichts da.</p>"}`;
