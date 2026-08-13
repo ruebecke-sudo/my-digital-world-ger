@@ -90,6 +90,7 @@ export default async (req) => {
     ? `<p class="klein">Lauf vom ${esc(new Date(lauf.begonnenAm).toLocaleString("de-DE"))} ·
         Status: <b>${esc(lauf.status)}</b> ·
         Kategorie: ${esc(lauf.kategorieId)}</p>
+       ${lauf.fehler ? `<p class="klein" style="color:#f0a0a0">Abbruch: ${esc(lauf.fehler)}</p>` : ""}
        <details><summary>Verwendeter Prompt</summary><pre>${esc(lauf.prompt)}</pre></details>`
     : `<p class="klein">Noch kein Lauf vorhanden.</p>`;
 

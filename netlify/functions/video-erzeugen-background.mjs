@@ -14,7 +14,7 @@
 import { getStore } from "@netlify/blobs";
 import { videoPrompt, videoErzeugen } from "../../lib/veo.mjs";
 import { getPaket } from "../../lib/videopakete.mjs";
-import { getVideoOrder, saveVideoOrder, json, siteUrl } from "../../lib/videoshared.mjs";
+import { getVideoOrder, saveVideoOrder, json, siteUrl, alsArrayBuffer } from "../../lib/videoshared.mjs";
 import { videoFertigMail, videoFehlerMail } from "../../lib/videomail.mjs";
 
 export const videosStore = () => getStore("videos");
@@ -50,7 +50,7 @@ export default async (req) => {
 
     const video = await videoErzeugen(prompt);
 
-    await videosStore().set(order.id, video, {
+    await videosStore().set(order.id, alsArrayBuffer(video), {
       metadata: { contentType: "video/mp4", erstelltAm: new Date().toISOString() },
     });
 

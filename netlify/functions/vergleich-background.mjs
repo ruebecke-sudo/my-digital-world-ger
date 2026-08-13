@@ -8,6 +8,7 @@
 import { getStore } from "@netlify/blobs";
 import { vergleichLaufen } from "../../lib/vergleich.mjs";
 import { videoPrompt } from "../../lib/veo.mjs";
+import { alsArrayBuffer } from "../../lib/videoshared.mjs";
 
 const store = () => getStore("vergleich");
 
@@ -31,7 +32,7 @@ export default async (req) => {
 
   try {
     lauf.ergebnisse = await vergleichLaufen(prompt, async (id, video) => {
-      await store().set(`video-${id}`, video, {
+      await store().set(`video-${id}`, alsArrayBuffer(video), {
         metadata: { contentType: "video/mp4" },
       });
     });
