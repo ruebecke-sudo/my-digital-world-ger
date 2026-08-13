@@ -56,10 +56,10 @@ export function Navbar() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="w-[96%] max-w-[1700px] mx-auto">
+        <div className="flex items-center justify-between gap-6 h-16">
           {/* Logo */}
-          <Link href="/" data-testid="link-logo">
+          <Link href="/" data-testid="link-logo" className="flex-shrink-0">
             <div className="flex items-center gap-2 cursor-pointer group">
               <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center group-hover:bg-cyan-500/30 transition-all">
                 <Zap className="w-4 h-4 text-cyan-400" />
@@ -72,9 +72,9 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden xl:flex items-center gap-4 2xl:gap-6 whitespace-nowrap">
             <Link href="/" data-testid="link-nav-start">
-              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+              <span className={`text-[15px] 2xl:text-base font-medium transition-colors cursor-pointer ${location === '/' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
                 Start
               </span>
             </Link>
@@ -84,7 +84,7 @@ export function Navbar() {
               <button
                 onClick={() => setLeistungenOpen(!leistungenOpen)}
                 data-testid="button-nav-leistungen"
-                className={`flex items-center gap-1 text-base font-medium transition-colors ${isLeistungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
+                className={`flex items-center gap-1 text-[15px] 2xl:text-base font-medium transition-colors ${isLeistungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
               >
                 Leistungen
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${leistungenOpen ? 'rotate-180' : ''}`} />
@@ -106,13 +106,13 @@ export function Navbar() {
             </div>
 
             <Link href="/programme" data-testid="link-nav-programme">
-              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/programme' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+              <span className={`text-[15px] 2xl:text-base font-medium transition-colors cursor-pointer ${location === '/programme' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
                 Tools & Programme
               </span>
             </Link>
 
             <Link href="/for-free" data-testid="link-nav-forfree">
-              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/for-free' ? 'text-green-400' : 'text-green-400 hover:text-green-300'}`}>
+              <span className={`text-[15px] 2xl:text-base font-medium transition-colors cursor-pointer ${location === '/for-free' ? 'text-green-400' : 'text-green-400 hover:text-green-300'}`}>
                 For free
               </span>
             </Link>
@@ -122,7 +122,7 @@ export function Navbar() {
               <button
                 onClick={() => setEmpfehlungenOpen(!empfehlungenOpen)}
                 data-testid="button-nav-empfehlungen"
-                className={`flex items-center gap-1 text-base font-medium transition-colors ${isEmpfehlungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
+                className={`flex items-center gap-1 text-[15px] 2xl:text-base font-medium transition-colors ${isEmpfehlungActive ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}
               >
                 Empfehlungen
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${empfehlungenOpen ? 'rotate-180' : ''}`} />
@@ -152,23 +152,23 @@ export function Navbar() {
             </a>
 
             <Link href="/kontakt" data-testid="link-nav-kontakt">
-              <span className={`text-base font-medium transition-colors cursor-pointer ${location === '/kontakt' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
+              <span className={`text-[15px] 2xl:text-base font-medium transition-colors cursor-pointer ${location === '/kontakt' ? 'text-cyan-400' : 'text-white/70 hover:text-white'}`}>
                 Kontakt
               </span>
             </Link>
           </div>
 
           {/* CTA */}
-          <div className="hidden md:flex">
+          <div className="hidden xl:flex flex-shrink-0">
             <Link href="/kontakt">
-              <button className="btn-primary text-base" data-testid="button-contact-nav">
+              <button className="btn-primary text-[15px] 2xl:text-base" data-testid="button-contact-nav">
                 Jetzt anfragen
               </button>
             </Link>
           </div>
 
           {/* Mobile menu */}
-          <button onClick={() => setIsOpen(!isOpen)} data-testid="button-mobile-menu" className="md:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all">
+          <button onClick={() => setIsOpen(!isOpen)} data-testid="button-mobile-menu" className="xl:hidden p-2 rounded-lg text-white/70 hover:text-white hover:bg-white/5 transition-all">
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -176,8 +176,8 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#060b18]/98 backdrop-blur-xl border-b border-cyan-500/10">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+        <div className="xl:hidden bg-[#060b18]/98 backdrop-blur-xl border-b border-cyan-500/10">
+          <div className="w-[96%] max-w-[1700px] mx-auto py-4 flex flex-col gap-1">
             <Link href="/"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Start</span></Link>
             <div className="py-1">
               <p className="text-sm text-white/55 uppercase tracking-wider mb-1">Leistungen</p>
