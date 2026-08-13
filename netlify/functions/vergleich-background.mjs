@@ -7,7 +7,7 @@
 // Geschuetzt durch INTERNAL_SECRET - jeder Lauf kostet Geld.
 import { getStore } from "@netlify/blobs";
 import { vergleichLaufen } from "../../lib/vergleich.mjs";
-import { videoPrompt } from "../../lib/veo.mjs";
+import { videoPrompt, szenenPlan } from "../../lib/veo.mjs";
 import { alsArrayBuffer } from "../../lib/videoshared.mjs";
 
 const store = () => getStore("vergleich");
@@ -17,14 +17,17 @@ export default async (req) => {
     return new Response("Kein Zugriff.", { status: 403 });
   }
 
-  const { briefing, kategorieId } = await req.json();
+  const { briefing, kategorieId, nur } = await req.json();
   const prompt = videoPrompt(briefing, kategorieId);
+  const szenen = szenenPlan(briefing, kategorieId, 15);
 
   const lauf = {
     begonnenAm: new Date().toISOString(),
     kategorieId,
     briefing,
     prompt,
+    szenen,
+    nur: nur || "",
     status: "laeuft",
     ergebnisse: [],
   };
@@ -35,7 +38,7 @@ export default async (req) => {
       await store().set(`video-${id}`, alsArrayBuffer(video), {
         metadata: { contentType: "video/mp4" },
       });
-    });
+    }, nur, szenen);
     lauf.status = "fertig";
   } catch (err) {
     lauf.status = "fehler";

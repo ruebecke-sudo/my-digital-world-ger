@@ -8,7 +8,7 @@
 //   fertig   -> Video liegt bereit
 //   fehler   -> Erzeugung gescheitert, wird von Hand nachgeholt
 //   briefing -> Antworten da, ein Mensch macht das Video (betreutes Paket)
-import { getPaket, getKategorie } from "../../lib/videopakete.mjs";
+import { getPaket, getKategorie, getLaenge } from "../../lib/videopakete.mjs";
 import { json, ladeMitToken } from "../../lib/videoshared.mjs";
 
 export default async (req) => {
@@ -21,6 +21,7 @@ export default async (req) => {
 
   const paket = getPaket(order.paketId);
   const kategorie = getKategorie(order.kategorieId);
+  const laenge = getLaenge(order.laengeId);
 
   return json({
     status: order.status,
@@ -28,6 +29,7 @@ export default async (req) => {
     paketLabel: paket ? paket.label : "",
     automatisch: Boolean(paket && paket.automatisch),
     kategorieLabel: kategorie ? kategorie.label : "",
+    laengeLabel: laenge ? laenge.label : "8 Sekunden",
     email: order.email,
     abfrageAbgegeben: Boolean(order.briefing),
     videoFertig: order.status === "fertig",

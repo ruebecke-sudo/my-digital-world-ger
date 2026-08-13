@@ -12,8 +12,9 @@
 // der Poster-Weg benutzt. Sonst koennte jeder auf Kosten des Betreibers Videos
 // erzeugen lassen.
 import { getStore } from "@netlify/blobs";
-import { videoPrompt, videoErzeugen } from "../../lib/veo.mjs";
-import { getPaket } from "../../lib/videopakete.mjs";
+import { videoPrompt, szenenPlan } from "../../lib/veo.mjs";
+import { getModell, MODELLE } from "../../lib/videomodelle.mjs";
+import { getPaket, getLaenge, DEFAULT_LAENGE } from "../../lib/videopakete.mjs";
 import { getVideoOrder, saveVideoOrder, json, siteUrl, alsArrayBuffer } from "../../lib/videoshared.mjs";
 import { videoFertigMail, videoFehlerMail } from "../../lib/videomail.mjs";
 
@@ -45,10 +46,21 @@ export default async (req) => {
     order.begonnenAm = new Date().toISOString();
     await saveVideoOrder(order);
 
-    const prompt = videoPrompt(order.briefing, order.kategorieId);
-    order.prompt = prompt;
+    // Welches Modell, entscheidet die gebuchte Laenge: acht Sekunden macht Veo
+    // in einer Einstellung, fuenfzehn macht Kling in drei Szenen.
+    const laenge = getLaenge(order.laengeId) || getLaenge(DEFAULT_LAENGE);
+    const modell = getModell(laenge.modell) || MODELLE.veo;
 
-    const video = await videoErzeugen(prompt);
+    const prompt = videoPrompt(order.briefing, order.kategorieId);
+    const szenen = laenge.sekunden > 8
+      ? szenenPlan(order.briefing, order.kategorieId, laenge.sekunden)
+      : null;
+
+    order.prompt = prompt;
+    order.modell = modell.id;
+    order.sekunden = laenge.sekunden;
+
+    const video = await modell.erzeugen({ prompt, szenen, sekunden: laenge.sekunden });
 
     await videosStore().set(order.id, alsArrayBuffer(video), {
       metadata: { contentType: "video/mp4", erstelltAm: new Date().toISOString() },

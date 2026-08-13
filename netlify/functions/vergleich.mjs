@@ -8,7 +8,7 @@
 // Bewusst als schlichte HTML-Seite und nicht als React-Route: Das hier ist ein
 // Werkzeug für dich, kein Teil des Shops. Es soll niemand darüber stolpern.
 import { getStore } from "@netlify/blobs";
-import { ANBIETER, ANBIETER_LISTE } from "../../lib/vergleich.mjs";
+import { ANBIETER_LISTE, anbieterWaehlen } from "../../lib/vergleich.mjs";
 
 const store = () => getStore("vergleich");
 const siteUrl = () => process.env.URL || "http://localhost:8888";
@@ -57,7 +57,7 @@ export default async (req) => {
     await fetch(`${siteUrl()}/.netlify/functions/vergleich-background`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-internal-key": geheim },
-      body: JSON.stringify({ briefing, kategorieId }),
+      body: JSON.stringify({ briefing, kategorieId, nur: url.searchParams.get("nur") || "" }),
     }).catch(err => console.error("Anstoss fehlgeschlagen:", err?.message));
 
     return new Response(null, {
@@ -70,19 +70,26 @@ export default async (req) => {
   const lauf = await store().get("lauf", { type: "json" });
   const laeuft = lauf && lauf.status === "laeuft";
 
+  // Beim laufenden bzw. letzten Lauf war womoeglich nur eine Auswahl dabei.
+  const dabei = new Set(anbieterWaehlen(lauf?.nur).map(a => a.id));
+
   const kacheln = ANBIETER_LISTE.map(a => {
     const e = lauf?.ergebnisse?.find(x => x.id === a.id);
     const fertig = e && e.ok;
+    const uebersprungen = lauf && !dabei.has(a.id);
     return `<div class="kachel">
       <h3>${esc(a.name)}</h3>
       <p class="klein">${esc(a.hinweis)}</p>
+      <p class="klein">${a.sekunden} Sekunden</p>
       <p class="preis">${euro(a.centJeVideo)} <span class="klein">je Video</span></p>
       ${fertig
         ? `<video src="?key=${encodeURIComponent(geheim)}&amp;datei=${a.id}" controls playsinline preload="metadata"></video>
            <p class="klein">${e.sekunden} s Wartezeit · ${(e.bytes / 1048576).toFixed(1)} MB</p>`
         : e && !e.ok
           ? `<div class="leer fehler">Fehlgeschlagen<br><span class="klein">${esc(e.fehler)}</span></div>`
-          : `<div class="leer">${laeuft ? "läuft…" : "noch kein Video"}</div>`}
+          : uebersprungen
+            ? `<div class="leer">bei diesem Lauf ausgelassen</div>`
+            : `<div class="leer">${laeuft ? "läuft…" : "noch kein Video"}</div>`}
     </div>`;
   }).join("");
 
@@ -91,10 +98,14 @@ export default async (req) => {
         Status: <b>${esc(lauf.status)}</b> ·
         Kategorie: ${esc(lauf.kategorieId)}</p>
        ${lauf.fehler ? `<p class="klein" style="color:#f0a0a0">Abbruch: ${esc(lauf.fehler)}</p>` : ""}
-       <details><summary>Verwendeter Prompt</summary><pre>${esc(lauf.prompt)}</pre></details>`
+       <details><summary>Verwendeter Prompt</summary><pre>${esc(lauf.prompt)}</pre></details>
+       ${lauf.szenen ? `<details><summary>Szenenplan für Kling (${lauf.szenen.length} Einstellungen)</summary><pre>${esc(lauf.szenen.map((x, i) => `${i + 1}. (${x.duration}s) ${x.prompt}`).join("\n\n"))}</pre></details>` : ""}`
     : `<p class="klein">Noch kein Lauf vorhanden.</p>`;
 
   const gesamt = ANBIETER_LISTE.reduce((s, a) => s + a.centJeVideo, 0);
+  const kosten = ids => anbieterWaehlen(ids).reduce((s, a) => s + a.centJeVideo, 0);
+  const start = zusatz =>
+    `?key=${encodeURIComponent(geheim)}&amp;neu=1${zusatz}`;
 
   const html = `<!doctype html><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -103,7 +114,8 @@ export default async (req) => {
   body{font:16px/1.6 system-ui,sans-serif;background:#060b18;color:#e7ecf5;margin:0;padding:28px 20px;max-width:1100px;margin:0 auto}
   h1{font-size:23px;margin:0 0 6px}
   h3{font-size:16px;margin:0 0 2px;color:#5eead4}
-  a.knopf{display:inline-block;background:#22d3ee;color:#04121a;text-decoration:none;font-weight:600;padding:11px 20px;border-radius:11px;margin:18px 0}
+  a.knopf{display:inline-block;background:#22d3ee;color:#04121a;text-decoration:none;font-weight:600;padding:11px 20px;border-radius:11px;margin:14px 10px 6px 0}
+  a.knopf.zweit{background:transparent;color:#9fe1cb;border:1px solid #2c4a44}
   .raster{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px}
   .kachel{background:#0e1729;border:1px solid #1e2b45;border-radius:14px;padding:16px}
   .kachel video{width:100%;aspect-ratio:9/16;object-fit:cover;background:#000;border-radius:10px;margin-top:10px}
@@ -117,11 +129,18 @@ export default async (req) => {
   .hinweis{background:#141108;border:1px solid #3a3320;border-radius:12px;padding:14px;font-size:14px;color:#e6d3a8;margin-top:22px}
 </style>
 <h1>Welches Modell reicht?</h1>
-<p class="klein">Derselbe Prompt, drei Anbieter, hochkant und mit Ton. Ansehen, vergleichen, entscheiden.</p>
+<p class="klein">Dieselbe Aufgabe, vier Modelle, hochkant und mit Ton - jedes in der Länge, die es kann. Ansehen, vergleichen, entscheiden.</p>
 ${kopf}
-<a class="knopf" href="?key=${encodeURIComponent(geheim)}&amp;neu=1">${lauf ? "Neuen Lauf starten" : "Vergleich starten"}</a>
-<span class="klein">kostet etwa ${euro(gesamt)}</span>
-${laeuft ? '<p class="klein">Es läuft gerade. Drei Modelle nacheinander dauern fünf bis zehn Minuten – Seite gelegentlich neu laden.</p>' : ""}
+<a class="knopf" href="${start("")}">${lauf ? "Neuen Lauf starten" : "Vergleich starten"}</a>
+<span class="klein">alle vier · etwa ${euro(gesamt)}</span>
+<br>
+<a class="knopf zweit" href="${start("&amp;nur=wan,grok")}">Nur Wan und Grok</a>
+<span class="klein">ohne Veo · etwa ${euro(kosten("wan,grok"))} · sinnvoll, solange die
+Google-Abrechnung noch nicht steht</span>
+<br>
+<a class="knopf zweit" href="${start("&amp;nur=kling")}">Nur Kling, 15 Sekunden</a>
+<span class="klein">etwa ${euro(kosten("kling"))} · zeigt, was der Mehrszenen-Modus kann</span>
+${laeuft ? '<p class="klein">Es läuft gerade. Mehrere Modelle nacheinander dauern fünf bis fünfzehn Minuten – Seite gelegentlich neu laden.</p>' : ""}
 <div class="raster">${kacheln}</div>
 <div class="hinweis">
   <b>Worauf du achten solltest:</b> Sitzt der gesprochene Satz und passen die Lippen dazu?
@@ -129,7 +148,11 @@ ${laeuft ? '<p class="klein">Es läuft gerade. Drei Modelle nacheinander dauern 
   Wirkt die Szene zur Branche passend?<br><br>
   Wenn ein günstigeres Modell in diesen vier Punkten mithält, kannst du umstellen –
   das spart rund 0,34 € pro Video. Wenn nicht, weißt du jetzt, warum es sich lohnt,
-  bei Veo zu bleiben.
+  bei Veo zu bleiben.<br><br>
+  <b>Bei Kling schau besonders auf den Szenenwechsel:</b> Es bekommt dieselbe
+  Aufgabe als Dreierplan – hinführen, Botschaft, Abschluss. Genau das steckt im
+  15-Sekunden-Aufpreis. Wenn die Übergänge holpern oder die Person zwischen den
+  Szenen anders aussieht, ist der Aufpreis nicht gerechtfertigt.
 </div>
 <p class="klein" style="margin-top:20px">
   Andere Aufgabe ausprobieren: <code>&amp;kategorie=produkt</code>,

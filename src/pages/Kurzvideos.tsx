@@ -18,6 +18,14 @@ type Paket = {
   automatisch: boolean
 }
 
+type Laenge = {
+  id: string
+  sekunden: number
+  aufpreisCents: number
+  label: string
+  kurz: string
+}
+
 const preis = (cents: number) => (cents / 100).toFixed(2).replace('.', ',') + ' €'
 
 // Fallback, falls die Function beim ersten Aufruf noch nicht antwortet. Die
@@ -42,6 +50,11 @@ const PAKETE_FALLBACK: Paket[] = [
     abfrage: true,
     automatisch: true,
   },
+]
+
+const LAENGEN_FALLBACK: Laenge[] = [
+  { id: 'kurz', sekunden: 8, aufpreisCents: 0, label: '8 Sekunden', kurz: 'Eine Einstellung, eine Aussage' },
+  { id: 'lang', sekunden: 15, aufpreisCents: 1000, label: '15 Sekunden', kurz: 'Drei Szenen - hinführen, Botschaft, Abschluss' },
 ]
 
 const KATEGORIEN = [
@@ -81,10 +94,10 @@ const KATEGORIEN = [
 
 const BAUSTEINE = [
   { icon: PenLine, titel: 'Aus vier Antworten eine Szene', text: 'Deine Angaben werden in eine Bildbeschreibung übersetzt, die das Modell versteht. Der Teil, an dem selbstgebaute Videos meistens scheitern.' },
-  { icon: Wand2, titel: 'Erzeugt mit Google Veo', text: 'Dasselbe Modell in beiden Paketen. Der Unterschied liegt darin, wer es bedient - die Automatik oder ein Mensch.' },
+  { icon: Wand2, titel: 'Google Veo und Kling', text: 'Acht Sekunden macht Veo, fünfzehn macht Kling im Mehrszenen-Modus. In beiden Paketen dieselben Modelle - der Unterschied liegt darin, wer sie bedient.' },
   { icon: Smartphone, titel: 'Hochkant 9:16', text: 'Direkt im Statusformat erzeugt, nicht nachträglich zugeschnitten. Nichts Wichtiges fällt am Rand weg.' },
   { icon: MessageCircle, titel: 'Mit eigenem Ton', text: 'Stimme und Geräusche entstehen mit dem Bild zusammen. Schrift kommt bewusst erst in WhatsApp dazu - gemalte Buchstaben werden fehlerhaft.' },
-  { icon: Clock, titel: 'Acht Sekunden', text: 'Die Länge, die im Status wirklich zu Ende gesehen wird. Ein Gedanke pro Video, nicht zwei.' },
+  { icon: Clock, titel: '8 oder 15 Sekunden', text: 'Acht Sekunden sind eine Einstellung, eine Aussage. Fünfzehn werden zu drei Szenen: hinführen, Botschaft, Abschluss.' },
   { icon: Download, titel: 'Fertige MP4-Datei', text: 'Direkt hochladbar - in den WhatsApp-Status und genauso in Reels, Shorts oder Stories.' },
 ]
 
@@ -104,6 +117,10 @@ const FRAGEN = [
   {
     frage: 'Brauche ich für das günstige Paket ein eigenes Gemini-Konto?',
     antwort: 'Nein. Die Erzeugung läuft über unseren Zugang, du brauchst gar nichts einzurichten - nur die vier Fragen zu beantworten. Als Beigabe bekommst du danach unser Prompt-Paket, falls du später doch selbst weitermachen willst.',
+  },
+  {
+    frage: 'Geht das auch länger als 15 Sekunden?',
+    antwort: 'In einem Stück nicht - dort liegt heute bei allen Anbietern die Grenze. Aber die 15 Sekunden sind kein Standbild: Sie werden zu drei Szenen, die aufeinander aufbauen. Wenn du mehr erzählen willst, sind mehrere Statusbeiträge à 15 Sekunden ohnehin die bessere Wahl - dein Status erscheint dann mehrfach bei deinen Kontakten statt nur einmal.',
   },
   {
     frage: 'Darf ich das Video geschäftlich nutzen?',
@@ -227,6 +244,8 @@ function VideoKachel({ datei, aktiv }: { datei: string; aktiv: boolean }) {
 
 export default function Kurzvideos() {
   const [pakete, setPakete] = useState<Paket[]>(PAKETE_FALLBACK)
+  const [laengen, setLaengen] = useState<Laenge[]>(LAENGEN_FALLBACK)
+  const [laengeId, setLaengeId] = useState('kurz')
   const [paketId, setPaketId] = useState('komplett')
   const [kategorieId, setKategorieId] = useState('sprecher')
   const [email, setEmail] = useState('')
@@ -239,11 +258,17 @@ export default function Kurzvideos() {
     setAbgebrochen(new URLSearchParams(window.location.search).get('abgebrochen') === '1')
     fetch(`${FN}/video-pakete`)
       .then(r => r.json())
-      .then(d => { if (d && Array.isArray(d.pakete) && d.pakete.length) setPakete(d.pakete) })
+      .then(d => {
+        if (d && Array.isArray(d.pakete) && d.pakete.length) setPakete(d.pakete)
+        if (d && Array.isArray(d.laengen) && d.laengen.length) setLaengen(d.laengen)
+      })
       .catch(() => { /* Fallback-Preise stehen schon */ })
   }, [])
 
   const paket = pakete.find(p => p.id === paketId) || pakete[0]
+  const laenge = laengen.find(l => l.id === laengeId) || laengen[0]
+  // Nur zur Anzeige - verbindlich rechnet der Server in lib/videopakete.mjs.
+  const gesamtpreis = (p?: Paket) => (p ? p.cents : 0) + (laenge ? laenge.aufpreisCents : 0)
 
   const zurKasse = async () => {
     setFehler('')
@@ -252,7 +277,7 @@ export default function Kurzvideos() {
       const res = await fetch(`${FN}/video-checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ paketId, kategorieId, email }),
+        body: JSON.stringify({ paketId, kategorieId, laengeId, email }),
       })
       const daten = await res.json()
       if (!res.ok || !daten.url) throw new Error(daten.error || 'Der Checkout konnte nicht geöffnet werden.')
@@ -289,11 +314,11 @@ export default function Kurzvideos() {
                 zu Ende ansieht.
               </p>
               <p className="text-white/70 text-base leading-relaxed mb-8">
-                Genau das entsteht hier: hochkant, acht Sekunden, mit Ton, erzeugt mit
-                Google Veo. Du beantwortest vier kurze Fragen - den Rest übernehmen
-                entweder wir von Hand für{' '}
+                Genau das entsteht hier: hochkant, mit Ton, acht oder fünfzehn Sekunden.
+                Du beantwortest vier kurze Fragen - den Rest übernehmen
+                entweder wir von Hand ab{' '}
                 {preis(pakete.find(p => p.id === 'komplett')?.cents ?? 4500)} oder die
-                Automatik in wenigen Minuten für{' '}
+                Automatik in wenigen Minuten ab{' '}
                 {preis(pakete.find(p => p.id === 'selbst')?.cents ?? 2500)}.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -444,14 +469,15 @@ export default function Kurzvideos() {
                 </div>
                 <div className="text-right">
                   <div className="font-display font-extrabold text-white text-3xl">
-                    {preis(pakete.find(p => p.id === 'komplett')?.cents ?? 4500)}
+                    {preis(gesamtpreis(pakete.find(p => p.id === 'komplett')))}
                   </div>
-                  <div className="text-white/40 text-sm">einmalig</div>
+                  <div className="text-white/40 text-sm">{laenge?.label} · einmalig</div>
                 </div>
               </div>
               <ul className="space-y-2">
                 {[
                   'Vier kurze Fragen - mehr musst du nicht tun',
+                  '8 oder 15 Sekunden, wie du möchtest',
                   'Ein Mensch baut das Video, keine Automatik',
                   'Mehrere Durchläufe, geliefert wird der beste',
                   'Eine Korrekturschleife inklusive',
@@ -482,14 +508,15 @@ export default function Kurzvideos() {
                 </div>
                 <div className="text-right">
                   <div className="font-display font-extrabold text-white text-3xl">
-                    {preis(pakete.find(p => p.id === 'selbst')?.cents ?? 2500)}
+                    {preis(gesamtpreis(pakete.find(p => p.id === 'selbst')))}
                   </div>
-                  <div className="text-white/40 text-sm">einmalig</div>
+                  <div className="text-white/40 text-sm">{laenge?.label} · einmalig</div>
                 </div>
               </div>
               <ul className="space-y-2">
                 {[
-                  'Dieselben vier Fragen, dasselbe Videomodell',
+                  'Dieselben vier Fragen, dieselben Videomodelle',
+                  '8 oder 15 Sekunden, wie du möchtest',
                   'Dein Video entsteht sofort automatisch',
                   'Nach ein bis drei Minuten zum Herunterladen da',
                   'Ein Durchlauf, keine Korrekturschleife',
@@ -506,8 +533,38 @@ export default function Kurzvideos() {
           {/* Bestellformular */}
           <div className="glass rounded-2xl border border-white/10 p-7">
             <h3 className="font-display font-bold text-white text-lg mb-5">
-              {paket?.label} für {preis(paket?.cents ?? 0)} bestellen
+              {paket?.label} für {preis(gesamtpreis(paket))} bestellen
             </h3>
+
+            <div className="mb-5">
+              <label className="block text-white/70 text-base mb-2">Wie lang?</label>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {laengen.map(l => {
+                  const gewaehlt = laengeId === l.id
+                  return (
+                    <button
+                      key={l.id}
+                      onClick={() => setLaengeId(l.id)}
+                      className={`text-left px-5 py-4 rounded-xl border transition-all ${
+                        gewaehlt
+                          ? 'bg-emerald-500/15 border-emerald-400/40'
+                          : 'border-white/10 hover:border-white/25 hover:bg-white/5'
+                      }`}
+                    >
+                      <span className="flex items-baseline justify-between gap-3">
+                        <span className={`font-medium text-base ${gewaehlt ? 'text-emerald-300' : 'text-white'}`}>
+                          {l.label}
+                        </span>
+                        <span className="text-white/40 text-sm">
+                          {l.aufpreisCents ? '+ ' + preis(l.aufpreisCents) : 'im Preis'}
+                        </span>
+                      </span>
+                      <span className="block text-white/40 text-sm mt-0.5">{l.kurz}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
 
             {paket?.abfrage && (
               <div className="mb-5">
@@ -567,7 +624,7 @@ export default function Kurzvideos() {
               disabled={laedt}
               className="btn-primary flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {laedt ? 'Kasse wird geöffnet…' : `Jetzt für ${preis(paket?.cents ?? 0)} bestellen`}
+              {laedt ? 'Kasse wird geöffnet…' : `Jetzt für ${preis(gesamtpreis(paket))} bestellen`}
               {!laedt && <ArrowRight className="w-4 h-4" />}
             </button>
 
