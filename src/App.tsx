@@ -23,6 +23,8 @@ import PosterShop from './pages/PosterShop'
 import PosterDanke from './pages/PosterDanke'
 import Kurzvideos from './pages/Kurzvideos'
 import KurzvideoDanke from './pages/KurzvideoDanke'
+import KurzvideosReels from './pages/KurzvideosReels'
+import Leistungen from './pages/Leistungen'
 
 function App() {
   return (
@@ -34,10 +36,13 @@ function App() {
           <Route path="/" component={Home} />
           <Route path="/programme" component={Programme} />
           <Route path="/aktionspreis-fuer-webseiten" component={Webseiten} />
+          <Route path="/kurzvideos-reels" component={KurzvideosReels} />
           <Route path="/soc-media-marketing" component={SocMediaMarketing} />
           <Route path="/digitale-praesentationen" component={Praesentationen} />
           <Route path="/ki-agenten" component={KiAgenten} />
           <Route path="/digitale-transformation" component={DigTransformation} />
+          <Route path="/comic-stil" component={ComicStil} />
+          <Route path="/leistungen" component={Leistungen} />
           <Route path="/kontakt" component={Kontakt} />
           <Route path="/impressum" component={Impressum} />
           <Route path="/datenschutz" component={Datenschutz} />
@@ -48,7 +53,6 @@ function App() {
           <Route path="/empfehlungen" component={Empfehlungen} />
           <Route path="/empfehlung/poster" component={PosterShop} />
           <Route path="/empfehlung/poster/danke" component={PosterDanke} />
-          <Route path="/comic-stil" component={ComicStil} />
           <Route path="/kurzvideos" component={Kurzvideos} />
           <Route path="/kurzvideos/danke" component={KurzvideoDanke} />
         </Switch>

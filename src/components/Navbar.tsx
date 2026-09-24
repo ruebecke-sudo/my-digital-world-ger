@@ -1,11 +1,12 @@
-﻿import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'wouter'
 import { Menu, X, ChevronDown, Zap } from 'lucide-react'
 
 const leistungenLinks = [
   { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
+  { href: '/kurzvideos-reels', label: 'Kurzvideos Reels' },
   { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
-  { href: '/digitale-praesentationen', label: 'Digitale PrÃ¤sentationen' },
+  { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
   { href: '/ki-agenten', label: 'KI Agenten' },
   { href: '/digitale-transformation', label: 'Digitale Transformation' },
   { href: '/comic-stil', label: 'Comicstil' },

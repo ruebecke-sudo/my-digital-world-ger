@@ -10,6 +10,7 @@ export function Footer() {
   const navLinks = isDE
     ? [
         { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
+        { href: '/kurzvideos-reels', label: 'Kurzvideos Reels' },
         { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
         { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
         { href: '/ki-agenten', label: 'KI Agenten' },
@@ -19,6 +20,7 @@ export function Footer() {
       ]
     : [
         { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
+        { href: '/kurzvideos-reels', label: 'Kurzvideos Reels' },
         { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
         { href: '/digitale-praesentationen', label: 'Digital Presentations' },
         { href: '/ki-agenten', label: 'AI Agents' },
