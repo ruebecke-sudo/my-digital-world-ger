@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown, Zap } from 'lucide-react'
 
 const leistungenLinks = [
   { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
+  { href: '/kurzvideos-reels', label: 'Kurzvideos Reels' },
   { href: '/soc-media-marketing', label: 'Soc. Media Marketing' },
   { href: '/digitale-praesentationen', label: 'Digitale Präsentationen' },
   { href: '/ki-agenten', label: 'KI Agenten' },

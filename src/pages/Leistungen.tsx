@@ -199,13 +199,15 @@ export default function Leistungen() {
                   <p className={`text-sm font-medium mb-2 ${leistung.iconFarbe}`}>{leistung.untertitel}</p>
                   <h2 className="font-display font-bold text-white text-2xl md:text-3xl mb-4 leading-tight">{leistung.titel}</h2>
                   <p className="text-white/75 text-base leading-relaxed mb-6">{leistung.beschreibung}</p>
-                  <Link href={leistung.id === 'empfehlungen' ? '/empfehlungen' : (leistung.id === 'comic-stil' ? '/comic-stil' : '/programme')}>
+                  <Link href={leistung.id === 'empfehlungen' ? '/empfehlungen' : (leistung.id === 'comic-stil' ? '/comic-stil' : (leistung.id === 'videos' ? '/kurzvideos-reels' : '/programme'))}>
                     <button className="btn-outline flex items-center gap-2 text-base" data-testid={`button-leistung-programme-${leistung.id}`}>
                       {leistung.id === 'empfehlungen' 
                         ? (isDE ? 'Zu den Deals' : 'View deals') 
                         : (leistung.id === 'comic-stil'
                           ? (isDE ? 'Mehr erfahren' : 'Learn more')
-                          : (isDE ? 'Passende Programme ansehen' : 'View matching programs'))}
+                          : (leistung.id === 'videos'
+                            ? (isDE ? 'Reels ansehen' : 'View reels')
+                            : (isDE ? 'Passende Programme ansehen' : 'View matching programs')))}
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </Link>
