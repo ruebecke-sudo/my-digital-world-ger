@@ -16,6 +16,7 @@ export function Footer() {
         { href: '/ki-agenten', label: 'KI Agenten' },
         { href: '/digitale-transformation', label: 'Digitale Transformation' },
         { href: '/comic-stil', label: 'Comicstil' },
+        { href: '/image-manager-pro', label: 'Image Manager Pro' },
         { href: '/programme', label: 'Zu den Programmen' },
       ]
     : [
@@ -26,6 +27,7 @@ export function Footer() {
         { href: '/ki-agenten', label: 'AI Agents' },
         { href: '/digitale-transformation', label: 'Digital Transformation' },
         { href: '/comic-stil', label: 'Comic Style' },
+        { href: '/image-manager-pro', label: 'Image Manager Pro' },
         { href: '/programme', label: 'Tools & Programs' },
       ]
 

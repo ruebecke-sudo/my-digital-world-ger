@@ -11,6 +11,7 @@ const leistungenLinks = [
   { href: '/digitale-transformation', label: 'Digitale Transformation' },
   { href: '/comic-stil', label: 'Comicstil' },
   { href: '/kurzvideos', label: 'Kurzvideos für WhatsApp' },
+  { href: '/image-manager-pro', label: 'Image Manager Pro' },
 ]
 
 
