@@ -58,10 +58,10 @@ export default function ImageManagerPro() {
     },
     {
       icon: Globe,
-      title: isDE ? 'Galerie für jede Website' : 'Gallery for any website',
+      title: isDE ? 'Fertige Galerie mit QR Code' : 'Ready gallery with QR code',
       desc: isDE
-        ? 'Code kopieren und einfügen: Ihre Bilder erscheinen als Galerie auf WordPress, Wix, Jimdo, Shopify und jeder anderen Seite. Immer aktuell.'
-        : 'Copy and paste the code: your images appear as a gallery on WordPress, Wix, Jimdo, Shopify and any other site. Always up to date.',
+        ? 'Ihre eigene Galerie Seite mit Logo, Link und QR Code. Oder per Code direkt auf WordPress, Wix, Jimdo, Shopify und jeder anderen Website.'
+        : 'Your own gallery page with logo, link and QR code. Or embedded directly on WordPress, Wix, Jimdo, Shopify and any other website.',
     },
     {
       icon: Users,
@@ -99,14 +99,14 @@ export default function ImageManagerPro() {
         { nr: '02', title: 'E-Mail bestätigen', desc: 'Klicken Sie den Link in der Bestätigungsmail einmal an.' },
         { nr: '03', title: 'Auftritt gestalten', desc: 'Unter Einstellungen Logo hochladen, Name und Farbe festlegen.' },
         { nr: '04', title: 'Bilder hochladen', desc: 'Bilder mit Vorschau hochladen, benennen und Kategorien vergeben.' },
-        { nr: '05', title: 'Galerie einbinden', desc: 'Unter Websites die Galerie freigeben, Code kopieren und auf Ihrer Website einfügen.' },
+        { nr: '05', title: 'Galerie zeigen', desc: 'Galerie einschalten, Link teilen, QR Code drucken oder mit dem Assistenten auf Ihrer Website einbauen.' },
       ]
     : [
         { nr: '01', title: 'Create an account', desc: 'Enter company name, email and password. Your workspace is created automatically.' },
         { nr: '02', title: 'Confirm your email', desc: 'Click the link in the confirmation email once.' },
         { nr: '03', title: 'Set up your branding', desc: 'Under settings, upload your logo and choose name and color.' },
         { nr: '04', title: 'Upload images', desc: 'Upload images with preview, name them and assign categories.' },
-        { nr: '05', title: 'Embed the gallery', desc: 'Under websites, enable the gallery, copy the code and paste it on your website.' },
+        { nr: '05', title: 'Show your gallery', desc: 'Switch on the gallery, share the link, print the QR code or add it to your website with the assistant.' },
       ]
 
   const tarife = [
@@ -120,13 +120,13 @@ export default function ImageManagerPro() {
     ? [
         { q: 'Was kostet der Test?', a: 'Nichts. Nach der Anmeldung arbeiten Sie im Umfang des Starter Tarifs. Ein Wechsel in einen anderen Tarif ist jederzeit im Bereich Tarif möglich.' },
         { q: 'Muss ich etwas installieren?', a: 'Nein. Image Manager Pro läuft im Browser, auf dem Computer genauso wie auf Tablet und Smartphone.' },
-        { q: 'Wie kommen die Bilder auf meine Website?', a: 'Mit dem Einbettungscode funktioniert es auf jeder Website, ganz ohne Installation. Für Websites mit eigener REST Schnittstelle gibt es zusätzlich die automatische Übertragung, ein WordPress Plugin ist in Vorbereitung.' },
+        { q: 'Wie kommen die Bilder auf meine Website?', a: 'Ganz ohne Technik: Sie bekommen eine fertige Galerie Seite und setzen nur einen Link darauf. Oder der Assistent erkennt Ihr Website System und zeigt drei einfache Schritte, für WordPress gibt es ein fertiges Plugin zum Hochladen.' },
         { q: 'Was passiert mit meinen Testdaten?', a: 'Ihre Daten bleiben in Ihrem Arbeitsbereich. Wenn Sie den Test beenden möchten, schreiben Sie uns eine E-Mail und wir löschen Ihren Arbeitsbereich vollständig.' },
       ]
     : [
         { q: 'What does the test cost?', a: 'Nothing. After signing up you work within the Starter plan. You can switch plans at any time in the plan section.' },
         { q: 'Do I need to install anything?', a: 'No. Image Manager Pro runs in the browser, on computers as well as tablets and smartphones.' },
-        { q: 'How do the images get onto my website?', a: 'The embed code works on any website without installation. Websites with their own REST interface can also receive images automatically, a WordPress plugin is in preparation.' },
+        { q: 'How do the images get onto my website?', a: 'No technical skills needed: you get a ready gallery page and simply link to it. Or the assistant detects your website system and shows three simple steps, for WordPress there is a ready plugin to upload.' },
         { q: 'What happens to my test data?', a: 'Your data stays in your workspace. If you want to end the test, send us an email and we will delete your workspace completely.' },
       ]
 
