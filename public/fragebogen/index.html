@@ -7,82 +7,119 @@
   <title>Fragebogen für Ihre neue Webseite | My Digital World</title>
   <meta name="theme-color" content="#000000">
   <style>
+  /* Glas-Design wie my-digital-world.de */
   :root {
-    --bg: #000000; --panel: #10121d; --panel-2: #171a29; --line: #2a2e45;
-    --text: #f2f4fa; --muted: #a9afc7; --cyan: #3fe3e6; --violet: #a970f5;
-    --grad: linear-gradient(90deg, var(--cyan), var(--violet));
+    --bg: #070b16; --text: #f1f5f9; --muted: rgba(241, 245, 249, .68); --soft: rgba(241, 245, 249, .5);
+    --glass: rgba(255, 255, 255, .03); --glass-2: rgba(255, 255, 255, .055); --edge: rgba(255, 255, 255, .08);
+    --cyan: #06b6d4; --cyan-light: #22d3ee; --violet: #a855f7;
+    --grad: linear-gradient(90deg, #22d3ee, #60a5fa, #c084fc);
     color-scheme: dark;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  a { color: var(--cyan); }
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
-  header.top { text-align: center; padding: 28px 0 8px; }
-  header.top img { width: min(360px, 80vw); height: auto; }
-  h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2; margin: 12px 0 8px; text-align: center; }
-  .lead { color: var(--muted); max-width: 680px; margin: 0 auto 8px; text-align: center; }
-  .alt { text-align: center; color: var(--muted); font-size: .95rem; margin: 0 0 28px; }
-  .bar { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 0 0 24px; }
-  .bar > span { display: block; height: 100%; width: 0; background: var(--grad); transition: width .3s; }
+  body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  h1, h2, legend, .btn { font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; }
+  a { color: var(--cyan-light); }
+
+  /* Leuchtkugeln im Hintergrund */
+  .orbs { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+    background: radial-gradient(ellipse at top, rgba(6, 182, 212, .07) 0%, transparent 65%); }
+  .orb { position: absolute; border-radius: 50%; filter: blur(90px); }
+  .o1 { width: 480px; height: 480px; background: rgba(6, 182, 212, .16); top: -160px; left: 50%; transform: translateX(-50%); }
+  .o2 { width: 380px; height: 380px; background: rgba(168, 85, 247, .14); bottom: 5%; right: -80px; }
+  .o3 { width: 320px; height: 320px; background: rgba(59, 130, 246, .10); top: 45%; left: -120px; }
+
+  .glass { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--edge); }
+
+  .wrap { position: relative; max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+  header.top { text-align: center; padding: 36px 0 8px; }
+  header.top img { width: min(340px, 78vw); height: auto; mix-blend-mode: screen; }
+  .badge { display: flex; width: fit-content; gap: 8px; align-items: center; margin: 14px auto 0; padding: 6px 14px; border-radius: 999px; font-size: .85rem; font-weight: 500;
+    color: var(--cyan-light); background: rgba(6, 182, 212, .1); border: 1px solid rgba(6, 182, 212, .25); }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.12; font-weight: 800; margin: 16px 0 12px; }
+  h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { color: var(--muted); max-width: 680px; margin: 0 auto 10px; font-size: 1.05rem; }
+  .alt { text-align: center; color: var(--soft); font-size: .92rem; margin: 0 0 30px; }
+
+  .bar { height: 4px; background: rgba(255, 255, 255, .06); border-radius: 4px; overflow: hidden; margin: 0 0 24px; }
+  .bar > span { display: block; height: 100%; width: 0; background: var(--grad); box-shadow: 0 0 12px rgba(34, 211, 238, .6); transition: width .35s; }
+
   .layout { display: grid; gap: 24px; }
-  @media (min-width: 900px) { .layout { grid-template-columns: 260px 1fr; align-items: start; } }
-  nav.steps ol { list-style: none; margin: 0; padding: 0; display: none; }
-  @media (min-width: 900px) { nav.steps ol { display: block; position: sticky; top: 16px; } }
-  nav.steps button { all: unset; box-sizing: border-box; display: flex; gap: 10px; align-items: center; width: 100%; padding: 7px 10px; border-radius: 8px; color: var(--muted); cursor: pointer; font-size: .92rem; }
-  nav.steps button:hover { background: var(--panel); color: var(--text); }
-  nav.steps button:focus-visible { outline: 2px solid var(--cyan); }
-  nav.steps button[aria-current="step"] { background: var(--panel-2); color: var(--text); }
-  nav.steps .num { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; border: 1px solid var(--line); }
-  nav.steps button.done .num { background: var(--grad); color: #07080f; border: 0; font-weight: 700; }
-  form { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: clamp(18px, 4vw, 36px); }
+  @media (min-width: 900px) { .layout { grid-template-columns: 270px 1fr; align-items: start; } }
+  nav.steps { display: none; }
+  @media (min-width: 900px) { nav.steps { display: block; position: sticky; top: 16px; border-radius: 20px; padding: 10px; } }
+  nav.steps ol { list-style: none; margin: 0; padding: 0; }
+  nav.steps button { all: unset; box-sizing: border-box; display: flex; gap: 10px; align-items: center; width: 100%; padding: 7px 10px; border-radius: 10px; color: var(--soft); cursor: pointer; font-size: .9rem; transition: background .2s, color .2s; }
+  nav.steps button:hover { background: var(--glass-2); color: var(--text); }
+  nav.steps button:focus-visible { outline: 2px solid var(--cyan-light); }
+  nav.steps button[aria-current="step"] { background: rgba(6, 182, 212, .1); color: var(--text); box-shadow: inset 0 0 0 1px rgba(6, 182, 212, .3); }
+  nav.steps .num { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: .72rem; border: 1px solid var(--edge); }
+  nav.steps button[aria-current="step"] .num { border-color: var(--cyan); color: var(--cyan-light); }
+  nav.steps button.done .num { background: linear-gradient(135deg, #06b6d4, #a855f7); color: #fff; border: 0; font-weight: 700; }
+
+  form, .panel { border-radius: 24px; padding: clamp(20px, 4vw, 40px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, .5); }
   .js .step { display: none; }
-  .js .step.active { display: block; }
-  .step + .step { margin-top: 40px; }
+  .js .step.active { display: block; animation: rein .35s ease-out; }
+  @keyframes rein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .step + .step { margin-top: 44px; }
   .js .step + .step { margin-top: 0; }
-  .step-count { margin: 0; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
-  h2 { margin: 4px 0 6px; font-size: 1.6rem; }
-  .intro { color: var(--muted); margin: 0 0 18px; }
-  .field { margin: 0 0 18px; border: 0; padding: 0; min-width: 0; }
+  .step-count { display: inline-block; margin: 0 0 8px; padding: 3px 10px; border-radius: 999px; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 600;
+    color: var(--cyan-light); background: rgba(6, 182, 212, .1); border: 1px solid rgba(6, 182, 212, .2); }
+  h2 { margin: 4px 0 6px; font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 800; }
+  .intro { color: var(--muted); margin: 0 0 22px; }
+  .field { margin: 0 0 20px; border: 0; padding: 0; min-width: 0; }
   label, legend { display: block; font-weight: 600; margin-bottom: 6px; padding: 0; }
-  .hint { display: block; color: var(--muted); font-size: .88rem; margin: -4px 0 6px; }
-  .req { color: var(--cyan); }
+  .hint { display: block; color: var(--soft); font-size: .87rem; margin: -3px 0 7px; }
+  .req { color: var(--cyan-light); }
   input[type=text], input[type=email], input[type=tel], input[type=url], textarea {
-    width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; font: inherit;
-  }
+    width: 100%; background: rgba(255, 255, 255, .04); color: var(--text); border: 1px solid rgba(255, 255, 255, .1); border-radius: 12px; padding: 12px 14px; font: inherit;
+    transition: border-color .2s, box-shadow .2s, background .2s; }
+  input::placeholder, textarea::placeholder { color: rgba(241, 245, 249, .3); }
   textarea { resize: vertical; }
-  input:focus, textarea:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(63, 227, 230, .25); }
+  input:hover, textarea:hover { border-color: rgba(255, 255, 255, .18); }
+  input:focus, textarea:focus { outline: none; border-color: var(--cyan); background: rgba(6, 182, 212, .05); box-shadow: 0 0 0 3px rgba(6, 182, 212, .2), 0 0 24px rgba(6, 182, 212, .12); }
   input[type=file] { width: 100%; color: var(--muted); }
-  input[type=file]::file-selector-button { font: inherit; margin-right: 12px; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); cursor: pointer; }
-  .options { display: grid; gap: 8px; }
+  input[type=file]::file-selector-button { font: inherit; margin-right: 12px; padding: 9px 16px; border-radius: 10px; border: 1px solid rgba(6, 182, 212, .4); background: rgba(6, 182, 212, .08); color: var(--cyan-light); cursor: pointer; }
+  .options { display: grid; gap: 10px; }
   @media (min-width: 640px) { .options { grid-template-columns: 1fr 1fr; } }
-  .option { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; background: var(--bg); }
-  .option:has(input:checked) { border-color: var(--violet); background: rgba(169, 112, 245, .1); }
+  .option { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; margin: 0; padding: 12px 14px; border: 1px solid rgba(255, 255, 255, .08); border-radius: 12px; cursor: pointer; background: rgba(255, 255, 255, .03); transition: border-color .2s, background .2s; }
+  .option:hover { border-color: rgba(255, 255, 255, .18); }
+  .option:has(input:checked) { border-color: rgba(168, 85, 247, .6); background: rgba(168, 85, 247, .1); box-shadow: 0 0 20px rgba(168, 85, 247, .12); }
   .option input { margin-top: 5px; accent-color: var(--violet); }
-  .buttons { display: flex; gap: 12px; justify-content: space-between; margin-top: 28px; flex-wrap: wrap; }
-  .btn { font: inherit; font-weight: 700; border-radius: 999px; padding: 12px 26px; cursor: pointer; border: 1px solid var(--line); background: transparent; color: var(--text); }
-  .btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-  .btn.primary { border: 0; background: var(--grad); color: #07080f; }
-  .btn.primary:hover { filter: brightness(1.08); }
+
+  .buttons { display: flex; gap: 12px; justify-content: space-between; margin-top: 30px; flex-wrap: wrap; }
+  .btn { font: inherit; font-family: "Space Grotesk", system-ui, sans-serif; font-weight: 600; border-radius: .5rem; padding: 12px 30px; cursor: pointer; transition: all .3s ease; text-decoration: none; display: inline-block;
+    background: transparent; color: var(--cyan); border: 1px solid rgba(6, 182, 212, .5); }
+  .btn:hover { background: rgba(6, 182, 212, .1); border-color: var(--cyan); box-shadow: 0 0 20px rgba(6, 182, 212, .2); }
+  .btn:focus-visible { outline: 2px solid var(--cyan-light); outline-offset: 3px; }
+  .btn.primary { border: 0; background: linear-gradient(135deg, #06b6d4, #0891b2); color: #0a0f1e; }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(6, 182, 212, .4); background: linear-gradient(135deg, #22d3ee, #06b6d4); }
+  .btn:disabled { opacity: .6; transform: none; cursor: wait; }
   .btn[hidden] { display: none; }
   .no-js-hide { display: none; }
   .js .no-js-hide { display: inline-block; }
-  .saved { color: var(--muted); font-size: .85rem; margin: 14px 0 0; min-height: 1.4em; }
+  .js .no-js-hide[hidden] { display: none; }
+  .saved { color: var(--soft); font-size: .85rem; margin: 14px 0 0; min-height: 1.4em; }
   .consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
   .consent input { margin-top: 6px; accent-color: var(--violet); }
-  .error { color: #ff9a9a; font-weight: 600; }
+  .error { color: #fca5a5; font-weight: 600; }
   .hp { position: absolute; left: -9999px; }
-  footer.bottom { text-align: center; color: var(--muted); font-size: .9rem; padding: 40px 0; }
-  footer.bottom .line { height: 2px; background: var(--grad); max-width: 420px; margin: 0 auto 20px; border-radius: 2px; opacity: .7; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .bar > span { transition: none; } }
+  .panel ol { padding-left: 1.2em; color: var(--muted); }
+  .panel li { margin: 6px 0; }
+
+  footer.bottom { position: relative; text-align: center; color: var(--soft); font-size: .9rem; padding: 48px 0; }
+  footer.bottom .line { height: 1px; background: var(--grad); max-width: 420px; margin: 0 auto 22px; opacity: .6; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .bar > span, .btn, .option, input, textarea { transition: none; } .js .step.active { animation: none; } }
 </style>
 </head>
 <body>
+  <div class="orbs" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span></div>
   <script>document.documentElement.classList.add('js')</script>
   <div class="wrap">
     <header class="top">
       <a href="https://www.my-digital-world.de"><img src="/fragebogen/mdw-logo.png" alt="My Digital World – zur Webseite" width="851" height="315"></a>
-      <h1>Fragebogen für Ihre neue Webseite</h1>
+      <p class="badge">Schritt für Schritt zu Ihrer Webseite</p>
+      <h1>Fragebogen für Ihre <span class="grad">neue Webseite</span></h1>
       <p class="lead">Bitte füllen Sie alles aus, was auf Sie zutrifft. Was Sie nicht wissen, lassen Sie einfach leer – wir klären das gemeinsam. Stichpunkte genügen, die Texte formulieren wir für Sie.</p>
       <p class="alt">Ihre Eingaben werden in diesem Browser zwischengespeichert – Sie können jederzeit pausieren.<br>
       Lieber auf Papier oder am PC? <a href="/fragebogen/fragebogen.pdf" download>Fragebogen als PDF</a> · <a href="/fragebogen/checkliste.pdf" download>Checkliste als PDF</a> · <a href="/fragebogen/pakete.pdf" download>Pakete als PDF</a></p>
@@ -91,7 +128,7 @@
     <div class="bar" aria-hidden="true"><span id="bar"></span></div>
 
     <div class="layout">
-      <nav class="steps" aria-label="Abschnitte">
+      <nav class="steps glass" aria-label="Abschnitte">
         <ol>
           <li><button type="button" data-goto="0"><span class="num">1</span>Ihre Ansprechperson</button></li>
           <li><button type="button" data-goto="1"><span class="num">2</span>Ihr Unternehmen</button></li>
@@ -113,7 +150,7 @@
         </ol>
       </nav>
 
-      <form name="fragebogen" method="POST" action="/fragebogen/danke.html" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <form class="glass" name="fragebogen" method="POST" action="/fragebogen/danke.html" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="form-name" value="fragebogen">
         <p class="hp"><label>Nicht ausfüllen <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
 
