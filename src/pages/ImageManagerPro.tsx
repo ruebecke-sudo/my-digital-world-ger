@@ -17,12 +17,19 @@ import {
   FlaskConical,
   RefreshCw,
   Infinity as InfinityIcon,
+  LayoutTemplate,
+  FileText,
+  ClipboardCheck,
+  Package,
+  Download,
 } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 // The neutral Image Manager Pro app (own Netlify site built in standalone mode from the zb-interieur repo).
 const APP_URL = 'https://imagemanager.my-digital-world.de/image-manager'
 const CONTACT_EMAIL = 'info@my-digital-world.de'
+// Online-Fragebogen und PDFs liegen statisch in public/fragebogen/ (erzeugt im Projekt webseiten-baukasten).
+const FRAGEBOGEN_URL = '/fragebogen/'
 
 export default function ImageManagerPro() {
   const { lang } = useLanguage()
@@ -114,6 +121,34 @@ export default function ImageManagerPro() {
     { name: 'Professional', price: isDE ? '39 € / Monat' : '€39 / month', limits: isDE ? '5.000 Bilder · 5 Benutzer · 2 Websites' : '5,000 images · 5 users · 2 websites', highlight: true },
     { name: 'Business', price: isDE ? '79 € / Monat' : '€79 / month', limits: isDE ? '25.000 Bilder · 15 Benutzer · 5 Websites' : '25,000 images · 15 users · 5 websites' },
     { name: isDE ? 'Agentur' : 'Agency', price: isDE ? 'Auf Anfrage' : 'On request', limits: isDE ? 'Bilder, Benutzer und Websites nach Absprache' : 'Images, users and websites by arrangement' },
+  ]
+
+  const webseitePakete = isDE
+    ? [
+        { name: 'Rundum-sorglos', desc: 'Wir kümmern uns um alles: Hosting, Domain, Kontaktformular und kleine Änderungen.' },
+        { name: 'Eigener Hoster', desc: 'Sie haben schon Hosting, z. B. bei IONOS oder Strato? Sie bekommen die fertige Webseite zum Hochladen.' },
+      ]
+    : [
+        { name: 'All-inclusive', desc: 'We take care of everything: hosting, domain, contact form and small changes.' },
+        { name: 'Your own host', desc: 'Already have hosting, e.g. with IONOS or Strato? You receive the finished website ready to upload.' },
+      ]
+
+  const webseiteSchritte = isDE
+    ? [
+        { nr: '01', title: 'Checkliste ansehen', desc: 'Welche Unterlagen wir brauchen: Logo, Fotos, Impressumsdaten.' },
+        { nr: '02', title: 'Fragebogen ausfüllen', desc: 'Online oder als PDF. Stichpunkte genügen, die Texte formulieren wir.' },
+        { nr: '03', title: 'Entwurf erhalten', desc: 'Sie bekommen Ihre fertige Webseite zur Ansicht und geben sie frei.' },
+      ]
+    : [
+        { nr: '01', title: 'Check the checklist', desc: 'What we need from you: logo, photos, legal details.' },
+        { nr: '02', title: 'Fill in the questionnaire', desc: 'Online or as a PDF. Bullet points are enough, we write the texts.' },
+        { nr: '03', title: 'Receive your draft', desc: 'You get your finished website to review and approve.' },
+      ]
+
+  const webseiteDownloads = [
+    { href: `${FRAGEBOGEN_URL}fragebogen.pdf`, icon: FileText, label: isDE ? 'Fragebogen (PDF, ausfüllbar)' : 'Questionnaire (PDF, fillable)' },
+    { href: `${FRAGEBOGEN_URL}checkliste.pdf`, icon: ClipboardCheck, label: isDE ? 'Checkliste (PDF)' : 'Checklist (PDF)' },
+    { href: `${FRAGEBOGEN_URL}pakete.pdf`, icon: Package, label: isDE ? 'Pakete (PDF)' : 'Packages (PDF)' },
   ]
 
   const faqs = isDE
@@ -333,6 +368,66 @@ export default function ImageManagerPro() {
                 ? 'Sie können jeden Tarif und die Dauerlizenz gefahrlos buchen. Verwenden Sie dafür die Testkarte 4242 4242 4242 4242 mit einem beliebigen Ablaufdatum in der Zukunft und einer beliebigen Prüfziffer.'
                 : 'You can book any plan and the lifetime license without risk. Use the test card 4242 4242 4242 4242 with any future expiry date and any security code.'}
             </p>
+          </div>
+        </section>
+
+        {/* WEBSITE ON DEMAND (questionnaire from the webseiten-baukasten project) */}
+        <section id="webseite" className="scroll-mt-28 glass rounded-3xl border border-purple-500/20 p-8 md:p-12 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none" />
+
+          <div className="relative text-center max-w-3xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-3 uppercase tracking-wider">
+              <LayoutTemplate className="w-3.5 h-3.5" />
+              {isDE ? 'Neu: Ihre Webseite' : 'New: your website'}
+            </div>
+            <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4">
+              {isDE ? 'Die passende Webseite gleich dazu' : 'The matching website as well'}
+            </h2>
+            <p className="text-white/70 text-base leading-relaxed">
+              {isDE
+                ? 'Eine komplette Geschäftswebseite auf Basis eines Fragebogens: Startseite, Leistungen, Über uns, Galerie, Preise, FAQ, Kontakt, Impressum und Datenschutz. Für Handy und PC, datenschutzfreundlich ohne Cookies und Tracking. Ihre Image-Manager-Galerie lässt sich direkt einbinden.'
+                : 'A complete business website based on a questionnaire: home, services, about us, gallery, prices, FAQ, contact, imprint and privacy policy. For mobile and desktop, privacy friendly without cookies or tracking. Your Image Manager gallery can be embedded directly.'}
+            </p>
+          </div>
+
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+            {webseiteSchritte.map((s) => (
+              <div key={s.nr} className="glass rounded-2xl border border-white/5 p-5 hover:border-purple-500/20 transition-all">
+                <div className="font-display font-black text-3xl text-purple-400/40 mb-3">{s.nr}</div>
+                <h3 className="font-display font-bold text-white text-base mb-2">{s.title}</h3>
+                <p className="text-white/60 text-sm leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+            {webseitePakete.map((p) => (
+              <div key={p.name} className="rounded-2xl border border-white/10 bg-white/5 p-5 flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-display font-bold text-white">{p.name}</h3>
+                  <p className="text-white/65 text-sm leading-relaxed mt-1">{p.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative flex flex-col items-center gap-6">
+            <a href={`${FRAGEBOGEN_URL}index.html`} className="btn-primary inline-flex items-center gap-2 text-base" data-testid="link-fragebogen-online">
+              {isDE ? 'Fragebogen online ausfüllen' : 'Fill in the questionnaire online (German)'} <ArrowRight className="w-4 h-4" />
+            </a>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              {webseiteDownloads.map((d) => {
+                const Icon = d.icon
+                return (
+                  <a key={d.href} href={d.href} download className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-cyan-300 transition-colors">
+                    <Icon className="w-4 h-4 text-cyan-400" />
+                    {d.label}
+                    <Download className="w-3.5 h-3.5 opacity-60" />
+                  </a>
+                )
+              })}
+            </div>
           </div>
         </section>
 

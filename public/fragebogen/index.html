@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Fragebogen für Ihre neue Webseite | My Digital World</title>
+  <meta name="theme-color" content="#000000">
+  <style>
+  :root {
+    --bg: #000000; --panel: #10121d; --panel-2: #171a29; --line: #2a2e45;
+    --text: #f2f4fa; --muted: #a9afc7; --cyan: #3fe3e6; --violet: #a970f5;
+    --grad: linear-gradient(90deg, var(--cyan), var(--violet));
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--cyan); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+  header.top { text-align: center; padding: 28px 0 8px; }
+  header.top img { width: min(360px, 80vw); height: auto; }
+  h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2; margin: 12px 0 8px; text-align: center; }
+  .lead { color: var(--muted); max-width: 680px; margin: 0 auto 8px; text-align: center; }
+  .alt { text-align: center; color: var(--muted); font-size: .95rem; margin: 0 0 28px; }
+  .bar { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 0 0 24px; }
+  .bar > span { display: block; height: 100%; width: 0; background: var(--grad); transition: width .3s; }
+  .layout { display: grid; gap: 24px; }
+  @media (min-width: 900px) { .layout { grid-template-columns: 260px 1fr; align-items: start; } }
+  nav.steps ol { list-style: none; margin: 0; padding: 0; display: none; }
+  @media (min-width: 900px) { nav.steps ol { display: block; position: sticky; top: 16px; } }
+  nav.steps button { all: unset; box-sizing: border-box; display: flex; gap: 10px; align-items: center; width: 100%; padding: 7px 10px; border-radius: 8px; color: var(--muted); cursor: pointer; font-size: .92rem; }
+  nav.steps button:hover { background: var(--panel); color: var(--text); }
+  nav.steps button:focus-visible { outline: 2px solid var(--cyan); }
+  nav.steps button[aria-current="step"] { background: var(--panel-2); color: var(--text); }
+  nav.steps .num { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; border: 1px solid var(--line); }
+  nav.steps button.done .num { background: var(--grad); color: #07080f; border: 0; font-weight: 700; }
+  form { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: clamp(18px, 4vw, 36px); }
+  .js .step { display: none; }
+  .js .step.active { display: block; }
+  .step + .step { margin-top: 40px; }
+  .js .step + .step { margin-top: 0; }
+  .step-count { margin: 0; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+  h2 { margin: 4px 0 6px; font-size: 1.6rem; }
+  .intro { color: var(--muted); margin: 0 0 18px; }
+  .field { margin: 0 0 18px; border: 0; padding: 0; min-width: 0; }
+  label, legend { display: block; font-weight: 600; margin-bottom: 6px; padding: 0; }
+  .hint { display: block; color: var(--muted); font-size: .88rem; margin: -4px 0 6px; }
+  .req { color: var(--cyan); }
+  input[type=text], input[type=email], input[type=tel], input[type=url], textarea {
+    width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; font: inherit;
+  }
+  textarea { resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(63, 227, 230, .25); }
+  input[type=file] { width: 100%; color: var(--muted); }
+  input[type=file]::file-selector-button { font: inherit; margin-right: 12px; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); cursor: pointer; }
+  .options { display: grid; gap: 8px; }
+  @media (min-width: 640px) { .options { grid-template-columns: 1fr 1fr; } }
+  .option { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; background: var(--bg); }
+  .option:has(input:checked) { border-color: var(--violet); background: rgba(169, 112, 245, .1); }
+  .option input { margin-top: 5px; accent-color: var(--violet); }
+  .buttons { display: flex; gap: 12px; justify-content: space-between; margin-top: 28px; flex-wrap: wrap; }
+  .btn { font: inherit; font-weight: 700; border-radius: 999px; padding: 12px 26px; cursor: pointer; border: 1px solid var(--line); background: transparent; color: var(--text); }
+  .btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+  .btn.primary { border: 0; background: var(--grad); color: #07080f; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn[hidden] { display: none; }
+  .no-js-hide { display: none; }
+  .js .no-js-hide { display: inline-block; }
+  .saved { color: var(--muted); font-size: .85rem; margin: 14px 0 0; min-height: 1.4em; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+  .consent input { margin-top: 6px; accent-color: var(--violet); }
+  .error { color: #ff9a9a; font-weight: 600; }
+  .hp { position: absolute; left: -9999px; }
+  footer.bottom { text-align: center; color: var(--muted); font-size: .9rem; padding: 40px 0; }
+  footer.bottom .line { height: 2px; background: var(--grad); max-width: 420px; margin: 0 auto 20px; border-radius: 2px; opacity: .7; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .bar > span { transition: none; } }
+</style>
+</head>
+<body>
+  <script>document.documentElement.classList.add('js')</script>
+  <div class="wrap">
+    <header class="top">
+      <a href="https://www.my-digital-world.de"><img src="/fragebogen/mdw-logo.png" alt="My Digital World – zur Webseite" width="851" height="315"></a>
+      <h1>Fragebogen für Ihre neue Webseite</h1>
+      <p class="lead">Bitte füllen Sie alles aus, was auf Sie zutrifft. Was Sie nicht wissen, lassen Sie einfach leer – wir klären das gemeinsam. Stichpunkte genügen, die Texte formulieren wir für Sie.</p>
+      <p class="alt">Ihre Eingaben werden in diesem Browser zwischengespeichert – Sie können jederzeit pausieren.<br>
+      Lieber auf Papier oder am PC? <a href="/fragebogen/fragebogen.pdf" download>Fragebogen als PDF</a> · <a href="/fragebogen/checkliste.pdf" download>Checkliste als PDF</a> · <a href="/fragebogen/pakete.pdf" download>Pakete als PDF</a></p>
+    </header>
+
+    <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+
+    <div class="layout">
+      <nav class="steps" aria-label="Abschnitte">
+        <ol>
+          <li><button type="button" data-goto="0"><span class="num">1</span>Ihre Ansprechperson</button></li>
+          <li><button type="button" data-goto="1"><span class="num">2</span>Ihr Unternehmen</button></li>
+          <li><button type="button" data-goto="2"><span class="num">3</span>Kontakt</button></li>
+          <li><button type="button" data-goto="3"><span class="num">4</span>Domain und Paket</button></li>
+          <li><button type="button" data-goto="4"><span class="num">5</span>Welche Seiten brauchen Sie?</button></li>
+          <li><button type="button" data-goto="5"><span class="num">6</span>Ihre Leistungen</button></li>
+          <li><button type="button" data-goto="6"><span class="num">7</span>Über uns</button></li>
+          <li><button type="button" data-goto="7"><span class="num">8</span>Kundenstimmen</button></li>
+          <li><button type="button" data-goto="8"><span class="num">9</span>Preise</button></li>
+          <li><button type="button" data-goto="9"><span class="num">10</span>Häufige Fragen</button></li>
+          <li><button type="button" data-goto="10"><span class="num">11</span>Aussehen</button></li>
+          <li><button type="button" data-goto="11"><span class="num">12</span>Fotos</button></li>
+          <li><button type="button" data-goto="12"><span class="num">13</span>Social Media und Bewertungen</button></li>
+          <li><button type="button" data-goto="13"><span class="num">14</span>Pflichtangaben für das Impressum</button></li>
+          <li><button type="button" data-goto="14"><span class="num">15</span>Datenschutzerklärung</button></li>
+          <li><button type="button" data-goto="15"><span class="num">16</span>Sonstiges</button></li>
+          <li><button type="button" data-goto="16"><span class="num">17</span>Absenden</button></li>
+        </ol>
+      </nav>
+
+      <form name="fragebogen" method="POST" action="/fragebogen/danke.html" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="fragebogen">
+        <p class="hp"><label>Nicht ausfüllen <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+        <section class="step" data-step="0" aria-labelledby="h_ansprechperson">
+          <p class="step-count">Schritt 1 von 17</p>
+          <h2 id="h_ansprechperson">Ihre Ansprechperson</h2>
+          <p class="intro">Mit wem dürfen wir Rückfragen klären und wer gibt die Webseite frei?</p>
+          <div class="field">
+            <label for="f_ap_name">Vor- und Nachname <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_ap_name" type="text" name="ap_name" required>
+          </div>
+          <div class="field">
+            <label for="f_ap_email">E-Mail <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_ap_email" type="email" name="ap_email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="f_ap_telefon">Telefon für Rückfragen</label>
+            <input id="f_ap_telefon" type="tel" name="ap_telefon" autocomplete="tel">
+          </div>
+        </section>
+
+        <section class="step" data-step="1" aria-labelledby="h_unternehmen">
+          <p class="step-count">Schritt 2 von 17</p>
+          <h2 id="h_unternehmen">Ihr Unternehmen</h2>
+          
+          <div class="field">
+            <label for="f_firma_name">Name, wie er auf der Webseite stehen soll <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_firma_name" type="text" name="firma_name" required>
+          </div>
+          <div class="field">
+            <label for="f_firma_rechtsform">Vollständiger Firmenname mit Rechtsform <span class="req" aria-hidden="true">*</span></label><span class="hint" id="f_firma_rechtsform_hint">z. B. „Klein Malerbetrieb GmbH“ oder „Anna Schmidt e. K.“</span>
+            <input id="f_firma_rechtsform" type="text" name="firma_rechtsform" required aria-describedby="f_firma_rechtsform_hint">
+          </div>
+          <div class="field">
+            <label for="f_branche">Branche <span class="req" aria-hidden="true">*</span></label><span class="hint" id="f_branche_hint">z. B. Malerbetrieb, Friseursalon, Steuerberatung</span>
+            <input id="f_branche" type="text" name="branche" required aria-describedby="f_branche_hint">
+          </div>
+          <div class="field">
+            <label for="f_slogan">Kurzer Slogan oder Untertitel (optional)</label>
+            <input id="f_slogan" type="text" name="slogan">
+          </div>
+          <div class="field">
+            <label for="f_gruendung">Seit wann gibt es Ihr Unternehmen?</label>
+            <input id="f_gruendung" type="text" name="gruendung">
+          </div>
+          <div class="field">
+            <label for="f_region">Wo sind Sie tätig?</label><span class="hint" id="f_region_hint">Ort, Region, Einzugsgebiet</span>
+            <input id="f_region" type="text" name="region" aria-describedby="f_region_hint">
+          </div>
+          <div class="field">
+            <label for="f_staerken">Was unterscheidet Sie von der Konkurrenz?</label><span class="hint" id="f_staerken_hint">3–4 Punkte, Stichworte genügen</span>
+            <textarea id="f_staerken" name="staerken" rows="4" aria-describedby="f_staerken_hint"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_zielgruppe">Wer sind Ihre Kunden?</label><span class="hint" id="f_zielgruppe_hint">Privat, Gewerbe, beides, Altersgruppe …</span>
+            <textarea id="f_zielgruppe" name="zielgruppe" rows="2" aria-describedby="f_zielgruppe_hint"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="2" aria-labelledby="h_kontakt">
+          <p class="step-count">Schritt 3 von 17</p>
+          <h2 id="h_kontakt">Kontakt</h2>
+          
+          <div class="field">
+            <label for="f_strasse">Straße und Hausnummer <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_strasse" type="text" name="strasse" required>
+          </div>
+          <div class="field">
+            <label for="f_plz_ort">PLZ und Ort <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_plz_ort" type="text" name="plz_ort" required>
+          </div>
+          <div class="field">
+            <label for="f_telefon">Telefon <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_telefon" type="tel" name="telefon" autocomplete="tel" required>
+          </div>
+          <div class="field">
+            <label for="f_email">E-Mail für Anfragen über die Webseite <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_email" type="email" name="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="f_whatsapp">WhatsApp-Nummer (falls Kunden Ihnen schreiben dürfen)</label>
+            <input id="f_whatsapp" type="tel" name="whatsapp" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="f_oeffnungszeiten">Öffnungszeiten</label><span class="hint" id="f_oeffnungszeiten_hint">z. B. Mo–Fr 8–17 Uhr, Sa 9–13 Uhr</span>
+            <textarea id="f_oeffnungszeiten" name="oeffnungszeiten" rows="3" aria-describedby="f_oeffnungszeiten_hint"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="3" aria-labelledby="h_domain">
+          <p class="step-count">Schritt 4 von 17</p>
+          <h2 id="h_domain">Domain und Paket</h2>
+          
+          <fieldset class="field">
+            <legend>Haben Sie schon eine Domain?</legend>
+            <div class="options">
+            <label class="option"><input type="radio" name="domain_vorhanden" value="Ja"><span>Ja</span></label>
+            <label class="option"><input type="radio" name="domain_vorhanden" value="Nein"><span>Nein</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="f_domain">Vorhandene Domain oder 2–3 Wunsch-Domains</label><span class="hint" id="f_domain_hint">z. B. www.ihre-firma.de</span>
+            <input id="f_domain" type="text" name="domain" aria-describedby="f_domain_hint">
+          </div>
+          <fieldset class="field">
+            <legend>Welches Paket?</legend>
+            <div class="options">
+            <label class="option"><input type="radio" name="paket" value="Rundum-sorglos (wir kümmern uns um Hosting und Domain)"><span>Rundum-sorglos (wir kümmern uns um Hosting und Domain)</span></label>
+            <label class="option"><input type="radio" name="paket" value="Eigener Hoster"><span>Eigener Hoster</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="f_hoster">Falls eigener Hoster: bei welchem Anbieter?</label><span class="hint" id="f_hoster_hint">z. B. IONOS, Strato, All-Inkl.</span>
+            <input id="f_hoster" type="text" name="hoster" aria-describedby="f_hoster_hint">
+          </div>
+        </section>
+
+        <section class="step" data-step="4" aria-labelledby="h_seiten">
+          <p class="step-count">Schritt 5 von 17</p>
+          <h2 id="h_seiten">Welche Seiten brauchen Sie?</h2>
+          <p class="intro">Startseite, Impressum und Datenschutz sind immer dabei.</p>
+          <fieldset class="field">
+            <legend>Gewünschte Unterseiten</legend>
+            <div class="options">
+            <label class="option"><input type="checkbox" name="seiten__leistungen" value="ja"><span>Leistungen</span></label>
+            <label class="option"><input type="checkbox" name="seiten__ueber_uns_team" value="ja"><span>Über uns / Team</span></label>
+            <label class="option"><input type="checkbox" name="seiten__galerie_referenzen" value="ja"><span>Galerie / Referenzen</span></label>
+            <label class="option"><input type="checkbox" name="seiten__preise" value="ja"><span>Preise</span></label>
+            <label class="option"><input type="checkbox" name="seiten__haeufige_fragen_faq" value="ja"><span>Häufige Fragen (FAQ)</span></label>
+            <label class="option"><input type="checkbox" name="seiten__kontakt_mit_formular" value="ja"><span>Kontakt mit Formular</span></label>
+            <label class="option"><input type="checkbox" name="seiten__karte_anfahrt" value="ja"><span>Karte / Anfahrt</span></label>
+            </div>
+          </fieldset>
+        </section>
+
+        <section class="step" data-step="5" aria-labelledby="h_leistungen">
+          <p class="step-count">Schritt 6 von 17</p>
+          <h2 id="h_leistungen">Ihre Leistungen</h2>
+          <p class="intro">Bis zu sechs Leistungen. Weitere gern unter „Sonstiges“ ergänzen.</p>
+          <div class="field">
+            <label for="f_leistung_1_name">Leistung 1: Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_leistung_1_name" type="text" name="leistung_1_name" required>
+          </div>
+          <div class="field">
+            <label for="f_leistung_1_kurz">Leistung 1: in einem Satz</label>
+            <input id="f_leistung_1_kurz" type="text" name="leistung_1_kurz">
+          </div>
+          <div class="field">
+            <label for="f_leistung_1_text">Leistung 1: ausführlich (Stichpunkte genügen)</label>
+            <textarea id="f_leistung_1_text" name="leistung_1_text" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_leistung_2_name">Leistung 2: Name</label>
+            <input id="f_leistung_2_name" type="text" name="leistung_2_name">
+          </div>
+          <div class="field">
+            <label for="f_leistung_2_kurz">Leistung 2: in einem Satz</label>
+            <input id="f_leistung_2_kurz" type="text" name="leistung_2_kurz">
+          </div>
+          <div class="field">
+            <label for="f_leistung_2_text">Leistung 2: ausführlich (Stichpunkte genügen)</label>
+            <textarea id="f_leistung_2_text" name="leistung_2_text" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_leistung_3_name">Leistung 3: Name</label>
+            <input id="f_leistung_3_name" type="text" name="leistung_3_name">
+          </div>
+          <div class="field">
+            <label for="f_leistung_3_kurz">Leistung 3: in einem Satz</label>
+            <input id="f_leistung_3_kurz" type="text" name="leistung_3_kurz">
+          </div>
+          <div class="field">
+            <label for="f_leistung_3_text">Leistung 3: ausführlich (Stichpunkte genügen)</label>
+            <textarea id="f_leistung_3_text" name="leistung_3_text" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_leistung_4_name">Leistung 4: Name</label>
+            <input id="f_leistung_4_name" type="text" name="leistung_4_name">
+          </div>
+          <div class="field">
+            <label for="f_leistung_4_kurz">Leistung 4: in einem Satz</label>
+            <input id="f_leistung_4_kurz" type="text" name="leistung_4_kurz">
+          </div>
+          <div class="field">
+            <label for="f_leistung_4_text">Leistung 4: ausführlich (Stichpunkte genügen)</label>
+            <textarea id="f_leistung_4_text" name="leistung_4_text" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_leistung_5_name">Leistung 5: Name</label>
+            <input id="f_leistung_5_name" type="text" name="leistung_5_name">
+          </div>
+          <div class="field">
+            <label for="f_leistung_5_kurz">Leistung 5: in einem Satz</label>
+            <input id="f_leistung_5_kurz" type="text" name="leistung_5_kurz">
+          </div>
+          <div class="field">
+            <label for="f_leistung_5_text">Leistung 5: ausführlich (Stichpunkte genügen)</label>
+            <textarea id="f_leistung_5_text" name="leistung_5_text" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_leistung_6_name">Leistung 6: Name</label>
+            <input id="f_leistung_6_name" type="text" name="leistung_6_name">
+          </div>
+          <div class="field">
+            <label for="f_leistung_6_kurz">Leistung 6: in einem Satz</label>
+            <input id="f_leistung_6_kurz" type="text" name="leistung_6_kurz">
+          </div>
+          <div class="field">
+            <label for="f_leistung_6_text">Leistung 6: ausführlich (Stichpunkte genügen)</label>
+            <textarea id="f_leistung_6_text" name="leistung_6_text" rows="3"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="6" aria-labelledby="h_ueber-uns">
+          <p class="step-count">Schritt 7 von 17</p>
+          <h2 id="h_ueber-uns">Über uns</h2>
+          
+          <div class="field">
+            <label for="f_geschichte">Ihre Geschichte in ein paar Sätzen</label>
+            <textarea id="f_geschichte" name="geschichte" rows="4"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_team">Team: Name und Funktion</label><span class="hint" id="f_team_hint">Fotos nur, wenn die Personen zugestimmt haben</span>
+            <textarea id="f_team" name="team" rows="4" aria-describedby="f_team_hint"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_zahlen">Zahlen, die beeindrucken</label><span class="hint" id="f_zahlen_hint">z. B. „25 Jahre Erfahrung“, „1.200 Projekte“</span>
+            <textarea id="f_zahlen" name="zahlen" rows="2" aria-describedby="f_zahlen_hint"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="7" aria-labelledby="h_bewertungen">
+          <p class="step-count">Schritt 8 von 17</p>
+          <h2 id="h_bewertungen">Kundenstimmen</h2>
+          <p class="intro">Nur echte Bewertungen, z. B. aus Google – bitte mit Name oder Kürzel und Ort.</p>
+          <div class="field">
+            <label for="f_bewertung_1_text">Bewertung 1: Text</label>
+            <textarea id="f_bewertung_1_text" name="bewertung_1_text" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_bewertung_1_name">Bewertung 1: Name/Kürzel und Ort</label>
+            <input id="f_bewertung_1_name" type="text" name="bewertung_1_name">
+          </div>
+          <div class="field">
+            <label for="f_bewertung_2_text">Bewertung 2: Text</label>
+            <textarea id="f_bewertung_2_text" name="bewertung_2_text" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_bewertung_2_name">Bewertung 2: Name/Kürzel und Ort</label>
+            <input id="f_bewertung_2_name" type="text" name="bewertung_2_name">
+          </div>
+          <div class="field">
+            <label for="f_bewertung_3_text">Bewertung 3: Text</label>
+            <textarea id="f_bewertung_3_text" name="bewertung_3_text" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_bewertung_3_name">Bewertung 3: Name/Kürzel und Ort</label>
+            <input id="f_bewertung_3_name" type="text" name="bewertung_3_name">
+          </div>
+        </section>
+
+        <section class="step" data-step="8" aria-labelledby="h_preise">
+          <p class="step-count">Schritt 9 von 17</p>
+          <h2 id="h_preise">Preise</h2>
+          <p class="intro">Nur ausfüllen, wenn Sie eine Preisseite möchten.</p>
+          <div class="field">
+            <label for="f_preise">Pakete/Angebote mit Preis und Inhalt</label><span class="hint" id="f_preise_hint">Bitte angeben, ob Brutto- oder Nettopreise</span>
+            <textarea id="f_preise" name="preise" rows="6" aria-describedby="f_preise_hint"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="9" aria-labelledby="h_faq">
+          <p class="step-count">Schritt 10 von 17</p>
+          <h2 id="h_faq">Häufige Fragen</h2>
+          <p class="intro">Welche Fragen hören Sie immer wieder – und was antworten Sie?</p>
+          <div class="field">
+            <label for="f_faq_1_frage">Frage 1</label>
+            <input id="f_faq_1_frage" type="text" name="faq_1_frage">
+          </div>
+          <div class="field">
+            <label for="f_faq_1_antwort">Antwort 1</label>
+            <textarea id="f_faq_1_antwort" name="faq_1_antwort" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_faq_2_frage">Frage 2</label>
+            <input id="f_faq_2_frage" type="text" name="faq_2_frage">
+          </div>
+          <div class="field">
+            <label for="f_faq_2_antwort">Antwort 2</label>
+            <textarea id="f_faq_2_antwort" name="faq_2_antwort" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_faq_3_frage">Frage 3</label>
+            <input id="f_faq_3_frage" type="text" name="faq_3_frage">
+          </div>
+          <div class="field">
+            <label for="f_faq_3_antwort">Antwort 3</label>
+            <textarea id="f_faq_3_antwort" name="faq_3_antwort" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_faq_4_frage">Frage 4</label>
+            <input id="f_faq_4_frage" type="text" name="faq_4_frage">
+          </div>
+          <div class="field">
+            <label for="f_faq_4_antwort">Antwort 4</label>
+            <textarea id="f_faq_4_antwort" name="faq_4_antwort" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_faq_5_frage">Frage 5</label>
+            <input id="f_faq_5_frage" type="text" name="faq_5_frage">
+          </div>
+          <div class="field">
+            <label for="f_faq_5_antwort">Antwort 5</label>
+            <textarea id="f_faq_5_antwort" name="faq_5_antwort" rows="2"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="10" aria-labelledby="h_aussehen">
+          <p class="step-count">Schritt 11 von 17</p>
+          <h2 id="h_aussehen">Aussehen</h2>
+          
+          <fieldset class="field">
+            <legend>Haben Sie ein Logo?</legend>
+            <div class="options">
+            <label class="option"><input type="radio" name="logo_vorhanden" value="Ja"><span>Ja</span></label>
+            <label class="option"><input type="radio" name="logo_vorhanden" value="Nein"><span>Nein</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="f_logo">Logo hochladen (SVG oder PNG, max. 5 MB)</label>
+            <input id="f_logo" type="file" name="logo" accept=".svg,.png,.jpg,.jpeg,.pdf,.ai,.eps" data-max-mb="5">
+          </div>
+          <div class="field">
+            <label for="f_farben">Firmenfarben</label><span class="hint" id="f_farben_hint">Farbcodes, falls bekannt – sonst beschreiben</span>
+            <input id="f_farben" type="text" name="farben" aria-describedby="f_farben_hint">
+          </div>
+          <fieldset class="field">
+            <legend>Welcher Stil passt zu Ihnen?</legend>
+            <div class="options">
+            <label class="option"><input type="checkbox" name="stil__modern" value="ja"><span>modern</span></label>
+            <label class="option"><input type="checkbox" name="stil__klassisch" value="ja"><span>klassisch</span></label>
+            <label class="option"><input type="checkbox" name="stil__edel" value="ja"><span>edel</span></label>
+            <label class="option"><input type="checkbox" name="stil__freundlich_verspielt" value="ja"><span>freundlich-verspielt</span></label>
+            <label class="option"><input type="checkbox" name="stil__handwerklich_bodenstaendig" value="ja"><span>handwerklich-bodenständig</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="f_vorbilder">Webseiten, die Ihnen gefallen (Links)</label>
+            <textarea id="f_vorbilder" name="vorbilder" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <label for="f_konkurrenz">Webseiten der Konkurrenz (Links)</label>
+            <textarea id="f_konkurrenz" name="konkurrenz" rows="2"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="11" aria-labelledby="h_fotos">
+          <p class="step-count">Schritt 12 von 17</p>
+          <h2 id="h_fotos">Fotos</h2>
+          <p class="intro">Fotos schicken Sie uns bitte separat (z. B. per WeTransfer an info@my-digital-world.de).</p>
+          <fieldset class="field">
+            <legend>Woher kommen die Fotos?</legend>
+            <div class="options">
+            <label class="option"><input type="radio" name="fotos" value="Ich schicke eigene Fotos"><span>Ich schicke eigene Fotos</span></label>
+            <label class="option"><input type="radio" name="fotos" value="Bitte lizenzfreie Fotos aussuchen"><span>Bitte lizenzfreie Fotos aussuchen</span></label>
+            <label class="option"><input type="radio" name="fotos" value="Beides"><span>Beides</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="field">
+            <legend>Bei eigenen Fotos: Haben Sie die Rechte daran?</legend><span class="hint" id="f_fotorechte_hint">selbst fotografiert oder der Fotograf hat zugestimmt</span>
+            <div class="options">
+            <label class="option"><input type="radio" name="fotorechte" value="Ja"><span>Ja</span></label>
+            <label class="option"><input type="radio" name="fotorechte" value="Nein"><span>Nein</span></label>
+            <label class="option"><input type="radio" name="fotorechte" value="Weiß nicht"><span>Weiß nicht</span></label>
+            </div>
+          </fieldset>
+        </section>
+
+        <section class="step" data-step="12" aria-labelledby="h_social">
+          <p class="step-count">Schritt 13 von 17</p>
+          <h2 id="h_social">Social Media und Bewertungen</h2>
+          
+          <div class="field">
+            <label for="f_facebook">Facebook</label>
+            <input id="f_facebook" type="url" name="facebook" placeholder="https://">
+          </div>
+          <div class="field">
+            <label for="f_instagram">Instagram</label>
+            <input id="f_instagram" type="url" name="instagram" placeholder="https://">
+          </div>
+          <div class="field">
+            <label for="f_linkedin">LinkedIn</label>
+            <input id="f_linkedin" type="url" name="linkedin" placeholder="https://">
+          </div>
+          <div class="field">
+            <label for="f_youtube">YouTube</label>
+            <input id="f_youtube" type="url" name="youtube" placeholder="https://">
+          </div>
+          <div class="field">
+            <label for="f_google">Google-Unternehmensprofil (Link „Rezension schreiben“)</label>
+            <input id="f_google" type="url" name="google" placeholder="https://">
+          </div>
+        </section>
+
+        <section class="step" data-step="13" aria-labelledby="h_impressum">
+          <p class="step-count">Schritt 14 von 17</p>
+          <h2 id="h_impressum">Pflichtangaben für das Impressum</h2>
+          
+          <div class="field">
+            <label for="f_inhaber">Inhaber bzw. Geschäftsführer <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_inhaber" type="text" name="inhaber" required>
+          </div>
+          <div class="field">
+            <label for="f_handelsregister">Handelsregister: Registergericht und Nummer (falls eingetragen)</label>
+            <input id="f_handelsregister" type="text" name="handelsregister">
+          </div>
+          <div class="field">
+            <label for="f_ust_id">Umsatzsteuer-ID (falls vorhanden)</label>
+            <input id="f_ust_id" type="text" name="ust_id">
+          </div>
+          <div class="field">
+            <label for="f_beruf">Berufsbezeichnung</label><span class="hint" id="f_beruf_hint">bei Handwerk und reglementierten Berufen, z. B. „Malermeister“</span>
+            <input id="f_beruf" type="text" name="beruf" aria-describedby="f_beruf_hint">
+          </div>
+          <div class="field">
+            <label for="f_kammer">Zuständige Kammer</label><span class="hint" id="f_kammer_hint">z. B. Handwerkskammer, IHK, Steuerberaterkammer</span>
+            <input id="f_kammer" type="text" name="kammer" aria-describedby="f_kammer_hint">
+          </div>
+          <div class="field">
+            <label for="f_aufsicht">Aufsichtsbehörde (falls Ihr Beruf eine Genehmigung braucht)</label>
+            <input id="f_aufsicht" type="text" name="aufsicht">
+          </div>
+          <div class="field">
+            <label for="f_verantwortlich">Verantwortlich für den Inhalt: Name und Anschrift <span class="req" aria-hidden="true">*</span></label>
+            <input id="f_verantwortlich" type="text" name="verantwortlich" required>
+          </div>
+        </section>
+
+        <section class="step" data-step="14" aria-labelledby="h_datenschutz">
+          <p class="step-count">Schritt 15 von 17</p>
+          <h2 id="h_datenschutz">Datenschutzerklärung</h2>
+          
+          <fieldset class="field">
+            <legend>Wer erstellt die Datenschutzerklärung?</legend>
+            <div class="options">
+            <label class="option"><input type="radio" name="datenschutz" value="Ich erstelle sie selbst mit einem Generator und schicke den Text"><span>Ich erstelle sie selbst mit einem Generator und schicke den Text</span></label>
+            <label class="option"><input type="radio" name="datenschutz" value="Bitte übernehmt das (sprechen Sie uns an)"><span>Bitte übernehmt das (sprechen Sie uns an)</span></label>
+            </div>
+          </fieldset>
+        </section>
+
+        <section class="step" data-step="15" aria-labelledby="h_sonstiges">
+          <p class="step-count">Schritt 16 von 17</p>
+          <h2 id="h_sonstiges">Sonstiges</h2>
+          
+          <div class="field">
+            <label for="f_sonstiges">Was sollen wir noch wissen?</label>
+            <textarea id="f_sonstiges" name="sonstiges" rows="5"></textarea>
+          </div>
+        </section>
+
+        <section class="step" data-step="16" aria-labelledby="h_absenden">
+          <p class="step-count">Schritt 17 von 17</p>
+          <h2 id="h_absenden">Fast geschafft!</h2>
+          <p class="intro">Mit „Absenden“ geht Ihr Fragebogen an My Digital World. Wir melden uns innerhalb von zwei Werktagen bei Ihnen.
+          Fotos schicken Sie bitte separat an <a href="mailto:info@my-digital-world.de">info@my-digital-world.de</a>.</p>
+          <div class="field">
+            <label class="consent"><input type="checkbox" name="einwilligung" value="ja" required>
+            <span>Ich bin einverstanden, dass My Digital World meine Angaben zur Erstellung meiner Webseite verarbeitet.
+            Details in der <a href="https://www.my-digital-world.de/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>. <span class="req" aria-hidden="true">*</span></span></label>
+          </div>
+          <p id="form-error" class="error" role="alert" hidden></p>
+        </section>
+
+        <div class="buttons">
+          <button type="button" class="btn no-js-hide" id="back">← Zurück</button>
+          <button type="button" class="btn primary no-js-hide" id="next">Weiter →</button>
+          <button type="submit" class="btn primary" id="submit">Fragebogen absenden</button>
+        </div>
+        <p class="saved" id="saved" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+  <footer class="bottom">
+    <div class="line"></div>
+    <p><strong>My Digital World</strong><br>
+    <a href="https://www.my-digital-world.de">www.my-digital-world.de</a> · <a href="mailto:info@my-digital-world.de">info@my-digital-world.de</a></p>
+    <p><a href="https://www.my-digital-world.de/impressum">Impressum</a> · <a href="https://www.my-digital-world.de/datenschutz">Datenschutz</a></p>
+  </footer>
+
+  <script>
+  (function () {
+    var KEY = 'mdw-fragebogen-v1'
+    var form = document.querySelector('form')
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.step'))
+    var navButtons = Array.prototype.slice.call(document.querySelectorAll('[data-goto]'))
+    var back = document.getElementById('back'), next = document.getElementById('next'), submit = document.getElementById('submit')
+    var bar = document.getElementById('bar'), saved = document.getElementById('saved'), errorBox = document.getElementById('form-error')
+    var current = 0, visited = {}
+
+    function fields(step) { return Array.prototype.slice.call(step.querySelectorAll('input, textarea')) }
+    function firstInvalid(step) {
+      return fields(step).filter(function (el) { return !el.checkValidity() })[0] || fileTooBig(step)
+    }
+    function fileTooBig(step) {
+      return fields(step).filter(function (el) {
+        if (el.type !== 'file' || !el.files || !el.files[0]) return false
+        var tooBig = el.files[0].size > Number(el.dataset.maxMb) * 1024 * 1024
+        el.setCustomValidity(tooBig ? 'Die Datei ist größer als ' + el.dataset.maxMb + ' MB. Bitte per E-Mail schicken.' : '')
+        return tooBig
+      })[0]
+    }
+
+    function show(i, focus) {
+      current = Math.max(0, Math.min(i, steps.length - 1))
+      visited[current] = true
+      steps.forEach(function (s, n) { s.classList.toggle('active', n === current) })
+      navButtons.forEach(function (b, n) {
+        if (n === current) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current')
+        b.classList.toggle('done', !!visited[n] && n !== current)
+      })
+      back.hidden = current === 0
+      next.hidden = current === steps.length - 1
+      submit.hidden = current !== steps.length - 1
+      bar.style.width = ((current + 1) / steps.length * 100) + '%'
+      if (focus) {
+        var h = steps[current].querySelector('h2')
+        h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true })
+        window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 16 })
+      }
+    }
+
+    next.addEventListener('click', function () {
+      var bad = firstInvalid(steps[current])
+      if (bad) { bad.reportValidity(); return }
+      show(current + 1, true)
+    })
+    back.addEventListener('click', function () { show(current - 1, true) })
+    navButtons.forEach(function (b) { b.addEventListener('click', function () { show(Number(b.dataset.goto), true) }) })
+
+    form.addEventListener('submit', function (e) {
+      for (var n = 0; n < steps.length; n++) {
+        var bad = firstInvalid(steps[n])
+        if (bad) {
+          e.preventDefault()
+          show(n, false)
+          errorBox.hidden = n !== steps.length - 1
+          errorBox.textContent = 'Bitte füllen Sie die markierten Pflichtfelder aus.'
+          bad.reportValidity()
+          return
+        }
+      }
+      submit.disabled = true
+      submit.textContent = 'Wird gesendet …'
+    })
+
+    // Zwischenspeichern im Browser (ohne Dateien)
+    function save() {
+      var data = {}
+      fields(form).forEach(function (el) {
+        if (el.type === 'file' || el.type === 'hidden' || el.name === 'bot-field') return
+        if (el.type === 'checkbox' || el.type === 'radio') { if (el.checked) data[el.name + '=' + el.value] = true }
+        else if (el.value) data[el.name] = el.value
+      })
+      try { localStorage.setItem(KEY, JSON.stringify(data)); saved.textContent = 'Zwischengespeichert.' } catch (err) {}
+    }
+    function restore() {
+      var data
+      try { data = JSON.parse(localStorage.getItem(KEY) || 'null') } catch (err) {}
+      if (!data) return
+      fields(form).forEach(function (el) {
+        if (el.type === 'checkbox' || el.type === 'radio') el.checked = !!data[el.name + '=' + el.value]
+        else if (el.type !== 'file' && el.type !== 'hidden' && data[el.name]) el.value = data[el.name]
+      })
+      saved.textContent = 'Ihre gespeicherten Eingaben wurden wiederhergestellt.'
+    }
+    var timer
+    form.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(save, 400) })
+    form.addEventListener('change', function (e) { if (e.target.type === 'file') fileTooBig(form) ; save() })
+
+    restore()
+    show(0, false)
+  })()
+  </script>
+</body>
+</html>

@@ -153,8 +153,8 @@ export default function Datenschutz() {
               </p>
               <p>
                 E-Mail:{' '}
-                <a href="mailto:info@mydigitalworld.de" className="text-cyan-400 hover:text-cyan-300 transition-colors" data-testid="link-datenschutz-email">
-                  info@mydigitalworld.de
+                <a href="mailto:info@my-digital-world.de" className="text-cyan-400 hover:text-cyan-300 transition-colors" data-testid="link-datenschutz-email">
+                  info@my-digital-world.de
                 </a>
               </p>
             </div>

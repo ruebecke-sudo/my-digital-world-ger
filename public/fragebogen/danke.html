@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vielen Dank | My Digital World</title>
+  <meta name="theme-color" content="#000000">
+  <style>
+  :root {
+    --bg: #000000; --panel: #10121d; --panel-2: #171a29; --line: #2a2e45;
+    --text: #f2f4fa; --muted: #a9afc7; --cyan: #3fe3e6; --violet: #a970f5;
+    --grad: linear-gradient(90deg, var(--cyan), var(--violet));
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color: var(--cyan); }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+  header.top { text-align: center; padding: 28px 0 8px; }
+  header.top img { width: min(360px, 80vw); height: auto; }
+  h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); line-height: 1.2; margin: 12px 0 8px; text-align: center; }
+  .lead { color: var(--muted); max-width: 680px; margin: 0 auto 8px; text-align: center; }
+  .alt { text-align: center; color: var(--muted); font-size: .95rem; margin: 0 0 28px; }
+  .bar { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 0 0 24px; }
+  .bar > span { display: block; height: 100%; width: 0; background: var(--grad); transition: width .3s; }
+  .layout { display: grid; gap: 24px; }
+  @media (min-width: 900px) { .layout { grid-template-columns: 260px 1fr; align-items: start; } }
+  nav.steps ol { list-style: none; margin: 0; padding: 0; display: none; }
+  @media (min-width: 900px) { nav.steps ol { display: block; position: sticky; top: 16px; } }
+  nav.steps button { all: unset; box-sizing: border-box; display: flex; gap: 10px; align-items: center; width: 100%; padding: 7px 10px; border-radius: 8px; color: var(--muted); cursor: pointer; font-size: .92rem; }
+  nav.steps button:hover { background: var(--panel); color: var(--text); }
+  nav.steps button:focus-visible { outline: 2px solid var(--cyan); }
+  nav.steps button[aria-current="step"] { background: var(--panel-2); color: var(--text); }
+  nav.steps .num { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; border: 1px solid var(--line); }
+  nav.steps button.done .num { background: var(--grad); color: #07080f; border: 0; font-weight: 700; }
+  form { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: clamp(18px, 4vw, 36px); }
+  .js .step { display: none; }
+  .js .step.active { display: block; }
+  .step + .step { margin-top: 40px; }
+  .js .step + .step { margin-top: 0; }
+  .step-count { margin: 0; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700; }
+  h2 { margin: 4px 0 6px; font-size: 1.6rem; }
+  .intro { color: var(--muted); margin: 0 0 18px; }
+  .field { margin: 0 0 18px; border: 0; padding: 0; min-width: 0; }
+  label, legend { display: block; font-weight: 600; margin-bottom: 6px; padding: 0; }
+  .hint { display: block; color: var(--muted); font-size: .88rem; margin: -4px 0 6px; }
+  .req { color: var(--cyan); }
+  input[type=text], input[type=email], input[type=tel], input[type=url], textarea {
+    width: 100%; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; font: inherit;
+  }
+  textarea { resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(63, 227, 230, .25); }
+  input[type=file] { width: 100%; color: var(--muted); }
+  input[type=file]::file-selector-button { font: inherit; margin-right: 12px; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); cursor: pointer; }
+  .options { display: grid; gap: 8px; }
+  @media (min-width: 640px) { .options { grid-template-columns: 1fr 1fr; } }
+  .option { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; margin: 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; cursor: pointer; background: var(--bg); }
+  .option:has(input:checked) { border-color: var(--violet); background: rgba(169, 112, 245, .1); }
+  .option input { margin-top: 5px; accent-color: var(--violet); }
+  .buttons { display: flex; gap: 12px; justify-content: space-between; margin-top: 28px; flex-wrap: wrap; }
+  .btn { font: inherit; font-weight: 700; border-radius: 999px; padding: 12px 26px; cursor: pointer; border: 1px solid var(--line); background: transparent; color: var(--text); }
+  .btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+  .btn.primary { border: 0; background: var(--grad); color: #07080f; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn[hidden] { display: none; }
+  .no-js-hide { display: none; }
+  .js .no-js-hide { display: inline-block; }
+  .saved { color: var(--muted); font-size: .85rem; margin: 14px 0 0; min-height: 1.4em; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+  .consent input { margin-top: 6px; accent-color: var(--violet); }
+  .error { color: #ff9a9a; font-weight: 600; }
+  .hp { position: absolute; left: -9999px; }
+  footer.bottom { text-align: center; color: var(--muted); font-size: .9rem; padding: 40px 0; }
+  footer.bottom .line { height: 2px; background: var(--grad); max-width: 420px; margin: 0 auto 20px; border-radius: 2px; opacity: .7; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .bar > span { transition: none; } }
+</style>
+</head>
+<body>
+  <div class="wrap" style="max-width:720px">
+    <header class="top">
+      <a href="https://www.my-digital-world.de"><img src="/fragebogen/mdw-logo.png" alt="My Digital World – zur Webseite" width="851" height="315"></a>
+      <h1>Vielen Dank!</h1>
+      <p class="lead">Ihr Fragebogen ist bei uns angekommen. Wir sehen uns alles an und melden uns innerhalb von zwei Werktagen.</p>
+    </header>
+    <form style="margin-top:24px">
+      <h2>Wie geht es weiter?</h2>
+      <ol>
+        <li>Schicken Sie uns Ihre Fotos und – falls noch nicht hochgeladen – Ihr Logo an <a href="mailto:info@my-digital-world.de">info@my-digital-world.de</a>.</li>
+        <li>Wir klären offene Fragen mit Ihnen.</li>
+        <li>Sie erhalten einen ersten Entwurf Ihrer Webseite zur Ansicht.</li>
+      </ol>
+      <p><a class="btn primary" href="https://www.my-digital-world.de" style="text-decoration:none;display:inline-block">Zu www.my-digital-world.de</a></p>
+    </form>
+  </div>
+  <footer class="bottom">
+    <div class="line"></div>
+    <p><strong>My Digital World</strong><br>
+    <a href="https://www.my-digital-world.de">www.my-digital-world.de</a> · <a href="mailto:info@my-digital-world.de">info@my-digital-world.de</a></p>
+    <p><a href="https://www.my-digital-world.de/impressum">Impressum</a> · <a href="https://www.my-digital-world.de/datenschutz">Datenschutz</a></p>
+  </footer>
+  <script>try { localStorage.removeItem('mdw-fragebogen-v1') } catch (e) {}</script>
+</body>
+</html>
