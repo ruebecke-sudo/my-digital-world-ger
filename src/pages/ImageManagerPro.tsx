@@ -385,8 +385,8 @@ export default function ImageManagerPro() {
             </h2>
             <p className="text-white/70 text-base leading-relaxed">
               {isDE
-                ? 'Eine komplette Geschäftswebseite auf Basis eines Fragebogens: Startseite, Leistungen, Über uns, Galerie, Preise, FAQ, Kontakt, Impressum und Datenschutz. Für Handy und PC, datenschutzfreundlich ohne Cookies und Tracking. Ihre Image-Manager-Galerie lässt sich direkt einbinden.'
-                : 'A complete business website based on a questionnaire: home, services, about us, gallery, prices, FAQ, contact, imprint and privacy policy. For mobile and desktop, privacy friendly without cookies or tracking. Your Image Manager gallery can be embedded directly.'}
+                ? 'Eine komplette Geschäftswebseite auf Basis eines Fragebogens: Startseite, Leistungen, Über uns, Galerie, Preise, FAQ, Kontakt, Impressum und Datenschutz. Für Handy und PC, ohne Cookies und mit datenschutzfreundlicher Besucherstatistik. Ihre Image-Manager-Galerie lässt sich direkt einbinden.'
+                : 'A complete business website based on a questionnaire: home, services, about us, gallery, prices, FAQ, contact, imprint and privacy policy. For mobile and desktop, without cookies and with privacy-friendly visitor statistics. Your Image Manager gallery can be embedded directly.'}
             </p>
           </div>
 
@@ -428,6 +428,9 @@ export default function ImageManagerPro() {
                 )
               })}
             </div>
+            <Link href="/aktionspreis-fuer-webseiten" className="inline-flex items-center gap-2 text-sm font-semibold text-cyan-300 hover:text-cyan-200">
+              {isDE ? 'Pakete und Preise ansehen' : 'View packages and prices'} <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </section>
 
