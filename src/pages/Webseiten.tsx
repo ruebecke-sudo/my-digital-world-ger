@@ -47,14 +47,14 @@ export default function Webseiten() {
 
   const argumente = isDE
     ? [
-        { icon: BarChart3, title: 'Sie sehen, was die Webseite bringt', text: 'Jeden Monat eine E-Mail mit Besuchern, Anrufen, WhatsApp-Nachrichten und Anfragen über die Webseite. Schwarz auf weiß.' },
-        { icon: Images, title: 'Neue Bilder in 2 Minuten online', text: 'Ordner hochladen, fertig. Mit Image Manager Pro pflegen Sie Produkte und Referenzen selbst, ohne Webdesigner.' },
-        { icon: ShieldCheck, title: 'Ohne Cookie-Banner', text: 'Die Statistik arbeitet ohne Cookies, Schriften liegen auf dem eigenen Server. Kein Banner, das Besucher vertreibt.' },
+        { icon: BarChart3, bild: 'statistik', title: 'Sie sehen, was die Webseite bringt', text: 'Jeden Monat eine E-Mail mit Besuchern, Anrufen, WhatsApp-Nachrichten und Anfragen über die Webseite. Schwarz auf weiß.' },
+        { icon: Images, bild: 'bilder', title: 'Neue Bilder in 2 Minuten online', text: 'Ordner hochladen, fertig. Mit Image Manager Pro pflegen Sie Produkte und Referenzen selbst, ohne Webdesigner.' },
+        { icon: ShieldCheck, bild: 'datenschutz', title: 'Ohne Cookie-Banner', text: 'Die Statistik arbeitet ohne Cookies, Schriften liegen auf dem eigenen Server. Kein Banner, das Besucher vertreibt.' },
       ]
     : [
-        { icon: BarChart3, title: 'See what your website delivers', text: 'Every month an email with visitors, calls, WhatsApp messages and enquiries from your website. In black and white.' },
-        { icon: Images, title: 'New images online in 2 minutes', text: 'Upload a folder, done. With Image Manager Pro you maintain products and references yourself, without a web designer.' },
-        { icon: ShieldCheck, title: 'No cookie banner', text: 'The statistics work without cookies and fonts are self-hosted. No banner that drives visitors away.' },
+        { icon: BarChart3, bild: 'statistik', title: 'See what your website delivers', text: 'Every month an email with visitors, calls, WhatsApp messages and enquiries from your website. In black and white.' },
+        { icon: Images, bild: 'bilder', title: 'New images online in 2 minutes', text: 'Upload a folder, done. With Image Manager Pro you maintain products and references yourself, without a web designer.' },
+        { icon: ShieldCheck, bild: 'datenschutz', title: 'No cookie banner', text: 'The statistics work without cookies and fonts are self-hosted. No banner that drives visitors away.' },
       ]
 
   const pakete: Paket[] = isDE
@@ -177,18 +177,32 @@ export default function Webseiten() {
             </a>
           </div>
         </div>
+        <div className={`relative z-10 mx-auto mt-14 max-w-5xl px-4 sm:px-6`}>
+          <div className={`${GLAS} rounded-[28px] p-2 sm:p-3`}>
+            <img
+              src="/images/pakete/hero.webp"
+              alt={isDE ? 'Laptop und Tablet mit einer modernen Geschäftswebseite in einem Showroom' : 'Laptop and tablet showing a modern business website in a showroom'}
+              width={1344}
+              height={768}
+              className="w-full rounded-[20px] object-cover"
+            />
+          </div>
+        </div>
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-16">
         {/* ARGUMENTS */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {argumente.map(({ icon: Icon, title, text }) => (
-            <div key={title} className={`${GLAS} rounded-3xl p-6 hover:bg-white/[0.09] transition-all`}>
+          {argumente.map(({ icon: Icon, bild, title, text }) => (
+            <div key={title} className={`${GLAS} rounded-3xl p-3 pb-6 hover:bg-white/[0.09] transition-all`}>
+              <img src={`/images/pakete/${bild}.webp`} alt="" loading="lazy" width={1152} height={896} className="aspect-[4/3] w-full rounded-2xl object-cover border border-white/10 mb-5" />
+              <div className="px-3">
               <div className="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4">
                 <Icon className="w-5 h-5 text-cyan-400" />
               </div>
               <h2 className="font-display font-bold text-white text-lg mb-2">{title}</h2>
               <p className="text-white/65 text-base leading-relaxed">{text}</p>
+              </div>
             </div>
           ))}
         </section>
@@ -322,7 +336,11 @@ export default function Webseiten() {
           <h2 className="font-display font-extrabold text-3xl text-white text-center mb-8">
             {isDE ? 'So einfach geht es' : "It's that simple"}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] items-center">
+          <div className={`${GLAS} rounded-3xl p-3`}>
+            <img src="/images/pakete/haendler.webp" alt="" loading="lazy" width={1216} height={832} className="aspect-[3/2] w-full rounded-2xl object-cover" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {schritte.map((s) => (
               <div key={s.nr} className={`${GLAS} rounded-2xl p-5 hover:bg-white/[0.09] transition-all`}>
                 <div className="font-display font-black text-3xl text-cyan-400/40 mb-3">{s.nr}</div>
@@ -330,6 +348,7 @@ export default function Webseiten() {
                 <p className="text-white/60 text-sm leading-relaxed">{s.text}</p>
               </div>
             ))}
+          </div>
           </div>
         </section>
 
