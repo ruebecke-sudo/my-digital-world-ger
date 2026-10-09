@@ -19,6 +19,11 @@ import { useLanguage } from '../context/LanguageContext'
 const FRAGEBOGEN_URL = '/fragebogen/'
 const CONTACT_EMAIL = 'info@my-digital-world.de'
 
+// Frosted glass: translucent surface, strong blur and a light inner edge. The colour glows
+// behind the content (see the page wrapper) are what the glass blurs.
+const GLAS = 'border border-white/15 bg-white/[0.06] backdrop-blur-2xl backdrop-saturate-150 shadow-[0_20px_60px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.14)]'
+const GLAS_KNOPF = 'inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[0.07] px-5 py-3 text-base text-white/90 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] hover:bg-white/[0.12] hover:border-cyan-300/50 transition-colors'
+
 type Paket = {
   name: string
   fuer: string
@@ -107,14 +112,16 @@ export default function Webseiten() {
   const faqs = isDE
     ? [
         { q: 'Ich habe schon eine Webseite. Lohnt sich das?', a: 'Wissen Sie, wie viele Anfragen sie im Monat bringt? Wir messen es. Image Manager Pro gibt es auch einzeln für bestehende Webseiten, etwa mit WordPress.' },
-        { q: 'Warum ist die Einrichtung so günstig?', a: 'Wir arbeiten mit einem erprobten Baukasten und betreuen Ihre Seite danach dauerhaft. Sie zahlen wenig zum Start und eine faire Monatsgebühr für Hosting, Pflege und Statistik.' },
+        { q: 'Warum ist die Einrichtung so günstig?', a: 'Ihre Webseite wird individuell für Sie erstellt, auf Basis bewährter, moderner Technik. Weil wir Ihre Seite danach dauerhaft betreuen, halten wir den Einstieg bewusst günstig. Sie zahlen wenig zum Start und eine faire Monatsgebühr für Hosting, Pflege und Statistik.' },
+        { q: 'Wie lange bin ich gebunden?', a: 'Die Mindestlaufzeit beträgt 6 Monate. Danach ist Ihr Paket monatlich kündbar.' },
         { q: 'Brauche ich einen Cookie-Banner?', a: 'Für unsere Webseiten nicht. Die Statistik arbeitet ohne Cookies, der Hinweis für die Datenschutzerklärung ist schon dabei.' },
         { q: 'Was kostet die Domain?', a: 'Die Domain trägt der Kunde selbst, meist wenige Euro im Jahr. Die Registrierung oder den Umzug übernehmen wir.' },
         { q: 'Was, wenn ich keine Zeit für Bilder habe?', a: 'Im Paket Händler und Premium übernehmen wir die Erstbefüllung. Danach reicht es, einen Ordner hochzuladen.' },
       ]
     : [
         { q: 'I already have a website. Is it worth it?', a: 'Do you know how many enquiries it brings each month? We measure it. Image Manager Pro is also available on its own for existing websites, e.g. WordPress.' },
-        { q: 'Why is the setup so affordable?', a: 'We work with a proven toolkit and look after your site permanently afterwards. You pay little to start and a fair monthly fee for hosting, care and statistics.' },
+        { q: 'Why is the setup so affordable?', a: 'Your website is created individually for you, based on proven, modern technology. Because we look after your site permanently afterwards, we keep the start deliberately affordable. You pay little to start and a fair monthly fee for hosting, care and statistics.' },
+        { q: 'How long am I committed?', a: 'The minimum term is 6 months. After that your package can be cancelled monthly.' },
         { q: 'Do I need a cookie banner?', a: 'Not for our websites. The statistics work without cookies and the privacy policy text is included.' },
         { q: 'What does the domain cost?', a: 'The customer pays for the domain, usually a few euros a year. We handle registration or transfer.' },
         { q: "What if I don't have time for images?", a: 'In the Retail and Premium packages we do the initial upload. After that, uploading a folder is all it takes.' },
@@ -130,7 +137,16 @@ export default function Webseiten() {
     )
 
   return (
-    <div className="pt-24 pb-32">
+    <div className="relative pt-24 pb-32 overflow-hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-0">
+        <div className="absolute top-[12%] -left-24 h-[30rem] w-[30rem] rounded-full bg-cyan-500/40 blur-[110px]" />
+        <div className="absolute top-[22%] right-[-6rem] h-[32rem] w-[32rem] rounded-full bg-purple-600/45 blur-[120px]" />
+        <div className="absolute top-[30%] left-[35%] h-[22rem] w-[22rem] rounded-full bg-fuchsia-500/30 blur-[110px]" />
+        <div className="absolute top-[48%] -left-20 h-[26rem] w-[26rem] rounded-full bg-purple-500/35 blur-[120px]" />
+        <div className="absolute top-[62%] right-[5%] h-[28rem] w-[28rem] rounded-full bg-cyan-400/35 blur-[120px]" />
+        <div className="absolute top-[82%] left-[25%] h-[26rem] w-[26rem] rounded-full bg-fuchsia-500/25 blur-[120px]" />
+      </div>
+
       {/* HERO */}
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
@@ -153,18 +169,18 @@ export default function Webseiten() {
             <a href="#pakete" className="btn-primary inline-flex items-center gap-2 text-base">
               {isDE ? 'Pakete ansehen' : 'View packages'} <ArrowRight className="w-4 h-4" />
             </a>
-            <a href={`${FRAGEBOGEN_URL}index.html`} className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-base text-white/85 hover:border-cyan-400/50 hover:text-white transition-colors">
+            <a href={`${FRAGEBOGEN_URL}index.html`} className={GLAS_KNOPF}>
               <ClipboardList className="w-4 h-4" /> {isDE ? 'Fragebogen ausfüllen' : 'Fill in the questionnaire'}
             </a>
           </div>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-16">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-16">
         {/* ARGUMENTS */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {argumente.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="glass rounded-2xl border border-white/5 p-6 hover:border-cyan-500/20 transition-all">
+            <div key={title} className={`${GLAS} rounded-3xl p-6 hover:bg-white/[0.09] transition-all`}>
               <div className="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4">
                 <Icon className="w-5 h-5 text-cyan-400" />
               </div>
@@ -181,7 +197,7 @@ export default function Webseiten() {
               {isDE ? 'Drei Pakete, ein Ziel: mehr Anfragen' : 'Three packages, one goal: more enquiries'}
             </h2>
             <p className="text-white/65">
-              {isDE ? 'Alle Preise netto, zzgl. MwSt.' : 'All prices net, excl. VAT.'}
+              {isDE ? 'Alle Preise netto, zzgl. MwSt. · Mindestlaufzeit 6 Monate, danach monatlich kündbar' : 'All prices net, excl. VAT. · Minimum term 6 months, then cancellable monthly'}
             </p>
           </div>
 
@@ -189,7 +205,7 @@ export default function Webseiten() {
             {pakete.map((p, i) => (
               <div
                 key={p.name}
-                className={`relative glass rounded-3xl p-7 flex flex-col ${p.highlight ? 'border border-cyan-400/40 shadow-[0_0_60px_rgba(34,211,238,0.12)] md:-translate-y-2' : 'border border-white/10'}`}
+                className={`relative ${GLAS} rounded-3xl p-7 flex flex-col ${p.highlight ? '!border-cyan-300/50 !bg-white/[0.09] md:-translate-y-2 ring-1 ring-cyan-300/20' : ''}`}
               >
                 {p.highlight && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-cyan-400 px-3 py-1 text-xs font-bold text-slate-900 uppercase tracking-wider">
@@ -202,8 +218,11 @@ export default function Webseiten() {
                   <span className="font-display font-black text-4xl text-cyan-400">{p.monatlich}</span>
                   <span className="text-white/60"> {isDE ? '/ Monat' : '/ month'}</span>
                 </div>
-                <p className="text-white/70 text-sm mb-6">
+                <p className="text-white/70 text-sm">
                   {isDE ? `einmalig ${p.einmalig} Einrichtung` : `one-off ${p.einmalig} setup`}
+                </p>
+                <p className="text-white/50 text-xs mt-1 mb-6">
+                  {isDE ? '6 Monate Mindestlaufzeit, danach monatlich kündbar' : '6-month minimum term, then cancellable monthly'}
                 </p>
                 <ul className="space-y-2.5 mb-8 flex-1">
                   {leistungen.filter((row) => row[i + 1] !== false).map((row) => (
@@ -215,7 +234,7 @@ export default function Webseiten() {
                 </ul>
                 <a
                   href={`${FRAGEBOGEN_URL}index.html`}
-                  className={p.highlight ? 'btn-primary inline-flex items-center justify-center gap-2 text-base' : 'inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-base text-white/85 hover:border-cyan-400/50 hover:text-white transition-colors'}
+                  className={p.highlight ? 'btn-primary inline-flex items-center justify-center gap-2 text-base' : GLAS_KNOPF}
                 >
                   {isDE ? `${p.name} anfragen` : `Request ${p.name}`} <ArrowRight className="w-4 h-4" />
                 </a>
@@ -224,7 +243,7 @@ export default function Webseiten() {
           </div>
 
           {/* COMPARISON TABLE */}
-          <div className="glass rounded-3xl border border-white/5 mt-10 overflow-x-auto">
+          <div className={`${GLAS} rounded-3xl mt-10 overflow-x-auto`}>
             <table className="w-full min-w-[640px] text-left">
               <caption className="sr-only">{isDE ? 'Leistungen im Vergleich' : 'Features compared'}</caption>
               <thead>
@@ -257,13 +276,13 @@ export default function Webseiten() {
           </div>
           <p className="text-white/50 text-sm text-center mt-4">
             {isDE
-              ? 'Domainkosten trägt der Kunde. Weitere Unterseiten, Sprachen oder Zusatzwünsche nach Absprache.'
-              : 'Domain costs are borne by the customer. Additional pages, languages or extras by arrangement.'}
+              ? 'Mindestlaufzeit 6 Monate, danach monatlich kündbar. Domainkosten trägt der Kunde. Weitere Unterseiten, Sprachen oder Zusatzwünsche nach Absprache.'
+              : 'Minimum term 6 months, then cancellable monthly. Domain costs are borne by the customer. Additional pages, languages or extras by arrangement.'}
           </p>
         </section>
 
         {/* EXAMPLE */}
-        <section className="glass rounded-3xl border border-purple-500/20 p-8 md:p-12 relative overflow-hidden">
+        <section className={`${GLAS} rounded-3xl p-8 md:p-12 relative overflow-hidden`}>
           <div className="absolute top-0 right-0 w-80 h-80 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none" />
           <div className="relative grid md:grid-cols-[1.2fr_1fr] gap-8 items-center">
             <div>
@@ -284,7 +303,7 @@ export default function Webseiten() {
                 ? ['300+ Bilder, nach Marke und Raum sortiert', 'Neue Marke in wenigen Minuten online', 'Kontakt-Popup und Terminbuchung', 'Statistik ohne Cookie-Banner']
                 : ['300+ images, sorted by brand and room', 'New brand online in minutes', 'Contact popup and appointment booking', 'Statistics without a cookie banner']
               ).map((punkt) => (
-                <li key={punkt} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/80">
+                <li key={punkt} className="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.07] px-4 py-3 text-white/85 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
                   <CheckCircle className="w-5 h-5 text-cyan-400 shrink-0" /> {punkt}
                 </li>
               ))}
@@ -299,7 +318,7 @@ export default function Webseiten() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {schritte.map((s) => (
-              <div key={s.nr} className="glass rounded-2xl border border-white/5 p-5 hover:border-cyan-500/20 transition-all">
+              <div key={s.nr} className={`${GLAS} rounded-2xl p-5 hover:bg-white/[0.09] transition-all`}>
                 <div className="font-display font-black text-3xl text-cyan-400/40 mb-3">{s.nr}</div>
                 <h3 className="font-display font-bold text-white text-base mb-2">{s.title}</h3>
                 <p className="text-white/60 text-sm leading-relaxed">{s.text}</p>
@@ -315,7 +334,7 @@ export default function Webseiten() {
           </h2>
           <div className="space-y-3">
             {faqs.map((f) => (
-              <details key={f.q} className="glass rounded-2xl border border-white/5 p-5 group">
+              <details key={f.q} className={`${GLAS} rounded-2xl p-5 group`}>
                 <summary className="cursor-pointer list-none flex items-center justify-between gap-4 font-display font-semibold text-white">
                   {f.q}
                   <ArrowRight className="w-4 h-4 text-cyan-400 shrink-0 transition-transform group-open:rotate-90" />
@@ -327,7 +346,7 @@ export default function Webseiten() {
         </section>
 
         {/* CTA */}
-        <section className="glass rounded-3xl border border-cyan-500/20 p-8 md:p-12 text-center">
+        <section className={`${GLAS} rounded-3xl p-8 md:p-12 text-center`}>
           <h2 className="font-display font-extrabold text-2xl md:text-3xl text-white mb-3">
             {isDE ? 'Bereit für Ihre neue Webseite?' : 'Ready for your new website?'}
           </h2>
@@ -340,10 +359,10 @@ export default function Webseiten() {
             <a href={`${FRAGEBOGEN_URL}index.html`} className="btn-primary inline-flex items-center gap-2 text-base">
               <ClipboardList className="w-5 h-5" /> {isDE ? 'Fragebogen ausfüllen' : 'Fill in the questionnaire'}
             </a>
-            <Link href="/kontakt" className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-base text-white/85 hover:border-cyan-400/50 hover:text-white transition-colors">
+            <Link href="/kontakt" className={GLAS_KNOPF}>
               <MessageCircle className="w-5 h-5" /> {isDE ? 'Kontakt aufnehmen' : 'Get in touch'}
             </Link>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 rounded-xl border border-white/15 px-5 py-3 text-base text-white/85 hover:border-cyan-400/50 hover:text-white transition-colors">
+            <a href={`mailto:${CONTACT_EMAIL}`} className={GLAS_KNOPF}>
               <Mail className="w-5 h-5" /> {CONTACT_EMAIL}
             </a>
           </div>
