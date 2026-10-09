@@ -4,6 +4,7 @@ import {
   ArrowRight,
   BarChart3,
   CheckCircle,
+  ExternalLink,
   ClipboardList,
   Images,
   Mail,
@@ -18,6 +19,8 @@ import { useLanguage } from '../context/LanguageContext'
 // Questionnaire and PDFs live statically in public/fragebogen/ (built in the webseiten-baukasten project).
 const FRAGEBOGEN_URL = '/fragebogen/'
 const CONTACT_EMAIL = 'info@my-digital-world.de'
+// Reference customer (approved 09.10.2026). Switch to https://www.zb-interieur.de once the new site runs there.
+const REFERENZ_URL = 'https://zb-interieur.netlify.app'
 
 // Frosted glass: translucent surface, strong blur and a light inner edge. The colour glows
 // behind the content (see the page wrapper) are what the glass blurs.
@@ -287,16 +290,19 @@ export default function Webseiten() {
           <div className="relative grid md:grid-cols-[1.2fr_1fr] gap-8 items-center">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-4 uppercase tracking-wider">
-                <Rocket className="w-3.5 h-3.5" /> {isDE ? 'Aus der Praxis' : 'In practice'}
+                <Rocket className="w-3.5 h-3.5" /> {isDE ? 'Referenz' : 'Reference'}
               </div>
               <h2 className="font-display font-extrabold text-2xl md:text-3xl text-white mb-4">
-                {isDE ? 'Einrichtungshaus mit über 300 Produktbildern' : 'Furniture store with over 300 product images'}
+                {isDE ? 'ZB Interieur, Homburg: über 300 Produktbilder selbst gepflegt' : 'ZB Interieur, Homburg: over 300 product images, self-maintained'}
               </h2>
               <p className="text-white/70 leading-relaxed">
                 {isDE
-                  ? 'Ein Einrichtungshaus pflegt seine Marken- und Produktbilder selbst mit Image Manager Pro. Neue Kollektionen kommen per Ordner-Upload online und erscheinen automatisch auf der Markenseite und in den Raum-Galerien der Startseite. Anfragen laufen über ein Kontakt-Popup, und jeden Monat zeigt der Bericht, wie viele davon über die Webseite kamen.'
-                  : 'A furniture store maintains its brand and product images itself with Image Manager Pro. New collections go online via folder upload and appear automatically on the brands page and in the room galleries on the home page. Enquiries come in via a contact popup, and every month the report shows how many came through the website.'}
+                  ? 'Das Einrichtungshaus ZB Interieur in Homburg (Saarland) zeigt Designmöbel internationaler Marken und pflegt seine Marken- und Produktbilder selbst mit Image Manager Pro. Neue Kollektionen kommen per Ordner-Upload online und erscheinen automatisch auf der Markenseite und in den Raum-Galerien der Startseite. Anfragen laufen über ein Kontakt-Popup, und jeden Monat zeigt der Bericht, wie viele davon über die Webseite kamen.'
+                  : 'The furniture store ZB Interieur in Homburg (Saarland, Germany) presents designer furniture from international brands and maintains its brand and product images itself with Image Manager Pro. New collections go online via folder upload and appear automatically on the brands page and in the room galleries on the home page. Enquiries come in via a contact popup, and every month the report shows how many came through the website.'}
               </p>
+              <a href={REFERENZ_URL} target="_blank" rel="noopener" className={`${GLAS_KNOPF} mt-6`}>
+                {isDE ? 'Webseite von ZB Interieur ansehen' : 'Visit the ZB Interieur website'} <ExternalLink className="w-4 h-4" />
+              </a>
             </div>
             <ul className="space-y-3">
               {(isDE
