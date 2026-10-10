@@ -32,10 +32,17 @@ export function VideoPopup({ onClose }: { onClose: () => void }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#040810]/60 p-3 backdrop-blur-md sm:p-6"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#040810] p-3 sm:p-6"
       role="presentation"
       onClick={onClose}
     >
+      {/* Strongly blurred still from the video: light and shapes for the glass to refract (4 KB) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 scale-110 bg-cover bg-center"
+        style={{ backgroundImage: 'url(/hero_video_hintergrund.webp)', filter: 'blur(24px) saturate(1.2)' }}
+      />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#040810]/30 via-[#040810]/10 to-[#040810]/45" />
       <div
         role="dialog"
         aria-modal="true"
