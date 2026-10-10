@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'wouter'
-import { Menu, X, ChevronDown, Zap } from 'lucide-react'
+import { Menu, X, ChevronDown, Zap, Handshake } from 'lucide-react'
 
 const leistungenLinks = [
   { href: '/aktionspreis-fuer-webseiten', label: 'Website Design' },
@@ -48,7 +48,7 @@ export function Navbar() {
   }, [])
 
   const isLeistungActive = leistungenLinks.some(l => l.href === location)
-  const isEmpfehlungActive = empfehlungenLinks.some(l => l.href === location)
+  const isEmpfehlungActive = empfehlungenLinks.some(l => l.href === location) || location === '/partnerprogramm'
 
   return (
     <nav
@@ -130,7 +130,8 @@ export function Navbar() {
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${empfehlungenOpen ? 'rotate-180' : ''}`} />
               </button>
               {empfehlungenOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 glass rounded-xl border border-cyan-500/10 shadow-xl shadow-black/30 py-2">
+                <div className="absolute top-full left-0 mt-2 w-72 glass-frost rounded-2xl shadow-xl shadow-black/30 py-2">
+                  <p className="px-4 pt-1 pb-1 text-[11px] font-semibold uppercase tracking-wider text-white/45">Deals & Shop</p>
                   {empfehlungenLinks.map(link => (
                     <Link key={link.href} href={link.href} data-testid={`link-dropdown-${link.label.toLowerCase().replace(/\s/g,'-')}`}>
                       <span
@@ -142,6 +143,21 @@ export function Navbar() {
                       </span>
                     </Link>
                   ))}
+                  <p className="mt-2 border-t border-white/10 px-4 pt-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-white/45">Partnerprogramm</p>
+                  <Link href="/partnerprogramm" data-testid="link-dropdown-partnerprogramm">
+                    <span
+                      onClick={() => setEmpfehlungenOpen(false)}
+                      className="mx-2 mt-1 mb-1 flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-300/25 bg-gradient-to-r from-cyan-500/15 to-purple-600/20 px-3 py-2.5 transition hover:border-cyan-300/50 hover:from-cyan-500/25 hover:to-purple-600/30"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-cyan-300/30 bg-cyan-400/15">
+                        <Handshake className="h-4 w-4 text-cyan-300" />
+                      </span>
+                      <span className="leading-tight">
+                        <span className="block text-[15px] font-semibold text-white">Partner werden</span>
+                        <span className="block text-xs text-cyan-200/80">30 % mitverdienen</span>
+                      </span>
+                    </span>
+                  </Link>
                 </div>
               )}
             </div>
@@ -203,6 +219,15 @@ export function Navbar() {
                   </span>
                 </Link>
               ))}
+              <Link href="/partnerprogramm">
+                <span onClick={() => setIsOpen(false)} className="mt-2 ml-3 flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-300/25 bg-gradient-to-r from-cyan-500/15 to-purple-600/20 px-3 py-2.5">
+                  <Handshake className="h-4 w-4 shrink-0 text-cyan-300" />
+                  <span className="leading-tight">
+                    <span className="block text-base font-semibold text-white">Partnerprogramm</span>
+                    <span className="block text-xs text-cyan-200/80">30 % mitverdienen</span>
+                  </span>
+                </span>
+              </Link>
             </div>
             <a href="https://mdw-bild-videogenerator.netlify.app" target="_blank" rel="noopener noreferrer"><span onClick={() => setIsOpen(false)} className="flex items-center gap-2 py-2 text-base font-medium text-orange-400 hover:text-orange-300 cursor-pointer">MDW-IV-Generator <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-orange-500 text-black leading-none">NEU</span></span></a>
             <Link href="/kontakt"><span onClick={() => setIsOpen(false)} className="block py-2 text-base font-medium text-white/70 hover:text-white cursor-pointer">Kontakt</span></Link>

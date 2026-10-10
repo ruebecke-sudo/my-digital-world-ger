@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'wouter'
-import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2, X, CreditCard } from 'lucide-react'
+import { ExternalLink, CheckCircle, Copy, Check, Info, Download, Maximize2, X, CreditCard, Handshake, ArrowRight } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 interface Recommendation {
@@ -223,6 +223,52 @@ export default function Empfehlungen() {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Partnerprogramm als eigene Rubrik */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-2 mb-16">
+        <div className="glass-frost rounded-3xl p-6 md:p-10 relative overflow-hidden">
+          <div aria-hidden className="pointer-events-none absolute -top-24 -left-20 h-80 w-80 rounded-full bg-cyan-500/25 blur-[100px]" />
+          <div aria-hidden className="pointer-events-none absolute -right-20 -bottom-24 h-80 w-80 rounded-full bg-purple-600/30 blur-[100px]" />
+          <div className="relative grid gap-8 md:grid-cols-[1.2fr_1fr] items-center">
+            <div>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold mb-4">
+                <Handshake className="w-3.5 h-3.5" /> {isDE ? 'Partnerprogramm' : 'Partner programme'}
+              </span>
+              <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-3">
+                {isDE ? <>Empfehlen Sie uns und verdienen Sie <span className="gradient-text">30 % mit</span></> : <>Recommend us and earn <span className="gradient-text">30 %</span></>}
+              </h2>
+              <p className="text-white/70 leading-relaxed mb-6">
+                {isDE
+                  ? 'Sie kennen Selbständige, Händler oder Handwerker, die eine moderne Webseite oder eine einfache Bildverwaltung brauchen? Für jeden vermittelten Kunden erhalten Sie eine Provision. Kostenlos und unverbindlich.'
+                  : 'Do you know self-employed people, retailers or trades who need a modern website or simple image management? You earn a commission for every customer you refer. Free and non-binding.'}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/partnerprogramm#anmelden">
+                  <button className="btn-primary inline-flex items-center gap-2 text-base">
+                    {isDE ? 'Jetzt Partner werden' : 'Become a partner'} <ArrowRight className="w-4 h-4" />
+                  </button>
+                </Link>
+                <Link href="/partnerprogramm">
+                  <button className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/[0.07] px-5 py-3 text-base text-white/90 backdrop-blur-xl hover:bg-white/[0.12] hover:border-cyan-300/50 transition-colors">
+                    {isDE ? 'Alle Details' : 'All details'}
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <ul className="space-y-3">
+              {(isDE
+                ? [['30 %', 'auf alle Monatsgebühren, 24 Monate lang'], ['15 %', 'auf die Einrichtung einer Webseite'], ['30 %', 'auf die Image-Manager-Dauerlizenz']]
+                : [['30 %', 'of all monthly fees, for 24 months'], ['15 %', 'of a website setup fee'], ['30 %', 'of the Image Manager lifetime licence']]
+              ).map(([wert, text]) => (
+                <li key={text} className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/[0.07] px-5 py-4 backdrop-blur-xl">
+                  <span className="font-display font-black text-3xl text-cyan-300 w-20 shrink-0">{wert}</span>
+                  <span className="text-white/80">{text}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
