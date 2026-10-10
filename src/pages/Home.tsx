@@ -1,10 +1,20 @@
+import { useState } from 'react'
 import { Link } from 'wouter'
-import { ArrowRight, Monitor, Share2, Bot, Video, CheckCircle2, Star } from 'lucide-react'
+import { ArrowRight, Monitor, Share2, Bot, Video, CheckCircle2, Star, Play } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
+import { VideoPopup } from '../components/VideoPopup'
+
+// The intro video opens once per page load (not again when navigating back inside the site).
+let introGezeigt = false
 
 export default function Home() {
   const { lang } = useLanguage()
   const isDE = lang === 'de'
+  const [videoOffen, setVideoOffen] = useState(() => {
+    const zeigen = !introGezeigt
+    introGezeigt = true
+    return zeigen
+  })
 
   const heroServices = isDE
     ? [
@@ -56,10 +66,8 @@ export default function Home() {
 
   return (
     <div className="overflow-x-hidden">
-      {/* TOP VIDEO */}
-      <div className="w-full pt-16">
-        <video src="/hero_video.mp4" autoPlay muted loop playsInline className="w-full h-auto block" />
-      </div>
+      {/* INTRO VIDEO as glass popup */}
+      {videoOffen ? <VideoPopup onClose={() => setVideoOffen(false)} /> : null}
 
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col justify-center pt-16 bg-grid">
@@ -90,6 +98,9 @@ export default function Home() {
                   {isDE ? 'Zu den Programmen' : 'See programs'} <ArrowRight className="w-4 h-4" />
                 </button>
               </Link>
+              <button type="button" onClick={() => setVideoOffen(true)} className="btn-outline flex items-center gap-2 text-base">
+                <Play className="w-4 h-4" /> {isDE ? 'Video ansehen' : 'Watch video'}
+              </button>
             </div>
           </div>
 
