@@ -34,6 +34,18 @@
       <input type="checkbox" name="dsgvoChecked" />
     </form>
 
+    <form name="partner-anmeldung" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="text" name="firma" />
+      <input type="email" name="email" />
+      <input type="tel" name="telefon" />
+      <input type="text" name="webseite" />
+      <input type="text" name="wunschcode" />
+      <textarea name="kanal"></textarea>
+      <input type="checkbox" name="einverstanden" />
+      <input type="text" name="bot-field" />
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

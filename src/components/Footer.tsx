@@ -17,6 +17,7 @@ export function Footer() {
         { href: '/digitale-transformation', label: 'Digitale Transformation' },
         { href: '/comic-stil', label: 'Comicstil' },
         { href: '/image-manager-pro', label: 'Image Manager Pro' },
+        { href: '/partnerprogramm', label: 'Partnerprogramm' },
         { href: '/programme', label: 'Zu den Programmen' },
       ]
     : [
@@ -28,6 +29,7 @@ export function Footer() {
         { href: '/digitale-transformation', label: 'Digital Transformation' },
         { href: '/comic-stil', label: 'Comic Style' },
         { href: '/image-manager-pro', label: 'Image Manager Pro' },
+        { href: '/partnerprogramm', label: 'Partner programme' },
         { href: '/programme', label: 'Tools & Programs' },
       ]
 

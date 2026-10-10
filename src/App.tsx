@@ -26,6 +26,7 @@ import KurzvideoDanke from './pages/KurzvideoDanke'
 import KurzvideosReels from './pages/KurzvideosReels'
 import Leistungen from './pages/Leistungen'
 import ImageManagerPro from './pages/ImageManagerPro'
+import Partnerprogramm from './pages/Partnerprogramm'
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/aktionspreis-fuer-webseiten" component={Webseiten} />
           <Route path="/kurzvideos-reels" component={KurzvideosReels} />
           <Route path="/image-manager-pro" component={ImageManagerPro} />
+          <Route path="/partnerprogramm" component={Partnerprogramm} />
           <Route path="/soc-media-marketing" component={SocMediaMarketing} />
           <Route path="/digitale-praesentationen" component={Praesentationen} />
           <Route path="/ki-agenten" component={KiAgenten} />

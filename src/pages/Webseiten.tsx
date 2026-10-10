@@ -301,6 +301,12 @@ export default function Webseiten() {
               {isDE ? 'So sieht eine fertige Webseite aus: Beispiel Malerbetrieb' : 'See a finished website: example painter'} <ExternalLink className="w-4 h-4" />
             </a>
           </p>
+          <p className="text-white/60 text-sm text-center mt-4">
+            {isDE ? 'Sie kennen jemanden, der eine Webseite braucht? ' : 'Know someone who needs a website? '}
+            <Link href="/partnerprogramm" className="text-cyan-300 hover:text-cyan-200 font-semibold">
+              {isDE ? 'Mit unserem Partnerprogramm 30 % mitverdienen →' : 'Earn 30 % with our partner programme →'}
+            </Link>
+          </p>
           <p className="text-white/50 text-sm text-center mt-4">
             {isDE
               ? 'Mindestlaufzeit 6 Monate, danach monatlich kündbar. Domainkosten trägt der Kunde. Weitere Unterseiten, Sprachen oder Zusatzwünsche nach Absprache.'
