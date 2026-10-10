@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'wouter'
-import { ArrowRight, BadgePercent, CheckCircle, Handshake, Megaphone, Repeat, Send, Wallet } from 'lucide-react'
+import { ArrowRight, BadgePercent, CheckCircle, Handshake, Megaphone, Repeat, Send, Wallet, X } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 
 const CONTACT_EMAIL = 'info@my-digital-world.de'
@@ -22,6 +23,26 @@ export default function Partnerprogramm() {
   const { lang } = useLanguage()
   const isDE = lang === 'de'
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'error'>('idle')
+  // Sign-up form as a glass popup; a link to /partnerprogramm#anmelden opens it directly.
+  const [formOffen, setFormOffen] = useState(() => typeof window !== 'undefined' && window.location.hash === '#anmelden')
+
+  useEffect(() => {
+    const onHash = () => { if (window.location.hash === '#anmelden') setFormOffen(true) }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  useEffect(() => {
+    if (!formOffen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setFormOffen(false) }
+    const overflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = overflow
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [formOffen])
 
   useEffect(() => {
     const previous = document.title
@@ -122,9 +143,9 @@ export default function Partnerprogramm() {
               : `For every customer you refer you receive ${PROVISION_MONATLICH} % of their monthly fees for ${MONATE} months and ${PROVISION_EINRICHTUNG} % of the setup fee. Free and non-binding.`}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="#anmelden" className="btn-primary inline-flex items-center gap-2 text-base">
+            <button type="button" onClick={() => setFormOffen(true)} className="btn-primary inline-flex items-center gap-2 text-base">
               {isDE ? 'Jetzt Partner werden' : 'Become a partner'} <ArrowRight className="w-4 h-4" />
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -217,56 +238,18 @@ export default function Partnerprogramm() {
           </ul>
         </section>
 
-        {/* SIGN-UP */}
-        <section id="anmelden" className={`scroll-mt-28 ${GLAS} rounded-3xl p-6 md:p-10 max-w-3xl mx-auto`}>
-          <h2 className="font-display font-extrabold text-2xl md:text-3xl text-white mb-2">
-            {isDE ? 'Jetzt Partner werden' : 'Become a partner'}
+        {/* SIGN-UP call to action (form opens as popup) */}
+        <section id="anmelden" className={`scroll-mt-28 ${GLAS} rounded-3xl p-8 md:p-12 text-center relative overflow-hidden`}>
+          <div aria-hidden className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-cyan-400/20 blur-3xl" />
+          <h2 className="relative font-display font-extrabold text-2xl md:text-4xl text-white mb-3">
+            {isDE ? 'Bereit, mitzuverdienen?' : 'Ready to earn with us?'}
           </h2>
-          <p className="text-white/65 mb-8">
-            {isDE ? 'Kostenlos und unverbindlich. Wir melden uns innerhalb von zwei Werktagen mit Ihrem Partnercode.' : 'Free and non-binding. We will get back to you within two working days with your partner code.'}
+          <p className="relative text-white/70 max-w-xl mx-auto mb-8">
+            {isDE ? 'Die Anmeldung dauert zwei Minuten, ist kostenlos und unverbindlich.' : 'Signing up takes two minutes, is free and non-binding.'}
           </p>
-
-          {status === 'ok' ? (
-            <div role="status" className="py-10 text-center">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10 text-3xl text-cyan-300">✓</div>
-              <h3 className="font-display font-bold text-2xl text-white mt-4">{isDE ? 'Vielen Dank!' : 'Thank you!'}</h3>
-              <p className="text-white/65 mt-2">{isDE ? 'Ihre Anmeldung ist angekommen. Wir melden uns in Kürze.' : 'Your application has arrived. We will be in touch shortly.'}</p>
-            </div>
-          ) : (
-            <form name="partner-anmeldung" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={absenden} className="space-y-4">
-              <input type="hidden" name="form-name" value="partner-anmeldung" />
-              <p className="hidden"><label>Nicht ausfüllen: <input name="bot-field" tabIndex={-1} /></label></p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="block"><span className={LABEL}>{isDE ? 'Name *' : 'Name *'}</span><input required name="name" autoComplete="name" className={FELD} /></label>
-                <label className="block"><span className={LABEL}>{isDE ? 'Firma' : 'Company'}</span><input name="firma" autoComplete="organization" className={FELD} /></label>
-                <label className="block"><span className={LABEL}>E-Mail *</span><input required type="email" name="email" autoComplete="email" className={FELD} /></label>
-                <label className="block"><span className={LABEL}>{isDE ? 'Telefon' : 'Phone'}</span><input type="tel" name="telefon" autoComplete="tel" className={FELD} /></label>
-                <label className="block"><span className={LABEL}>{isDE ? 'Webseite' : 'Website'}</span><input name="webseite" placeholder="www.…" className={FELD} /></label>
-                <label className="block"><span className={LABEL}>{isDE ? 'Wunsch-Partnercode' : 'Preferred partner code'}</span><input name="wunschcode" placeholder={isDE ? 'z. B. MUELLER' : 'e.g. MUELLER'} className={FELD} /></label>
-              </div>
-              <label className="block">
-                <span className={LABEL}>{isDE ? 'Wie möchten Sie uns empfehlen? *' : 'How would you like to recommend us? *'}</span>
-                <textarea required name="kanal" rows={4} placeholder={isDE ? 'z. B. an meine Kunden als Steuerberater, im Handwerkerverband, über Social Media …' : 'e.g. to my clients as a tax advisor, in a trade association, on social media …'} className={`${FELD} resize-y`} />
-              </label>
-              <label className="flex items-start gap-3 rounded-xl border border-white/15 bg-white/[0.05] p-3 text-sm text-white/70">
-                <input type="checkbox" required name="einverstanden" value="ja" className="mt-1 h-4 w-4 accent-cyan-400" />
-                <span>
-                  {isDE
-                    ? <>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anmeldung verwendet werden. Details in der <Link href="/datenschutz" className="underline">Datenschutzerklärung</Link>. *</>
-                    : <>I agree that my details are used to process the application. Details in the <Link href="/datenschutz" className="underline">privacy policy</Link>. *</>}
-                </span>
-              </label>
-              {status === 'error' ? (
-                <p role="alert" className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
-                  {isDE ? 'Das hat leider nicht geklappt. Bitte schreiben Sie uns an ' : 'Something went wrong. Please write to '}
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="underline">{CONTACT_EMAIL}</a>.
-                </p>
-              ) : null}
-              <button type="submit" disabled={status === 'sending'} className="btn-primary inline-flex items-center gap-2 text-base disabled:opacity-60">
-                {status === 'sending' ? (isDE ? 'Wird gesendet …' : 'Sending …') : (isDE ? 'Anmeldung senden' : 'Send application')} <Send className="w-4 h-4" />
-              </button>
-            </form>
-          )}
+          <button type="button" onClick={() => setFormOffen(true)} className="relative btn-primary inline-flex items-center gap-2 text-base">
+            {isDE ? 'Jetzt Partner werden' : 'Become a partner'} <ArrowRight className="w-4 h-4" />
+          </button>
         </section>
 
         {/* FAQ */}
@@ -287,6 +270,105 @@ export default function Partnerprogramm() {
           </div>
         </section>
       </div>
+
+      {formOffen
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[100] flex items-end justify-center bg-[#040810]/55 backdrop-blur-xl sm:items-center sm:p-6"
+              role="presentation"
+              onClick={() => setFormOffen(false)}
+            >
+              <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute top-[10%] left-[8%] h-80 w-80 rounded-full bg-cyan-500/30 blur-[100px]" />
+                <div className="absolute right-[6%] bottom-[8%] h-96 w-96 rounded-full bg-purple-600/35 blur-[110px]" />
+              </div>
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="partner-popup-titel"
+                onClick={(e) => e.stopPropagation()}
+                className="glass-frost relative grid w-full max-w-5xl max-h-[100dvh] overflow-y-auto rounded-t-[28px] sm:max-h-[calc(100dvh-3rem)] sm:rounded-[28px] md:grid-cols-[0.8fr_1.2fr]"
+              >
+                <button
+                  type="button"
+                  onClick={() => setFormOffen(false)}
+                  className="absolute top-4 right-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-black/40 text-white backdrop-blur transition hover:bg-black/60"
+                  aria-label={isDE ? 'Anmeldung schließen' : 'Close sign-up'}
+                >
+                  <X className="h-5 w-5" />
+                </button>
+
+                <aside className="relative bg-gradient-to-br from-cyan-500/25 via-cyan-500/10 to-purple-600/30 p-6 md:p-8">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-cyan-200">
+                    <Handshake className="h-3.5 w-3.5" /> {isDE ? 'Partnerprogramm' : 'Partner programme'}
+                  </div>
+                  <h2 id="partner-popup-titel" className="mt-4 font-display text-2xl font-extrabold leading-tight text-white md:text-3xl">
+                    {isDE ? 'Jetzt Partner werden' : 'Become a partner'}
+                  </h2>
+                  <p className="mt-2 text-sm text-white/70">
+                    {isDE ? 'Kostenlos und unverbindlich. Wir melden uns innerhalb von zwei Werktagen mit Ihrem Partnercode.' : 'Free and non-binding. We will get back to you within two working days with your partner code.'}
+                  </p>
+                  <ul className="mt-6 space-y-2.5">
+                    {konditionen.map(({ wert, titel }) => (
+                      <li key={titel} className="flex items-baseline gap-3 rounded-2xl border border-white/15 bg-white/[0.07] px-4 py-3 backdrop-blur-xl">
+                        <span className="font-display text-2xl font-black text-cyan-300">{wert}</span>
+                        <span className="text-sm text-white/80">{titel}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-5 text-sm text-white/60">
+                    {isDE ? `Beispiel: Ein vermittelter Händler bringt Ihnen ${euro(bspGesamt)}.` : `Example: one referred retailer earns you ${euro(bspGesamt)}.`}
+                  </p>
+                </aside>
+
+                <div className="p-6 md:p-8">
+                {status === 'ok' ? (
+                  <div role="status" className="py-10 text-center">
+                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/10 text-3xl text-cyan-300">✓</div>
+                    <h3 className="font-display font-bold text-2xl text-white mt-4">{isDE ? 'Vielen Dank!' : 'Thank you!'}</h3>
+                    <p className="text-white/65 mt-2">{isDE ? 'Ihre Anmeldung ist angekommen. Wir melden uns in Kürze.' : 'Your application has arrived. We will be in touch shortly.'}</p>
+                  </div>
+                ) : (
+                  <form name="partner-anmeldung" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={absenden} className="space-y-4">
+                    <input type="hidden" name="form-name" value="partner-anmeldung" />
+                    <p className="hidden"><label>Nicht ausfüllen: <input name="bot-field" tabIndex={-1} /></label></p>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <label className="block"><span className={LABEL}>{isDE ? 'Name *' : 'Name *'}</span><input required name="name" autoComplete="name" className={FELD} /></label>
+                      <label className="block"><span className={LABEL}>{isDE ? 'Firma' : 'Company'}</span><input name="firma" autoComplete="organization" className={FELD} /></label>
+                      <label className="block"><span className={LABEL}>E-Mail *</span><input required type="email" name="email" autoComplete="email" className={FELD} /></label>
+                      <label className="block"><span className={LABEL}>{isDE ? 'Telefon' : 'Phone'}</span><input type="tel" name="telefon" autoComplete="tel" className={FELD} /></label>
+                      <label className="block"><span className={LABEL}>{isDE ? 'Webseite' : 'Website'}</span><input name="webseite" placeholder="www.…" className={FELD} /></label>
+                      <label className="block"><span className={LABEL}>{isDE ? 'Wunsch-Partnercode' : 'Preferred partner code'}</span><input name="wunschcode" placeholder={isDE ? 'z. B. MUELLER' : 'e.g. MUELLER'} className={FELD} /></label>
+                    </div>
+                    <label className="block">
+                      <span className={LABEL}>{isDE ? 'Wie möchten Sie uns empfehlen? *' : 'How would you like to recommend us? *'}</span>
+                      <textarea required name="kanal" rows={4} placeholder={isDE ? 'z. B. an meine Kunden als Steuerberater, im Handwerkerverband, über Social Media …' : 'e.g. to my clients as a tax advisor, in a trade association, on social media …'} className={`${FELD} resize-y`} />
+                    </label>
+                    <label className="flex items-start gap-3 rounded-xl border border-white/15 bg-white/[0.05] p-3 text-sm text-white/70">
+                      <input type="checkbox" required name="einverstanden" value="ja" className="mt-1 h-4 w-4 accent-cyan-400" />
+                      <span>
+                        {isDE
+                          ? <>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anmeldung verwendet werden. Details in der <Link href="/datenschutz" className="underline">Datenschutzerklärung</Link>. *</>
+                          : <>I agree that my details are used to process the application. Details in the <Link href="/datenschutz" className="underline">privacy policy</Link>. *</>}
+                      </span>
+                    </label>
+                    {status === 'error' ? (
+                      <p role="alert" className="rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                        {isDE ? 'Das hat leider nicht geklappt. Bitte schreiben Sie uns an ' : 'Something went wrong. Please write to '}
+                        <a href={`mailto:${CONTACT_EMAIL}`} className="underline">{CONTACT_EMAIL}</a>.
+                      </p>
+                    ) : null}
+                    <button type="submit" disabled={status === 'sending'} className="btn-primary inline-flex items-center gap-2 text-base disabled:opacity-60">
+                      {status === 'sending' ? (isDE ? 'Wird gesendet …' : 'Sending …') : (isDE ? 'Anmeldung senden' : 'Send application')} <Send className="w-4 h-4" />
+                    </button>
+                  </form>
+                )}
+                </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   )
 }
