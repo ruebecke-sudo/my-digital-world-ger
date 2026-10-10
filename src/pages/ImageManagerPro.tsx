@@ -166,7 +166,16 @@ export default function ImageManagerPro() {
       ]
 
   return (
-    <div className="pt-24 pb-32 overflow-x-hidden">
+    <div className="relative isolate pt-24 pb-32 overflow-x-hidden overflow-y-clip">
+      {/* Colour glows behind the frosted glass surfaces */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute top-[6%] -left-24 h-[30rem] w-[30rem] rounded-full bg-cyan-500/35 blur-[110px]" />
+        <div className="absolute top-[16%] right-[-6rem] h-[32rem] w-[32rem] rounded-full bg-purple-600/40 blur-[120px]" />
+        <div className="absolute top-[32%] left-[30%] h-[24rem] w-[24rem] rounded-full bg-fuchsia-500/25 blur-[110px]" />
+        <div className="absolute top-[48%] -left-20 h-[26rem] w-[26rem] rounded-full bg-purple-500/35 blur-[120px]" />
+        <div className="absolute top-[64%] right-[5%] h-[28rem] w-[28rem] rounded-full bg-cyan-400/30 blur-[120px]" />
+        <div className="absolute top-[82%] left-[20%] h-[26rem] w-[26rem] rounded-full bg-fuchsia-500/25 blur-[120px]" />
+      </div>
       {/* HERO */}
       <div className="relative section-overlay py-20 text-center">
         <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
@@ -203,7 +212,7 @@ export default function ImageManagerPro() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 space-y-24">
 
         {/* PRODUCT PREVIEW */}
-        <section aria-label={isDE ? 'Vorschau der Bildverwaltung' : 'Preview of the image library'} className="glass rounded-3xl border border-white/10 p-3 md:p-4 shadow-2xl shadow-black/40">
+        <section aria-label={isDE ? 'Vorschau der Bildverwaltung' : 'Preview of the image library'} className="glass-frost rounded-3xl p-3 md:p-4 shadow-2xl shadow-black/40">
           <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#0b1226] grid md:grid-cols-[200px_1fr]">
             <div className="hidden md:block bg-[#070d1d] border-r border-white/5 p-4 space-y-2">
               <div className="flex items-center gap-2 mb-5">
@@ -255,7 +264,7 @@ export default function ImageManagerPro() {
             {funktionen.map((f) => {
               const Icon = f.icon
               return (
-                <div key={f.title} className="glass rounded-2xl border border-white/5 p-6 hover:border-cyan-500/20 transition-all group">
+                <div key={f.title} className="glass-frost rounded-2xl p-6 hover:border-cyan-500/20 transition-all group">
                   <div className="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4 group-hover:bg-cyan-500/20 transition-all">
                     <Icon className="w-6 h-6 text-cyan-400" />
                   </div>
@@ -268,7 +277,7 @@ export default function ImageManagerPro() {
         </section>
 
         {/* HOW THE TEST WORKS */}
-        <section id="so-gehts" className="scroll-mt-28 glass rounded-3xl border border-white/5 p-8 md:p-12 relative overflow-hidden">
+        <section id="so-gehts" className="scroll-mt-28 glass-frost rounded-3xl p-8 md:p-12 relative overflow-hidden">
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-purple-500/5 rounded-full blur-[80px] pointer-events-none" />
 
           <div className="text-center max-w-3xl mx-auto mb-14">
@@ -288,7 +297,7 @@ export default function ImageManagerPro() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {schritte.map((s) => (
-              <div key={s.nr} className="relative glass rounded-2xl border border-white/5 p-5 flex flex-col hover:border-cyan-500/20 transition-all">
+              <div key={s.nr} className="relative glass-frost rounded-2xl p-5 flex flex-col hover:border-cyan-500/20 transition-all">
                 <div className="font-display font-black text-3xl text-cyan-400/40 mb-3">{s.nr}</div>
                 <h3 className="font-display font-bold text-white text-sm mb-2">{s.title}</h3>
                 <p className="text-white/60 text-xs leading-relaxed">{s.desc}</p>
@@ -322,7 +331,7 @@ export default function ImageManagerPro() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {tarife.map((t) => (
-              <div key={t.name} className={`glass rounded-2xl border p-6 flex flex-col ${t.highlight ? 'border-cyan-500/40 shadow-lg shadow-cyan-500/10' : 'border-white/10'}`}>
+              <div key={t.name} className={`glass-frost rounded-2xl border p-6 flex flex-col ${t.highlight ? 'border-cyan-500/40 shadow-lg shadow-cyan-500/10' : 'border-white/10'}`}>
                 {t.highlight && <span className="self-start mb-3 px-2 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] font-bold text-cyan-300">{isDE ? 'BELIEBT' : 'POPULAR'}</span>}
                 <h3 className="font-display font-bold text-white text-xl">{t.name}</h3>
                 <div className="mt-2 font-display font-extrabold text-2xl text-cyan-300">{t.price}</div>
@@ -336,7 +345,7 @@ export default function ImageManagerPro() {
             ))}
           </div>
 
-          <div className="mt-6 glass rounded-2xl border border-purple-500/30 p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+          <div className="mt-6 glass-frost rounded-2xl border border-purple-500/30 p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 shrink-0 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center">
                 <InfinityIcon className="w-6 h-6 text-purple-300" />
@@ -357,7 +366,7 @@ export default function ImageManagerPro() {
         </section>
 
         {/* TEST MODE NOTICE, remove when Stripe switches to live mode */}
-        <section className="glass rounded-2xl border border-amber-400/30 p-6 md:p-8 flex items-start gap-4 -mt-12">
+        <section className="glass-frost rounded-2xl border border-amber-400/30 p-6 md:p-8 flex items-start gap-4 -mt-12">
           <div className="w-12 h-12 shrink-0 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center">
             <FlaskConical className="w-6 h-6 text-amber-300" />
           </div>
@@ -372,7 +381,7 @@ export default function ImageManagerPro() {
         </section>
 
         {/* WEBSITE ON DEMAND (questionnaire from the webseiten-baukasten project) */}
-        <section id="webseite" className="scroll-mt-28 glass rounded-3xl border border-purple-500/20 p-8 md:p-12 relative overflow-hidden">
+        <section id="webseite" className="scroll-mt-28 glass-frost rounded-3xl border border-purple-500/20 p-8 md:p-12 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none" />
 
           <div className="relative text-center max-w-3xl mx-auto mb-12">
@@ -392,7 +401,7 @@ export default function ImageManagerPro() {
 
           <div className="relative grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             {webseiteSchritte.map((s) => (
-              <div key={s.nr} className="glass rounded-2xl border border-white/5 p-5 hover:border-purple-500/20 transition-all">
+              <div key={s.nr} className="glass-frost rounded-2xl p-5 hover:border-purple-500/20 transition-all">
                 <div className="font-display font-black text-3xl text-purple-400/40 mb-3">{s.nr}</div>
                 <h3 className="font-display font-bold text-white text-base mb-2">{s.title}</h3>
                 <p className="text-white/60 text-sm leading-relaxed">{s.desc}</p>
@@ -402,7 +411,7 @@ export default function ImageManagerPro() {
 
           <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
             {webseitePakete.map((p) => (
-              <div key={p.name} className="rounded-2xl border border-white/10 bg-white/5 p-5 flex items-start gap-3">
+              <div key={p.name} className="glass-frost rounded-2xl p-5 flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-display font-bold text-white">{p.name}</h3>
@@ -441,7 +450,7 @@ export default function ImageManagerPro() {
           </h2>
           <div className="space-y-3">
             {faqs.map((f) => (
-              <details key={f.q} className="glass rounded-2xl border border-white/10 p-5 group">
+              <details key={f.q} className="glass-frost rounded-2xl p-5 group">
                 <summary className="cursor-pointer font-display font-bold text-white list-none flex items-center justify-between gap-4">
                   {f.q}
                   <span className="text-cyan-400 transition-transform group-open:rotate-45 text-xl leading-none">+</span>
@@ -453,7 +462,7 @@ export default function ImageManagerPro() {
         </section>
 
         {/* CTA */}
-        <div className="glass rounded-3xl border border-cyan-500/20 p-8 md:p-12 text-center relative overflow-hidden">
+        <div className="glass-frost rounded-3xl border border-cyan-500/20 p-8 md:p-12 text-center relative overflow-hidden">
           <div className="hero-orb w-96 h-96 bg-cyan-500/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
           <div className="relative z-10 max-w-2xl mx-auto">
             <h2 className="font-display font-extrabold text-3xl md:text-4xl text-white mb-4">

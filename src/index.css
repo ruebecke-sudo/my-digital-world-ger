@@ -72,6 +72,16 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* Frosted glass: stronger blur, light edge and inner highlight. Needs colour behind it
+   (see the glow layers on the package and Image Manager pages). */
+.glass-frost {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
 /* Card hover effect */
 .card-hover {
   transition: all 0.3s ease;
