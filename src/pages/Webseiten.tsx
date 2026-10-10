@@ -21,6 +21,8 @@ const FRAGEBOGEN_URL = '/fragebogen/'
 const CONTACT_EMAIL = 'info@my-digital-world.de'
 // Reference customer (approved 09.10.2026). Switch to https://www.zb-interieur.de once the new site runs there.
 const REFERENZ_URL = 'https://zb-interieur.netlify.app'
+// Public demo of the website template (example painter, invented data, not indexed).
+const DEMO_URL = 'https://mdw-beispiel-maler.netlify.app'
 
 // Frosted glass: translucent surface, strong blur and a light inner edge. The colour glows
 // behind the content (see the page wrapper) are what the glass blurs.
@@ -175,6 +177,9 @@ export default function Webseiten() {
             <a href={`${FRAGEBOGEN_URL}index.html`} className={GLAS_KNOPF}>
               <ClipboardList className="w-4 h-4" /> {isDE ? 'Fragebogen ausfüllen' : 'Fill in the questionnaire'}
             </a>
+            <a href={DEMO_URL} target="_blank" rel="noopener" className={GLAS_KNOPF}>
+              <ExternalLink className="w-4 h-4" /> {isDE ? 'Beispielseite ansehen' : 'View example site'}
+            </a>
           </div>
         </div>
         <div className={`relative z-10 mx-auto mt-14 max-w-5xl px-4 sm:px-6`}>
@@ -291,6 +296,11 @@ export default function Webseiten() {
               </tbody>
             </table>
           </div>
+          <p className="text-center mt-6">
+            <a href={DEMO_URL} target="_blank" rel="noopener" className={GLAS_KNOPF}>
+              {isDE ? 'So sieht eine fertige Webseite aus: Beispiel Malerbetrieb' : 'See a finished website: example painter'} <ExternalLink className="w-4 h-4" />
+            </a>
+          </p>
           <p className="text-white/50 text-sm text-center mt-4">
             {isDE
               ? 'Mindestlaufzeit 6 Monate, danach monatlich kündbar. Domainkosten trägt der Kunde. Weitere Unterseiten, Sprachen oder Zusatzwünsche nach Absprache.'
