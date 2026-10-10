@@ -41,11 +41,13 @@ export function VideoPopup({ onClose }: { onClose: () => void }) {
         aria-modal="true"
         aria-labelledby="video-popup-titel"
         onClick={(e) => e.stopPropagation()}
-        className="glass-frost relative w-full max-w-4xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-[28px] p-3 sm:p-5"
+        className="glass-frost relative max-h-[calc(100dvh-1.5rem)] overflow-y-auto rounded-[28px] p-3 sm:p-4"
       >
         {/* Colour glows behind the glass frame */}
-        <div aria-hidden className="pointer-events-none absolute -top-20 -left-20 h-72 w-72 rounded-full bg-cyan-500/30 blur-3xl" />
-        <div aria-hidden className="pointer-events-none absolute -right-16 -bottom-20 h-72 w-72 rounded-full bg-purple-600/35 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden rounded-[28px]">
+          <div className="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-cyan-500/30 blur-3xl" />
+          <div className="absolute -right-16 -bottom-20 h-72 w-72 rounded-full bg-purple-600/35 blur-3xl" />
+        </div>
 
         <button
           type="button"
@@ -56,7 +58,11 @@ export function VideoPopup({ onClose }: { onClose: () => void }) {
           <X className="h-5 w-5" />
         </button>
 
-        <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-black shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+        {/* Video size follows the screen height, so video, text and buttons fit without scrolling. */}
+        <div
+          className="relative overflow-hidden rounded-2xl border border-white/15 bg-black shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
+          style={{ width: 'min(calc(96vw - 2rem), 1500px, calc((100dvh - 14.5rem) * 16 / 9))' }}
+        >
           <video
             src="/hero_video.mp4"
             poster="/hero_video_poster.webp"
@@ -69,28 +75,30 @@ export function VideoPopup({ onClose }: { onClose: () => void }) {
           />
         </div>
 
-        <div className="relative px-1 pt-5 pb-1 sm:px-2">
-          <h2 id="video-popup-titel" className="font-display text-xl font-extrabold text-white sm:text-2xl">
-            {isDE ? 'Willkommen bei My Digital World' : 'Welcome to My Digital World'}
-          </h2>
-          <p className="mt-1 text-sm text-white/65 sm:text-base">
-            {isDE ? 'Kreative digitale Lösungen für Ihr Unternehmen. Wohin möchten Sie?' : 'Creative digital solutions for your business. Where would you like to go?'}
-          </p>
-          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+        <div className="relative flex flex-wrap items-center justify-between gap-x-4 gap-y-3 px-1 pt-4 sm:px-2" style={{ maxWidth: 'min(calc(96vw - 2rem), 1500px, calc((100dvh - 14.5rem) * 16 / 9))' }}>
+          <div className="min-w-[15rem] flex-1">
+            <h2 id="video-popup-titel" className="font-display text-lg font-extrabold text-white sm:text-xl">
+              {isDE ? 'Willkommen bei My Digital World' : 'Welcome to My Digital World'}
+            </h2>
+            <p className="text-sm text-white/65">
+              {isDE ? 'Kreative digitale Lösungen für Ihr Unternehmen. Wohin möchten Sie?' : 'Creative digital solutions for your business. Where would you like to go?'}
+            </p>
+          </div>
+          <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:flex-wrap">
             {ziele.map(({ href, icon: Icon, label }) => (
               <Link
                 key={href}
                 href={href}
                 onClick={onClose}
-                className="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/[0.07] px-3 py-3 text-[13px] font-semibold sm:px-3.5 sm:text-sm text-white/90 backdrop-blur-xl transition hover:border-cyan-300/50 hover:bg-white/[0.12]"
+                className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.07] px-3 py-3 text-[13px] font-semibold text-white/90 backdrop-blur-xl transition hover:border-cyan-300/50 hover:bg-white/[0.12]"
               >
                 <Icon className="h-4 w-4 shrink-0 text-cyan-300" /> <span className="min-w-0 break-words leading-tight">{label}</span>
               </Link>
             ))}
+            <button type="button" onClick={onClose} className="btn-primary col-span-2 inline-flex items-center justify-center gap-2 !px-4 !py-3 text-sm sm:col-span-1">
+              {isDE ? 'Zur Startseite' : 'Home page'} <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
-          <button type="button" onClick={onClose} className="btn-primary mt-4 inline-flex w-full items-center justify-center gap-2 text-base sm:w-auto">
-            {isDE ? 'Weiter zur Startseite' : 'Continue to the home page'} <ArrowRight className="h-4 w-4" />
-          </button>
         </div>
       </div>
     </div>,
